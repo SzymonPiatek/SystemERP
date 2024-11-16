@@ -6,3 +6,114 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id            Int           @id @default(autoincrement())
+  email         String        @unique
+  password      String
+  isActive      Boolean       @default(false)
+  firstName     String
+  lastName      String
+  position      String
+  profile       Profile?
+
+  companies     Company[]
+  ApiKey        ApiKey[]
+}
+
+enum RoleType {
+  ADMIN
+  ENTITY_ADMIN
+  OWNER
+  MANAGER
+  WORKER
+}
+
+model Permission {
+  id                Int                 @id @default(autoincrement())
+  name              String              @unique
+  action            String
+  subject           String
+
+  permissionRole    PermissionRole[]
+  ApiKeyPermission  ApiKeyPermission[]
+}
+
+model PermissionRole {
+  permission        Permission          @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  permissionId      Int
+  role              Role                @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  roleId            Int
+
+  @@id([permissionId, roleId])
+}
+
+model Role {
+  id                Int                 @id @default(autoincrement())
+  name              RoleType            @unique
+
+  permissionRole    PermissionRole[]
+  Profile           Profile[]
+}
+
+model Profile {
+  id                  Int                @id @default(autoincrement())
+  notificationEmail   Boolean            @default(false)
+  lastLogin           DateTime?          @default(now())
+  profilePicPath      String?
+
+  roleId              Int
+  userId              Int               @unique
+
+  role                Role              @relation(fields: [roleId], references: [id])
+  user                User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ApiKey {
+  id                  Int               @id @default(autoincrement())
+  keyId               String            @unique
+  hashedKey           String
+  userId              Int
+  companyId           Int?
+
+  user                User               @relation(fields: [userId], references: [id])
+  company             Company?           @relation(fields: [companyId], references: [id])
+  createdAt           DateTime           @default(now())
+  expiresAt           DateTime?
+  revoked             Boolean            @default(false)
+  ApiKeyPermission    ApiKeyPermission[]
+}
+
+model ApiKeyPermission {
+  apiKeyId            Int
+  permissionId        Int
+
+  apiKey              ApiKey              @relation(fields: [apiKeyId], references: [id], onDelete: Cascade)
+  permission          Permission          @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([apiKeyId, permissionId])
+}
+
+model Company {
+  id             Int      @id @default(autoincrement())
+  name           String
+  companyWebsite String?
+  email          String
+  phoneNumber    String?
+  regon          String
+  krs            String?
+  nip            String
+  europeanNip    String?
+  country        String
+  voivodeship    String
+  district       String
+  commune        String
+  zipCode        String
+  city           String
+  street         String
+  houseNo        String
+  apartmentNo    String
+
+  user           User[]
+  ApiKey         ApiKey[]
+}
