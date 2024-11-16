@@ -5,6 +5,7 @@ import helmetConfig from './routes/helmet';
 import corsConfig from './routes/cors';
 import blockDoubleSlashesMiddleware from './routes/routeMiddleware';
 import swaggerSpec from './swaggerConfig';
+import apiRouter from './routes';
 
 const app = express();
 
@@ -19,5 +20,6 @@ app.use(corsConfig);
 app.use(blockDoubleSlashesMiddleware);
 
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api/v1', apiRouter);
 
 export default app;
