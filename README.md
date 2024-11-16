@@ -68,7 +68,7 @@
       <td>Przygotowanie podstawy backendu za pomocą TypeScript z Expressem</td>
       <td></td>
       <td>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>
     <tr>
@@ -116,7 +116,7 @@
         <span>Postgresql</span>
       </td>
       <td>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>
     <tr>
