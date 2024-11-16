@@ -30,7 +30,7 @@
       <td>1</td>
       <td>Analiza potrzeb</td>
       <td>Whiteboard?</td>
-      <td>W trakcie</td>
+      <td>Zrobione</td>
     </tr>
     <tr>
       <td>2</td>
@@ -44,7 +44,7 @@
         <br>
         <span>Notatki?</span>
       </td>
-      <td>W trakcie</td>
+      <td>Zrobione</td>
     </tr>
   </thead>
 </table>
