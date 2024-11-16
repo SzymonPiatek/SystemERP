@@ -1,0 +1,4 @@
+name: 'erp'
+
+include:
+  - ./api/docker-compose.yaml
