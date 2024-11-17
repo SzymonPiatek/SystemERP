@@ -26,14 +26,16 @@ model Company {
   id              Int           @id @default(autoincrement())
   name            String
   country         String
-  voivodeship     String
-  district        String
-  commune         String
+  voivodeship     String?
+  district        String?
+  commune         String?
   city            String
   zipCode         String
   street          String
   houseNumber     String
-  apartmentNumber String
+  apartmentNumber String?
+  nip             String
+  regon           String
 
   users           User[]
   createdAt       DateTime      @default(now())
