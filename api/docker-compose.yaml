@@ -1,0 +1,42 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - '5555:5555'
+    expose:
+      - '3000'
+    networks:
+      - api_network
+      - db_network
+    volumes:
+      - ./:/api
+      - /api/node_modules
+      - /api/dist
+    command: ["sh", "-c", "npm run dev & npx prisma studio"]
+    env_file:
+      - ../envs/.env-db
+      - ../envs/.env-auth
+      - ../envs/.env-api
+  db_api:
+    image: postgres
+    volumes:
+      - db_api_volume:/var/lib/postgresql/data
+    env_file:
+      - ../envs/.env-db
+    networks:
+      - api_network
+      - db_network
+    ports:
+      - '5442:5432'
+
+volumes:
+  db_api_volume:
+
+networks:
+  api_network:
+    driver: bridge
+  db_network:
+    internal: true
