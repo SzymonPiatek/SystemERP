@@ -10,7 +10,7 @@ const userSchema = Joi.object({
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
   isActive: Joi.boolean().optional().default(false),
-  companyId: Joi.number().integer().optional(),
+  companyId: Joi.number().integer().optional().allow(null),
   roleId: Joi.number().integer().required(),
 });
 
@@ -33,7 +33,7 @@ export const registerHandler: RequestHandler = async (req, res): Promise<void> =
       return;
     }
 
-    if (companyId) {
+    if (companyId !== null) {
       const companyExists = await prisma.company.findUnique({
         where: { id: companyId },
       });
