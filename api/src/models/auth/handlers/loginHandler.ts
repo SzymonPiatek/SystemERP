@@ -3,7 +3,7 @@ import Joi from 'joi';
 import { comparePassword } from '../../../modules/authModule';
 import { returnError } from '../../../utils/error';
 import prisma from '../../../prismaClient';
-import { generateAccessToken, generateRefreshToken } from '../../../services/authService';
+import { generateAccessToken, generateRefreshToken } from '../services/authService';
 
 const loginSchema = Joi.object({
   email: Joi.string().email().required(),

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getAllUsersHandler, getUserByIdHandler } from '../handlers/getHandlers';
-import { authenticateToken } from '../../../routes/authMiddleware';
+import { authenticateToken } from '../../../middlewares/authMiddleware';
 
 const router = Router();
 
