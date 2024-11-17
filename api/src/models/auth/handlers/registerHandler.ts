@@ -9,8 +9,9 @@ const userSchema = Joi.object({
   password: Joi.string().min(8).required(),
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
-  isActive: Joi.boolean().optional().default(true),
+  isActive: Joi.boolean().optional().default(false),
   companyId: Joi.number().integer().optional(),
+  roleId: Joi.number().integer().required(),
 });
 
 export const registerHandler: RequestHandler = async (req, res): Promise<void> => {
@@ -21,7 +22,7 @@ export const registerHandler: RequestHandler = async (req, res): Promise<void> =
       return;
     }
 
-    const { email, password, firstName, lastName, isActive, companyId } = value;
+    const { email, password, firstName, lastName, isActive, companyId, roleId } = value;
 
     const isEmailAlreadyExist = await prisma.user.findUnique({
       where: { email: email },
@@ -43,6 +44,15 @@ export const registerHandler: RequestHandler = async (req, res): Promise<void> =
       }
     }
 
+    const roleExists = await prisma.role.findUnique({
+      where: { id: roleId },
+    });
+
+    if (!roleExists) {
+      res.status(400).json({ success: false, message: 'Invalid roleId' });
+      return;
+    }
+
     const hashedPassword: string = await hashPassword(password);
 
     const newUser = await prisma.user.create({
@@ -53,6 +63,14 @@ export const registerHandler: RequestHandler = async (req, res): Promise<void> =
         lastName,
         isActive,
         companyId: companyId || null,
+        profile: {
+          create: {
+            roleId,
+          },
+        },
+      },
+      include: {
+        profile: true,
       },
     });
 

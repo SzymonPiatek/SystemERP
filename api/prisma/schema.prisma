@@ -14,10 +14,9 @@ model User {
   firstName       String
   lastName        String
   isActive        Boolean       @default(false)
-  role            Role?         @relation(fields: [roleId], references: [id])
-  roleId          Int?
   company         Company?      @relation(fields: [companyId], references: [id])
   companyId       Int?
+  profile         Profile?
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 }
@@ -45,12 +44,44 @@ model Company {
 model Role {
   id              Int           @id @default(autoincrement())
   name            String        @unique
-  permissions     Permission[]  @relation("RolePermissions")
-  users           User[]
+
+  permissionRole  PermissionRole[]
+  Profile         Profile[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 }
 
 model Permission {
   id              Int           @id @default(autoincrement())
   name            String        @unique
-  roles           Role[]        @relation("RolePermissions")
+  action          String
+  subject         String
+
+  permissionRole  PermissionRole[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model PermissionRole {
+  permission      Permission    @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  permissionId    Int
+  role            Role          @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  roleId          Int
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@id([permissionId, roleId])
+}
+
+model Profile {
+  id                 Int        @id @default(autoincrement())
+  profilePicPath     String?
+  roleId             Int
+  userId             Int        @unique
+  role               Role       @relation(fields: [roleId], references: [id])
+  user               User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
 }

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --files src/server.ts --legacy-watch",
+    "dev": "npx prisma migrate dev && npx prisma db seed && nodemon --files src/server.ts --legacy-watch",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "prettier": "prettier . --check",
     "format": "prettier . --write",
@@ -14,6 +14,10 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "prisma": {
+    "schema": "prisma/schema.prisma",
+    "seed": "ts-node prisma/seed.ts"
+  },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/cookie-parser": "^1.4.7",
