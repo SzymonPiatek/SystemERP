@@ -10,6 +10,7 @@ const userSchema = Joi.object({
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
   isActive: Joi.boolean().optional().default(true),
+  companyId: Joi.number().integer().optional(),
 });
 
 export const registerHandler: RequestHandler = async (req, res): Promise<void> => {
@@ -20,7 +21,7 @@ export const registerHandler: RequestHandler = async (req, res): Promise<void> =
       return;
     }
 
-    const { email, password, firstName, lastName, isActive } = value;
+    const { email, password, firstName, lastName, isActive, companyId } = value;
 
     const isEmailAlreadyExist = await prisma.user.findUnique({
       where: { email: email },
@@ -29,6 +30,17 @@ export const registerHandler: RequestHandler = async (req, res): Promise<void> =
     if (isEmailAlreadyExist) {
       res.status(400).json({ success: false, message: 'Email already in use' });
       return;
+    }
+
+    if (companyId) {
+      const companyExists = await prisma.company.findUnique({
+        where: { id: companyId },
+      });
+
+      if (!companyExists) {
+        res.status(400).json({ success: false, message: 'Invalid companyId' });
+        return;
+      }
     }
 
     const hashedPassword: string = await hashPassword(password);
@@ -40,6 +52,7 @@ export const registerHandler: RequestHandler = async (req, res): Promise<void> =
         firstName,
         lastName,
         isActive,
+        companyId: companyId || null,
       },
     });
 
