@@ -44,15 +44,7 @@ export const loginHandler: RequestHandler = async (req, res): Promise<void> => {
       message: 'Login successful',
       accessToken,
       refreshToken,
-      user: {
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        isActive: user.isActive,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      },
+      user,
     });
     return;
   } catch (error) {

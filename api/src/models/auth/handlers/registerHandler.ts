@@ -46,15 +46,7 @@ export const registerHandler: RequestHandler = async (req, res): Promise<void> =
     res.status(201).json({
       success: true,
       message: 'User created',
-      user: {
-        id: newUser.id,
-        email: newUser.email,
-        firstName: newUser.firstName,
-        lastName: newUser.lastName,
-        isActive: newUser.isActive,
-        createdAt: newUser.createdAt,
-        updatedAt: newUser.updatedAt,
-      },
+      user: newUser,
     });
   } catch (error) {
     returnError(res, error);

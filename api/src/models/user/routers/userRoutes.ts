@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import { getAllUsersHandler } from '../handlers/getHandlers';
+import { getAllUsersHandler, getUserByIdHandler } from '../handlers/getHandlers';
 import { authenticateToken } from '../../../routes/authMiddleware';
 
 const router = Router();
 
 router.get('/', authenticateToken, getAllUsersHandler);
+router.get('/:id', authenticateToken, getUserByIdHandler);
 
 export default router;
