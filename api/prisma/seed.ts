@@ -12,8 +12,10 @@ async function main() {
 
   // Creating admin user
   const adminUserData = await createAdminUserData();
-  await prisma.user.create({
-    data: adminUserData,
+  await prisma.user.upsert({
+    where: { email: adminUserData.email },
+    update: {},
+    create: adminUserData,
   });
 
   // Creating companies

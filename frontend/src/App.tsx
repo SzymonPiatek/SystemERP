@@ -1,24 +1,14 @@
-import "./App.css";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { HomeLayout, Error, Panel } from "./pages";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <HomeLayout />,
-    errorElement: <Error />,
-    children: [
-      {
-        index: true,
-        element: <Panel />,
-        errorElement: <Error />,
-      },
-    ],
-  },
-]);
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HomePage } from "./pages/HomePage";
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

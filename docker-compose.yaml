@@ -1,5 +1,78 @@
-name: 'erp'
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - '5555:5555'
+    expose:
+      - '5000'
+    env_file:
+      - ./envs/.env-api
+      - ./envs/.env-auth
+      - ./envs/.env-db
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/dist
+    networks:
+      - api_network
+      - db_network
+    depends_on:
+      - db
+    command: ["sh", "-c", "npm run dev & npx prisma studio"]
 
-include:
-  - ./api/docker-compose.yaml
-  - ./proxy/docker-compose.yaml
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    env_file:
+      - ./envs/.env-db
+    networks:
+      - api_network
+      - db_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: development
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - web_network
+
+  proxy:
+    image: nginx:latest
+    volumes:
+      - ./proxy/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - '80:80'
+    networks:
+      - api_network
+      - web_network
+    depends_on:
+      - api
+      - db
+      - frontend
+
+volumes:
+  db_volume:
+
+networks:
+  api_network:
+    driver: bridge
+  db_network:
+    internal: true
+  web_network:
+    name: web_network
+    driver: bridge
