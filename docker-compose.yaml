@@ -4,8 +4,9 @@ services:
       context: ./api
       dockerfile: Dockerfile
     ports:
-      - '5000:5000'
       - '5555:5555'
+    expose:
+      - '5000'
     env_file:
       - ./envs/.env-api
       - ./envs/.env-auth
@@ -13,8 +14,10 @@ services:
     volumes:
       - ./api:/usr/src/app
       - /usr/src/app/node_modules
+      - /usr/src/app/dist
     networks:
-      - internal
+      - api_network
+      - db_network
     depends_on:
       - db
     command: ["sh", "-c", "npm run dev & npx prisma studio"]
@@ -25,11 +28,12 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - ./db/data:/var/lib/postgresql/data
+      - db_volume:/var/lib/postgresql/data
     env_file:
       - ./envs/.env-db
     networks:
-      - internal
+      - api_network
+      - db_network
 
   frontend:
     build:
@@ -45,7 +49,7 @@ services:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
     networks:
-      - internal
+      - web_network
 
   proxy:
     image: nginx:latest
@@ -54,7 +58,8 @@ services:
     ports:
       - '80:80'
     networks:
-      - internal
+      - api_network
+      - web_network
     depends_on:
       - api
       - db
@@ -64,5 +69,10 @@ volumes:
   db_volume:
 
 networks:
-  internal:
+  api_network:
+    driver: bridge
+  db_network:
+    internal: true
+  web_network:
+    name: web_network
     driver: bridge
