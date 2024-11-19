@@ -1,13 +1,13 @@
-FROM node:20.13.1 AS base
+FROM node:20.11.1-alpine AS development
 
-FROM base AS development
-
-WORKDIR /api
+WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-ENV NODE_ENV=development
+RUN npm install
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+COPY . .
+
+RUN npx prisma generate
+
+CMD ["npm", "start"]
