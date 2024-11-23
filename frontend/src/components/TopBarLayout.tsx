@@ -7,7 +7,7 @@ type TopBarProps = {
 
 export const TopBarLayout: FC<TopBarProps> = (props) => {
 return(
-    <Box></Box>
+    <Box>topbar</Box>
 )
 
 }
