@@ -4,6 +4,16 @@
 
 ---
 
+## Spis Treści
+
+- [1. Autorzy](#autorzy)
+- [2. Etap I](#etap-i)
+- [3. Etap II](#etap-ii)
+    - [3.1 Backend](#backend)
+    - [3.2 Frontend](#frontend)
+    - [3.3 DevOps](#devops)
+    - [3.4 Documentation](#documentation)
+
 ## Autorzy:
 
 <table >
