@@ -9,10 +9,17 @@
 - [1. Autorzy](#autorzy)
 - [2. Etap I](#etap-i)
 - [3. Etap II](#etap-ii)
-    - [3.1 Backend](#backend)
-    - [3.2 Frontend](#frontend)
-    - [3.3 DevOps](#devops)
-    - [3.4 Documentation](#documentation)
+  - [3.1 Backend](#etap-ii-backend)
+  - [3.2 Frontend](#etap-ii-frontend)
+  - [3.3 DevOps](#etap-ii-devops)
+  - [3.4 Documentation](#etap-ii-documentation)
+- [4. Technologie](#technologie)
+  - [4.1 Backend](#technologie-backend)
+  - [4.2 Database](#technologie-database)
+  - [4.3 Frontend](#technologie-frontend)
+  - [4.4 DevOps](#technologie-devops)
+
+---
 
 ## Autorzy:
 
@@ -91,6 +98,7 @@
 
 ## Etap II
 
+<a id="etap-ii-backend"></a>
 ### Backend
 <table>
   <thead>
@@ -212,6 +220,7 @@
   </tbody>
 </table>
 
+<a id="etap-ii-frontend"></a>
 ### Frontend
 <table>
   <thead>
@@ -284,6 +293,7 @@
   </tbody>
 </table>
 
+<a id="etap-ii-devops"></a>
 ### DevOps
 <table>
   <thead>
@@ -310,6 +320,7 @@
   </tbody>
 </table>
 
+<a id="etap-ii-documentation"></a>
 ### Documentation
 <table>
   <thead>
@@ -356,3 +367,117 @@
         border: 1px solid rgba(255, 255, 255, 0.3);
     }
 </style>
+
+
+## Technologie
+
+<a id="technologie-backend"></a>
+### Backend
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 5%;">Lp</th>
+      <th style="width: 25%;">Technologia</th>
+      <th style="width: 70%;">Uwagi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>TypeScript</td>
+      <td>Język programowania do typowania statycznego. Jest nadzbiorem języka JavaScript</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Express</td>
+      <td>Backendowy framework aplikacji intenernetowych do budowania REST API</td>
+    </tr>
+  </tbody>
+</table>
+
+<a id="technologie-database"></a>
+### Database
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 5%;">Lp</th>
+      <th style="width: 25%;">Technologia</th>
+      <th style="width: 70%;">Uwagi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>PostgreSQL</td>
+      <td>Relacyjna baza danych używana do przechowywania danych</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Prisma</td>
+      <td>ORM (Object-Relational Mapper) do zarządzania bazą danych, generowania zapytań SQL i migracji</td>
+    </tr>
+  </tbody>
+</table>
+
+<a id="technologie-frontend"></a>
+### Frontend
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 5%;">Lp</th>
+      <th style="width: 25%;">Technologia</th>
+      <th style="width: 70%;">Uwagi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>TypeScript</td>
+      <td>Język programowania do typowania statycznego. Jest nadzbiorem języka JavaScript</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>React</td>
+      <td>Biblioteka JavaScript, która wykorzystywana jest do tworzenia interfejsów graficznych</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Vite</td>
+      <td>Szybkie narzędzie do budowania aplikacji frontendowych</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Chakra</td>
+      <td>Biblioteka komponentów do budowy interfejsów użytkownika</td>
+    </tr>
+  </tbody>
+</table>
+
+<a id="technologie-devops"></a>
+### DevOps
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 5%;">Lp</th>
+      <th style="width: 25%;">Technologia</th>
+      <th style="width: 70%;">Uwagi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Docker</td>
+      <td>Platforma do konteneryzacji aplikacji i zarządzania środowiskami</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Nginx</td>
+      <td>Serwer HTTP używany jako reverse proxy i do zarządzania ruchem sieciowym</td>
+    </tr>
+  </tbody>
+</table>
+
