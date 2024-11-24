@@ -359,16 +359,6 @@
   </tbody>
 </table>
 
-<style>
-    table {
-        width: 100%; 
-        table-layout: fixed; 
-        border-collapse: collapse; 
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-</style>
-
-
 ## Technologie
 
 <a id="technologie-backend"></a>
@@ -480,4 +470,5 @@
     </tr>
   </tbody>
 </table>
+
 
