@@ -2,7 +2,7 @@ import swaggerJsdoc from 'swagger-jsdoc';
 
 const options = {
   definition: {
-    openapi: '1.0.0',
+    openapi: '3.1.0',
     info: {
       title: 'System ERP API',
       version: '1.0.0',
@@ -10,11 +10,11 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000',
+        url: 'http://localhost/api/v1/',
       },
     ],
   },
-  apis: [],
+  apis: ['./src/models/**/swagger/*.ts'],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
