@@ -1,21 +1,17 @@
 import { Box, Stack, Flex, Link, VStack, Button } from '@chakra-ui/react';
 import { FC, PropsWithChildren } from 'react';
 import { Link as L } from 'react-router-dom';
-import {
-  MdSpaceDashboard,
-} from 'react-icons/md';
-import { BsPersonSquare} from 'react-icons/bs';
+import { MdSpaceDashboard } from 'react-icons/md';
+import { BsPersonSquare } from 'react-icons/bs';
 
 import { Logo } from '../components/Logo';
-import {TopBarLayout} from '../components/TopBarLayout'
+import { TopBarLayout } from '../components/TopBarLayout';
 import { NavLink } from './NavLayout/NavLink';
-
 
 export type NavLayoutProps = PropsWithChildren<{}>;
 
 export const NavLayout: FC<NavLayoutProps> = (props) => {
   const { children } = props;
-
 
   return (
     <Flex background="gray.100" p={0} minH="100vh">
@@ -31,18 +27,12 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
         top="0"
       >
         <Box px={8} py={5}>
-
-            <Logo />
-
+          <Logo />
         </Box>
         <Stack as="nav" height="full" overflowY="auto">
           <Box px={4} pb={8}>
-                <NavLink to="/" >
-                Dashboard
-                </NavLink>
-                <NavLink to="/schedule" >
-                Schedule
-                </NavLink>
+            <NavLink to="/">Dashboard</NavLink>
+            <NavLink to="/schedule">Schedule</NavLink>
           </Box>
         </Stack>
       </Stack>

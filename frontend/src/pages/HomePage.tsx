@@ -4,5 +4,9 @@ import { NavLayout } from '../components/NavLayout';
 import { Outlet } from 'react-router-dom';
 
 export const HomePage: FC<{}> = () => {
-  return <NavLayout><Outlet/></NavLayout>;
+  return (
+    <NavLayout>
+      <Outlet />
+    </NavLayout>
+  );
 };

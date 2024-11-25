@@ -3,9 +3,12 @@ import { FC } from 'react';
 import BigCalendar from '../components/BigCalendar';
 
 export const Schedule: FC<{}> = () => {
-  return <Box>Schedule
+  return (
     <Box>
-      <BigCalendar/>
+      Schedule
+      <Box>
+        <BigCalendar />
+      </Box>
     </Box>
-  </Box>;
+  );
 };
