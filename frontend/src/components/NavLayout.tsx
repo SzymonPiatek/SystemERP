@@ -1,8 +1,5 @@
-import { Box, Stack, Flex, Link, VStack, Button } from '@chakra-ui/react';
+import { Box, Stack, Flex, VStack } from '@chakra-ui/react';
 import { FC, PropsWithChildren } from 'react';
-import { Link as L } from 'react-router-dom';
-import { MdSpaceDashboard } from 'react-icons/md';
-import { BsPersonSquare } from 'react-icons/bs';
 
 import { Logo } from '../components/Logo';
 import { TopBarLayout } from '../components/TopBarLayout';

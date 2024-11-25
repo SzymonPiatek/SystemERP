@@ -24,12 +24,12 @@ const router = createBrowserRouter([
         element: <Schedule />,
         errorElement: <Error />,
       },
-      {
-        path: '/login',
-        element: <LoginPage />,
-        errorElement: <Error />,
-      },
     ],
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+    errorElement: <Error />,
   },
 ]);
 
