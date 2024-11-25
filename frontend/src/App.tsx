@@ -6,7 +6,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Schedule } from './pages/Schedule';
 import { LoginPage } from './pages/auth/LoginPage.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from 'react-hot-toast';
+import ToastProvider from './components/toaster/ToastProvider.tsx';
 
 const router = createBrowserRouter([
   {
@@ -39,7 +39,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-      <Toaster />
+      <ToastProvider />
     </QueryClientProvider>
   );
 }
