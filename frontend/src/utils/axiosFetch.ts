@@ -1,8 +1,8 @@
 'use server';
 
 import { AxiosError } from 'axios';
-import axiosAuth from './axiosUtils.ts';
-import { ErrorResponse } from './types.ts';
+import axiosAuth from './axiosUtils';
+import { ErrorResponse } from './types';
 
 type AxiosFetchProps = {
   method?: 'get' | 'post' | 'put' | 'patch' | 'delete';
@@ -11,7 +11,7 @@ type AxiosFetchProps = {
   params?: Record<string, any>;
 };
 
-export const axiosFetch = async <T>({
+const axiosFetch = async <T>({
   method = 'get',
   url,
   data,
@@ -33,3 +33,5 @@ export const axiosFetch = async <T>({
     throw axiosError;
   }
 };
+
+export default axiosFetch;
