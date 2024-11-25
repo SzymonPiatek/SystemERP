@@ -4,6 +4,7 @@ import { HomePage } from './pages/HomePage';
 import { Error } from './pages/Error';
 import { Dashboard } from './pages/Dashboard';
 import { Schedule } from './pages/Schedule';
+import { LoginPage } from './pages/auth/LoginPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,11 @@ const router = createBrowserRouter([
       {
         path: '/schedule',
         element: <Schedule />,
+        errorElement: <Error />,
+      },
+      {
+        path: '/login',
+        element: <LoginPage />,
         errorElement: <Error />,
       },
     ],

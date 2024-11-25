@@ -49,6 +49,11 @@ export type Profile = {
   userId: number;
 };
 
+export type LoginDataProps = {
+  email: string;
+  password: string;
+};
+
 export interface ErrorResponse {
   message?: string;
   errors?: string[];
