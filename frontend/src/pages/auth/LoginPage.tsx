@@ -1,15 +1,16 @@
 import { FC, useState } from 'react';
 import ClientFormWrapper from '../../components/form/formWrapper/ClientFormWrapper.tsx';
 import { Box } from '@chakra-ui/react';
-import { login } from '../../actions/authActions.ts';
+import { useLoginUser } from '../../hooks/useLoginUser.tsx';
 
 export const LoginPage: FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
+  const { mutate, isPending } = useLoginUser();
+
   const handleLogin = async () => {
-    const loginResponse = await login({ email, password });
-    console.log(loginResponse);
+    mutate({ email, password });
   };
 
   return (
