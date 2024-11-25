@@ -4,6 +4,7 @@ import { HomePage } from './pages/HomePage';
 import { Error } from './pages/Error';
 import { Dashboard } from './pages/Dashboard';
 import { Schedule } from './pages/Schedule';
+import { testAxiosFetch } from './tests/axiosFetchTest';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  testAxiosFetch();
   return <RouterProvider router={router} />;
 }
 
