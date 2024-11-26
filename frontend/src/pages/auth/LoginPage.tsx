@@ -1,7 +1,8 @@
 import { FC, useState } from 'react';
 import ClientFormWrapper from '../../components/form/formWrapper/ClientFormWrapper.tsx';
-import { Box, Button, Heading, Input } from '@chakra-ui/react';
+import { Box, Button, Heading } from '@chakra-ui/react';
 import { useLoginUser } from '../../hooks/useLoginUser.tsx';
+import CustomInput from '../../components/input/CustomInput.tsx';
 
 export const LoginPage: FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -30,31 +31,21 @@ export const LoginPage: FC = () => {
         </Box>
         <ClientFormWrapper onSubmit={handleLogin}>
           <Box display="flex" flexDirection="column" gap="1rem">
-            <Input
+            <CustomInput
               type="email"
               name="email"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(value) => setEmail(value as string)}
               placeholder="Email"
-              color="black"
-              _focus={{
-                borderColor: 'black',
-                borderWidth: '2px',
-              }}
             />
-            <Input
+            <CustomInput
               type="password"
               name="password"
               required
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(value) => setPassword(value as string)}
               placeholder="Password"
-              color="black"
-              _focus={{
-                borderColor: 'black',
-                borderWidth: '2px',
-              }}
             />
             <Box width="100%" display="flex" justifyContent="center">
               <Button
