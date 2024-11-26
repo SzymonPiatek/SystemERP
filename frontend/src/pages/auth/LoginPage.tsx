@@ -49,7 +49,9 @@ export const LoginPage: FC = () => {
               placeholder="Password"
             />
             <Box width="100%" display="flex" justifyContent="center">
-              <CustomButton type="submit">Zaloguj się</CustomButton>
+              <CustomButton type="submit" variant="primary">
+                Zaloguj się
+              </CustomButton>
             </Box>
           </Box>
         </ClientFormWrapper>
