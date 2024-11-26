@@ -48,7 +48,7 @@ export const LoginPage: FC = () => {
               onChange={(value) => setPassword(value as string)}
               placeholder="Password"
             />
-            <Box width="100%" display="flex" justifyContent="center">
+            <Box width="100%" display="flex" justifyContent="center" marginTop="1rem">
               <CustomButton type="submit" variant="primary">
                 Zaloguj się
               </CustomButton>

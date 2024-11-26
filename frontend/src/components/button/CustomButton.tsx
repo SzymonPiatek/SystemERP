@@ -32,7 +32,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
           },
         };
 
-  return <Button {...props} {...styles} marginTop="1rem" paddingLeft="8" paddingRight="8" />;
+  return <Button {...props} {...styles} paddingLeft="8" paddingRight="8" />;
 };
 
 export default CustomButton;
