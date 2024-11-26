@@ -1,14 +1,15 @@
 import { FC, useState } from 'react';
 import ClientFormWrapper from '../../components/form/formWrapper/ClientFormWrapper.tsx';
-import { Box, Button, Heading } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 import { useLoginUser } from '../../hooks/useLoginUser.tsx';
 import CustomInput from '../../components/input/CustomInput.tsx';
+import CustomButton from '../../components/button/CustomButton.tsx';
 
 export const LoginPage: FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const { mutate, isPending } = useLoginUser();
+  const { mutate } = useLoginUser();
 
   const handleLogin = async () => {
     mutate({ email, password });
@@ -48,19 +49,7 @@ export const LoginPage: FC = () => {
               placeholder="Password"
             />
             <Box width="100%" display="flex" justifyContent="center">
-              <Button
-                marginTop="1rem"
-                type="submit"
-                color="white"
-                bg="green.600"
-                _hover={{
-                  bg: 'green.700',
-                }}
-                paddingLeft="8"
-                paddingRight="8"
-              >
-                Zaloguj się
-              </Button>
+              <CustomButton type="submit">Zaloguj się</CustomButton>
             </Box>
           </Box>
         </ClientFormWrapper>
