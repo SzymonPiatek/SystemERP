@@ -5,7 +5,7 @@ import { Logo } from '../logo/Logo.tsx';
 import { TopBarLayout } from '../topBarLayout/TopBarLayout.tsx';
 import { NavLink } from './NavLink.tsx';
 import { MdDashboard, MdCalendarMonth, MdPeopleAlt, MdNotes } from 'react-icons/md';
-import { TextWithIcon } from './NavLayout/TextWithIcon';
+import { TextWithIcon } from './TextWithIcon';
 
 export type NavLayoutProps = PropsWithChildren<{}>;
 

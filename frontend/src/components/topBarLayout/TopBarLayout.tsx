@@ -1,6 +1,6 @@
 import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
 import { FC } from 'react';
-import { Avatar } from '../components/ui/avatar';
+import { Avatar } from '../ui/avatar';
 
 import { MdOutlineAnnouncement, MdOutlineLogout, MdPerson } from 'react-icons/md';
 import { Link } from 'react-router-dom';
