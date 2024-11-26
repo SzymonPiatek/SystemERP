@@ -17,8 +17,8 @@ export const testAxiosFetch = async () => {
       method: 'post',
       url: API.auth.login,
       data: {
-        email: 'admin@test.pl',
-        password: 'Testowe123!',
+        email: '',
+        password: '',
       },
     });
     localStorage.setItem('accessToken', getData.accessToken);

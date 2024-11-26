@@ -1,9 +1,9 @@
 import { Box, Stack, Flex, VStack } from '@chakra-ui/react';
 import { FC, PropsWithChildren } from 'react';
 
-import { Logo } from '../components/Logo';
-import { TopBarLayout } from '../components/TopBarLayout';
-import { NavLink } from './NavLayout/NavLink';
+import { Logo } from '../logo/Logo.tsx';
+import { TopBarLayout } from '../topBarLayout/TopBarLayout.tsx';
+import { NavLink } from './NavLink.tsx';
 
 export type NavLayoutProps = PropsWithChildren<{}>;
 
