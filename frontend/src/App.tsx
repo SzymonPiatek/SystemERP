@@ -1,15 +1,16 @@
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-
-import {HomePage} from './pages/HomePage'
-import {Error} from './pages/Error'
-import { Dashboard } from "./pages/Dashboard";
-import { Schedule } from "./pages/Schedule";
-
+import { HomePage } from './pages/HomePage';
+import { Error } from './pages/Error';
+import { Dashboard } from './pages/Dashboard';
+import { Schedule } from './pages/Schedule';
+import { Notes } from './pages/Notes';
+import { Employees } from './pages/Employees';
+import { ProfilePage } from './pages/ProfilePage';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <HomePage />,
     errorElement: <Error />,
     children: [
@@ -19,8 +20,23 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path:"/schedule",
+        path: '/schedule',
         element: <Schedule />,
+        errorElement: <Error />,
+      },
+      {
+        path: '/employees',
+        element: <Employees />,
+        errorElement: <Error />,
+      },
+      {
+        path: '/notes',
+        element: <Notes />,
+        errorElement: <Error />,
+      },
+      {
+        path: '/profile',
+        element: <ProfilePage />,
         errorElement: <Error />,
       },
     ],

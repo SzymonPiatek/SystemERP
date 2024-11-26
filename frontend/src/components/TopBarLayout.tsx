@@ -1,18 +1,25 @@
-import {  Box, Flex, IconButton, Text } from '@chakra-ui/react';
+import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
 import { FC } from 'react';
-import { Avatar } from "../components/ui/avatar"
+import { Avatar } from '../components/ui/avatar';
 
-import { MdOutlineAnnouncement,MdSettings, MdPerson  } from "react-icons/md";
+import { MdOutlineAnnouncement, MdOutlineLogout, MdPerson } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
-
-
-type TopBarProps = {
-    
-  };
+type TopBarProps = {};
 
 export const TopBarLayout: FC<TopBarProps> = (props) => {
-return(
-    <Flex justify="space-between" p="4" align="center" bg="white" color="black" width="full">
+  return (
+    <Flex
+      justify="space-between"
+      p="4"
+      align="center"
+      bg="white"
+      color="black"
+      width="full"
+      hideBelow="lg"
+      position="sticky"
+      top="0"
+    >
       {/* NOTES */}
       <Flex align="center" gap="1">
         <Box bg="red.600" h="4" w="4" rounded="full"></Box>
@@ -25,22 +32,26 @@ return(
       {/* ICONS AND USER */}
       <Flex align="center" gap="6">
         <Box>
-          <IconButton size="xs" >
+          <IconButton size="xs">
+            <MdOutlineLogout />
+          </IconButton>
+          <IconButton size="xs">
             <MdOutlineAnnouncement />
           </IconButton>
-          <IconButton size="xs" >
-            <MdSettings />
-          </IconButton>
-          <IconButton size="xs" >
-            <MdPerson />
-          </IconButton>
+          <Link to="/profile">
+            <IconButton size="xs">
+              <MdPerson />
+            </IconButton>
+          </Link>
         </Box>
         <Flex direction="column">
-         <Text textStyle="sm">John Doe</Text>
-         <Text textStyle="xs" color="gray.500">Admin</Text>
+          <Text textStyle="sm">John Doe</Text>
+          <Text textStyle="xs" color="gray.500">
+            Admin
+          </Text>
         </Flex>
-        <Avatar size="xs" name="John Doe" src="https://bit.ly/sage-adebayo" cursor="pointer"/>
+        <Avatar size="xs" name="John Doe" src="https://bit.ly/sage-adebayo" cursor="pointer" />
       </Flex>
     </Flex>
-  )
-}
+  );
+};
