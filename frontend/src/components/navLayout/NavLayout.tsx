@@ -6,6 +6,7 @@ import { TopBarLayout } from '../topBarLayout/TopBarLayout.tsx';
 import { NavLink } from './NavLink.tsx';
 import { MdDashboard, MdCalendarMonth, MdPeopleAlt, MdNotes } from 'react-icons/md';
 import { TextWithIcon } from './TextWithIcon';
+import NavFooter from './NavFooter.tsx';
 
 export type NavLayoutProps = PropsWithChildren<{}>;
 
@@ -16,7 +17,6 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
     <Flex background="gray.100" p={0} minH="100vh">
       <Stack
         as="aside"
-        height="full"
         background="white"
         minWidth={[null, '15%', '13%']}
         maxWidth={[null, '15%', '13%']}
@@ -24,12 +24,14 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
         position="sticky"
         left="0"
         top="0"
+        justifyContent="space-between"
+        flex="1"
       >
-        <Box p="4">
-          <Logo />
-        </Box>
-        <Stack as="nav" height="full" overflowY="auto">
-          <Box px={4} pb={8}>
+        <Box>
+          <Box p="4">
+            <Logo />
+          </Box>
+          <Stack as="nav" px={4} pb={8}>
             <NavLink to="/">
               <TextWithIcon title="Dashboard" Icon={MdDashboard}></TextWithIcon>
             </NavLink>
@@ -42,8 +44,11 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
             <NavLink to="/notes">
               <TextWithIcon title="Notes" Icon={MdNotes}></TextWithIcon>
             </NavLink>
-          </Box>
-        </Stack>
+          </Stack>
+        </Box>
+        <Box p={4}>
+          <NavFooter />
+        </Box>
       </Stack>
       <VStack w="full">
         <TopBarLayout />

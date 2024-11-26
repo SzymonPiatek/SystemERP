@@ -19,6 +19,7 @@ export const TopBarLayout: FC<TopBarProps> = (props) => {
       hideBelow="lg"
       position="sticky"
       top="0"
+      zIndex="999"
     >
       {/* NOTES */}
       <Flex align="center" gap="1">
