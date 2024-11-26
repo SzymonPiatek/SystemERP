@@ -7,6 +7,9 @@ import { Schedule } from './pages/Schedule';
 import { Notes } from './pages/Notes';
 import { Employees } from './pages/Employees';
 import { ProfilePage } from './pages/ProfilePage';
+import { LoginPage } from './pages/auth/LoginPage.tsx';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ToastProvider from './components/toaster/ToastProvider.tsx';
 
 const router = createBrowserRouter([
   {
@@ -41,10 +44,22 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/login',
+    element: <LoginPage />,
+    errorElement: <Error />,
+  },
 ]);
 
+const queryClient = new QueryClient();
+
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ToastProvider />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
