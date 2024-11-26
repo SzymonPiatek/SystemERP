@@ -24,7 +24,7 @@ export const LoginPage: FC = () => {
     >
       <Box width="100%" maxWidth="400px" display="flex" flexDirection="column" gap="2rem">
         <Box width="100%" display="flex" justifyContent="center">
-          <Heading size="4xl" color="black">
+          <Heading size="3xl" color="black">
             Logowanie
           </Heading>
         </Box>
@@ -56,17 +56,21 @@ export const LoginPage: FC = () => {
                 borderWidth: '2px',
               }}
             />
-            <Button
-              marginTop="1rem"
-              type="submit"
-              color="white"
-              bg="green.600"
-              _hover={{
-                bg: 'green.700',
-              }}
-            >
-              Zaloguj się
-            </Button>
+            <Box width="100%" display="flex" justifyContent="center">
+              <Button
+                marginTop="1rem"
+                type="submit"
+                color="white"
+                bg="green.600"
+                _hover={{
+                  bg: 'green.700',
+                }}
+                paddingLeft="8"
+                paddingRight="8"
+              >
+                Zaloguj się
+              </Button>
+            </Box>
           </Box>
         </ClientFormWrapper>
       </Box>
