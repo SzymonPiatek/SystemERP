@@ -15,13 +15,14 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
 
   return (
     <Flex background="gray.100" p={0} minH="100vh">
+      {/* Left Menu */}
       <Stack
         as="aside"
         background="white"
         minWidth={[null, '15%', '13%']}
         maxWidth={[null, '15%', '13%']}
         minH="100vh"
-        position="sticky"
+        position="fixed"
         left="0"
         top="0"
         justifyContent="space-between"
@@ -50,7 +51,8 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
           <NavFooter />
         </Box>
       </Stack>
-      <VStack w="full">
+
+      <VStack w="full" ml={[null, '15%', '13%']}>
         <TopBarLayout FirstName="John" LastName="Doe" Role="Admin" />
         <Box flex={1} w="full">
           {children}

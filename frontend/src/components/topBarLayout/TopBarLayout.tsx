@@ -37,14 +37,14 @@ export const TopBarLayout: FC<TopBarProps> = (props) => {
       {/* ICONS AND USER */}
       <Flex align="center" gap="6">
         <Box>
-          <IconButton size="xs" _hover={{ color: 'green.600' }}>
+          <IconButton size="xs">
             <MdOutlineLogout />
           </IconButton>
-          <IconButton size="xs" _hover={{ color: 'green.600' }}>
+          <IconButton size="xs">
             <MdOutlineAnnouncement />
           </IconButton>
           <Link to="/profile">
-            <IconButton size="xs" _hover={{ color: 'green.600' }}>
+            <IconButton size="xs">
               <MdPerson />
             </IconButton>
           </Link>
