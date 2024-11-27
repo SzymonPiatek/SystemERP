@@ -2,6 +2,12 @@ export const calendarEvents = [
   {
     title: 'Morning Briefing',
     allDay: false,
+    start: new Date(2024, 10, 25, 8, 0),
+    end: new Date(2024, 10, 25, 16, 0),
+  },
+  {
+    title: 'Morning Briefing',
+    allDay: false,
     start: new Date(2024, 10, 26, 8, 0),
     end: new Date(2024, 10, 26, 9, 0),
   },
@@ -178,5 +184,13 @@ export const calendarEvents = [
     allDay: false,
     start: new Date(2024, 11, 1, 14, 15),
     end: new Date(2024, 11, 1, 17, 0),
+  },
+];
+
+export const User = [
+  {
+    firstName: 'John',
+    lastName: 'Doe',
+    email: 'admin@admin',
   },
 ];

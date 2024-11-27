@@ -51,7 +51,7 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
         </Box>
       </Stack>
       <VStack w="full">
-        <TopBarLayout />
+        <TopBarLayout FirstName="John" LastName="Doe" Role="Admin" />
         <Box flex={1} w="full">
           {children}
         </Box>

@@ -13,7 +13,7 @@ export const Logo: FC<LogoProps> = (props) => {
           textTransform="uppercase"
           lineHeight="1"
           color="gray.700"
-          textStyle={{ base: 'xs', lg: 'md' }}
+          textStyle={{ base: 'xs', lg: 'md', xl: 'lg' }}
         >
           System ERP
           <br />

@@ -1,6 +1,11 @@
-import { Box } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { FC } from 'react';
+import { BoxWithTitle } from '../components/ui/BoxWithTitle';
 
 export const Dashboard: FC<{}> = () => {
-  return <Box>Dashboard</Box>;
+  return (
+    <Flex>
+      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
+    </Flex>
+  );
 };

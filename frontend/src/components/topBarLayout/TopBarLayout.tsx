@@ -5,7 +5,11 @@ import { Avatar } from '../ui/avatar';
 import { MdOutlineAnnouncement, MdOutlineLogout, MdPerson } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-type TopBarProps = {};
+type TopBarProps = {
+  FirstName: string;
+  LastName: string;
+  Role: string;
+};
 
 export const TopBarLayout: FC<TopBarProps> = (props) => {
   return (
@@ -33,22 +37,24 @@ export const TopBarLayout: FC<TopBarProps> = (props) => {
       {/* ICONS AND USER */}
       <Flex align="center" gap="6">
         <Box>
-          <IconButton size="xs">
+          <IconButton size="xs" _hover={{ color: 'green.600' }}>
             <MdOutlineLogout />
           </IconButton>
-          <IconButton size="xs">
+          <IconButton size="xs" _hover={{ color: 'green.600' }}>
             <MdOutlineAnnouncement />
           </IconButton>
           <Link to="/profile">
-            <IconButton size="xs">
+            <IconButton size="xs" _hover={{ color: 'green.600' }}>
               <MdPerson />
             </IconButton>
           </Link>
         </Box>
         <Flex direction="column">
-          <Text textStyle="sm">John Doe</Text>
+          <Text textStyle="sm">
+            {props.FirstName} {props.LastName}
+          </Text>
           <Text textStyle="xs" color="gray.500">
-            Admin
+            {props.Role}
           </Text>
         </Flex>
         <Avatar size="xs" name="John Doe" src="https://bit.ly/sage-adebayo" cursor="pointer" />

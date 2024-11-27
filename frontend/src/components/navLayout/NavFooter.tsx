@@ -1,30 +1,28 @@
-import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
+import { Flex, IconButton, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { MdOutlineAnnouncement, MdOutlineLogout, MdPerson } from 'react-icons/md';
+import { MdOutlineLogout, MdPerson } from 'react-icons/md';
 
 const NavFooter = () => {
-  // Get the current year
   const currentYear = new Date().getFullYear();
 
   return (
     <Flex color="black" justify="center" direction="column" alignItems="center">
-      <Box mb={2}>
-        <IconButton size="xs" aria-label="Logout">
+      <Flex mb={2} direction={{ base: 'column', lg: 'row' }}>
+        <IconButton size="xs" aria-label="Logout" _hover={{ color: 'green.600' }}>
           <MdOutlineLogout />
-        </IconButton>
-        <IconButton size="xs" aria-label="Announcements">
-          <MdOutlineAnnouncement />
+          <Text display={{ base: 'none', lg: 'block' }}>Logout</Text>
         </IconButton>
         <Link to="/profile">
-          <IconButton size="xs" aria-label="Profile">
+          <IconButton size="xs" aria-label="Profile" _hover={{ color: 'green.600' }}>
             <MdPerson />
+            <Text display={{ base: 'none', lg: 'block' }}>Profile</Text>
           </IconButton>
         </Link>
-      </Box>
+      </Flex>
       <Text fontSize="xs" color="gray.600">
         &copy; {currentYear} Cebulki Programowania.
       </Text>
-      <Text fontSize="xs" color="gray.600">
+      <Text fontSize="xs" color="gray.600" hideBelow="lg">
         {' '}
         All rights reserved.
       </Text>
