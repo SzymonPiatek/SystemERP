@@ -14,6 +14,7 @@ type CustomSelectProps = {
   placeholder: string;
   label: string;
   variant?: 'subtle' | 'outline';
+  stackStyle?: React.CSSProperties;
 };
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
@@ -21,13 +22,14 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   placeholder,
   label,
   variant = 'subtle',
+  stackStyle = {},
 }) => {
   const formattedCollection = createListCollection({
     items: collection,
   });
 
   return (
-    <Stack>
+    <Stack style={stackStyle}>
       <SelectRoot collection={formattedCollection} variant={variant}>
         <SelectLabel>{label}</SelectLabel>
         <SelectTrigger>
