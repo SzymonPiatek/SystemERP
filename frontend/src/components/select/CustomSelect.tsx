@@ -15,6 +15,7 @@ type CustomSelectProps = {
   label: string;
   variant?: 'subtle' | 'outline';
   stackStyle?: React.CSSProperties;
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
@@ -23,10 +24,17 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   label,
   variant = 'subtle',
   stackStyle = {},
+  onChange = () => {},
 }) => {
   const formattedCollection = createListCollection({
     items: collection,
   });
+
+  const handleSelectChange = (itemValue: string) => {
+    onChange({
+      target: { value: itemValue } as HTMLSelectElement,
+    } as React.ChangeEvent<HTMLSelectElement>);
+  };
 
   return (
     <Stack style={stackStyle}>
@@ -37,7 +45,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         </SelectTrigger>
         <SelectContent>
           {formattedCollection.items.map((item) => (
-            <SelectItem item={item} key={item.value}>
+            <SelectItem item={item} key={item.value} onClick={() => handleSelectChange(item.value)}>
               {item.label}
             </SelectItem>
           ))}

@@ -1,9 +1,12 @@
 import { Box } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import ClientFormWrapper from '../../components/form/formWrapper/ClientFormWrapper.tsx';
 import CustomSelect from '../../components/select/CustomSelect.tsx';
+import CustomButton from '../../components/button/CustomButton.tsx';
 
 const PostmanPage: FC<{}> = () => {
+  const [selectedMethod, setSelectedMethod] = useState('GET');
+
   const methodCollection = [
     { label: 'GET', value: 'GET' },
     { label: 'POST', value: 'POST' },
@@ -13,18 +16,21 @@ const PostmanPage: FC<{}> = () => {
 
   const handleOnSubmit = async () => {
     console.log('Submit');
+    console.log(selectedMethod);
   };
 
   return (
     <Box bg="#262626" minH="100vh" padding="2rem">
       <ClientFormWrapper onSubmit={handleOnSubmit}>
-        <Box display="flex" gap="1rem">
+        <Box display="flex" gap="1rem" alignItems="end">
           <CustomSelect
             collection={methodCollection}
             placeholder="Method"
             label="Method"
             stackStyle={{ width: '8rem' }}
+            onChange={(e) => setSelectedMethod(e.target.value)}
           />
+          <CustomButton type="submit">Send</CustomButton>
         </Box>
       </ClientFormWrapper>
     </Box>
