@@ -5,10 +5,18 @@ import prisma from '../../../prismaClient';
 
 const eventSchema = Joi.object({
   title: Joi.string().required(),
-  description: Joi.string().required(),
-  date: Joi.date().required(),
-  location: Joi.string().required(),
-  organizer: Joi.string().required(),
+  startDate: Joi.date().required(),
+  endDate: Joi.date()
+    .required()
+    .custom((value, helpers) => {
+      const { startDate } = helpers.state.ancestors[0];
+      if (new Date(value) < new Date(startDate)) {
+        return helpers.error('any.invalid', { message: '"endDate" must be greater than or equal to "startDate"' });
+      }
+      return value;
+    }),
+  ownerId: Joi.number().required(),
+  isAllDay: Joi.boolean(),
 });
 
 export const postEventHandler: RequestHandler = async (req, res) => {
@@ -19,7 +27,16 @@ export const postEventHandler: RequestHandler = async (req, res) => {
       return;
     }
 
-    const { title, isAllDay, startDate, endDate, ownerId, owner } = value;
+    const { title, isAllDay, startDate, endDate, ownerId } = value;
+
+    const userExists = await prisma.user.findUnique({
+      where: { id: ownerId },
+    });
+
+    if (!userExists) {
+      res.status(404).json({ success: false, message: 'Owner not found' });
+      return;
+    }
 
     const newEvent = await prisma.event.create({
       data: {
@@ -28,7 +45,6 @@ export const postEventHandler: RequestHandler = async (req, res) => {
         startDate,
         endDate,
         ownerId,
-        owner,
       },
     });
 
