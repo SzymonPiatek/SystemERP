@@ -5,13 +5,7 @@ type CustomButtonProps = ButtonProps & {
   variant?: 'primary' | 'outline';
 };
 
-const CustomButton: React.FC<CustomButtonProps> = ({
-  variant = 'primary',
-  value,
-  onChange,
-  _focus,
-  ...props
-}) => {
+const CustomButton: React.FC<CustomButtonProps> = ({ variant = 'primary', ...props }) => {
   const styles =
     variant === 'primary'
       ? {
