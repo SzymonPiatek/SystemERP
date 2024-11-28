@@ -4,7 +4,7 @@ export type MethodVariantProps = {
 };
 
 export const methodVariants: MethodVariantProps[] = [
-  { name: 'GET', color: 'green' },
+  { name: 'GET', color: 'green.700' },
   { name: 'POST', color: 'orange' },
   { name: 'PATCH', color: '#6b03fc' },
   { name: 'DELETE', color: 'red' },

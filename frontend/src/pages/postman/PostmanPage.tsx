@@ -19,6 +19,7 @@ const PostmanPage: FC<{}> = () => {
   return (
     <Box bg="#262626" minH="100vh" padding="2rem" display="flex" gap="1rem">
       <ResponseList setSelectedMethod={setSelectedMethod} setSelectedUrl={setSelectedUrl} />
+
       <Box flex="1">
         <ClientFormWrapper onSubmit={handleOnSubmit}>
           <Box display="flex" gap="1rem" alignItems="end">
