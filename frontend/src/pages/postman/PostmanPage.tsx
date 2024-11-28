@@ -18,13 +18,14 @@ const methodCollection = methodVariants.flatMap((method) => ({
 }));
 
 type ResponseListProps = {
+  displayName: string;
   method: string;
   url: string;
 };
 
 const responseList: ResponseListProps[] = [
-  { method: 'GET', url: 'http://localhost/api/v1/users' },
-  { method: 'PATCH', url: 'http://localhost/api/v1/auth/login' },
+  { displayName: 'Get users', method: 'GET', url: 'http://localhost/api/v1/users' },
+  { displayName: 'Login', method: 'PATCH', url: 'http://localhost/api/v1/auth/login' },
 ];
 
 const PostmanPage: FC<{}> = () => {
@@ -53,9 +54,26 @@ const PostmanPage: FC<{}> = () => {
           <CustomButton
             key={response.url}
             onClick={() => handleApplyResponseSettings(response)}
-            style={{ background: getButtonColor(response.method) }}
+            variant="outline"
+            style={{
+              color: 'white',
+              padding: '0 0.5rem',
+            }}
           >
-            {response.url}
+            <Box display="grid" gridTemplateColumns="auto 1fr" flex="1">
+              <Box
+                bg={getButtonColor(response.method)}
+                padding="0 1rem"
+                textAlign="center"
+                width="5rem"
+                borderRadius="1rem"
+              >
+                {response.method}
+              </Box>
+              <Box textAlign="start" padding="0 1rem">
+                {response.displayName}
+              </Box>
+            </Box>
           </CustomButton>
         ))}
       </Box>
