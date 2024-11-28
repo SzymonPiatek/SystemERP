@@ -32,7 +32,12 @@ export const ResponseList: React.FC<ResponseListProps> = ({
       maxH="calc(100dvh - 4rem)"
       overflowY="auto"
     >
-      <Box textAlign="center" border="1px solid white" borderRadius="1rem">
+      <Box
+        textAlign="center"
+        border="1px solid white"
+        borderRadius="1rem"
+        background="rgba(0,0,0,0.3)"
+      >
         <Heading>Response list</Heading>
       </Box>
       <Box
