@@ -12,7 +12,7 @@ import React from 'react';
 type CustomSelectProps = {
   collection: { label: string; value: string }[];
   placeholder: string;
-  label: string;
+  label?: string;
   variant?: 'subtle' | 'outline';
   stackStyle?: React.CSSProperties;
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -39,7 +39,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   return (
     <Stack style={stackStyle}>
       <SelectRoot collection={formattedCollection} variant={variant}>
-        <SelectLabel>{label}</SelectLabel>
+        {label && <SelectLabel>{label}</SelectLabel>}
         <SelectTrigger>
           <SelectValueText placeholder={placeholder} />
         </SelectTrigger>

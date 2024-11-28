@@ -28,11 +28,14 @@ const PostmanPage: FC<{}> = () => {
           <CustomSelect
             collection={methodCollection}
             placeholder="Method"
-            label="Method"
             stackStyle={{ width: '8rem' }}
             onChange={(e) => setSelectedMethod(e.target.value)}
           />
-          <CustomInput value="" onChange={() => setSelectedUrl} style={{ borderColor: 'black' }} />
+          <CustomInput
+            value={selectedUrl}
+            onChange={(newValue) => setSelectedUrl(newValue as string)}
+            style={{ borderColor: 'black', background: 'white' }}
+          />
           <CustomButton type="submit">Send</CustomButton>
         </Box>
       </ClientFormWrapper>
