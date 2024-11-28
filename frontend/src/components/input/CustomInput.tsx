@@ -6,7 +6,7 @@ type CustomInputProps = InputProps & {
   onChange?: (value: string | number) => void;
 };
 
-const CustomInput: React.FC<CustomInputProps> = ({ value, onChange, _focus, ...props }) => {
+const CustomInput: React.FC<CustomInputProps> = ({ value, onChange, ...props }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
       onChange(event.target.value);
