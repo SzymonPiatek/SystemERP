@@ -137,7 +137,7 @@
       <td>
         <span>Zrobione</span><br>
         <span>Zrobione</span><br>
-        <span>W trakcie</span><br>
+        <span>Zrobione</span><br>
         <span>W trakcie</span>
       </td>
     </tr>
@@ -195,9 +195,9 @@
         <span>* Edycja wydarzenia</span>
       </td>
       <td>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
+        <span>Zrobione</span><br>
+        <span>Zrobione</span><br>
+        <span>Zrobione</span><br>
         <span>W trakcie</span>
       </td>
     </tr>
