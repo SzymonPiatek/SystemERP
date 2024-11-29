@@ -4,9 +4,10 @@ import React from 'react';
 type CustomInputProps = InputProps & {
   value?: string | number;
   onChange?: (value: string | number) => void;
+  style?: React.CSSProperties;
 };
 
-const CustomInput: React.FC<CustomInputProps> = ({ value, onChange, _focus, ...props }) => {
+const CustomInput: React.FC<CustomInputProps> = ({ value, onChange, style = {}, ...props }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
       onChange(event.target.value);
@@ -23,6 +24,7 @@ const CustomInput: React.FC<CustomInputProps> = ({ value, onChange, _focus, ...p
         borderColor: 'black',
         borderWidth: '2px',
       }}
+      style={style}
     />
   );
 };
