@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import ClientFormWrapper from '../form/formWrapper/ClientFormWrapper.tsx';
 import CustomSelect from '../select/CustomSelect.tsx';
-import { methodCollection, ResponseElementsProps, responseList } from '../../lib/postmanData.ts';
+import { environmentList, methodCollection, responseList } from '../../lib/postmanData.ts';
 import CustomInput from '../input/CustomInput.tsx';
 import CustomButton from '../button/CustomButton.tsx';
 import React, { useEffect, useState } from 'react';
@@ -27,6 +27,16 @@ const getActiveResponseData = async (response: string) => {
   return null;
 };
 
+const getActiveEnvironmentData = async (environment: string) => {
+  for (const group of environmentList) {
+    for (const envKey in group) {
+      if (envKey === environment) {
+        return group[envKey];
+      }
+    }
+  }
+  return null;
+};
 const PostmanMainSection: React.FC<PostmanMainSectionProps> = ({
   handleOnSubmit,
   activeEnvironment,
@@ -38,7 +48,7 @@ const PostmanMainSection: React.FC<PostmanMainSectionProps> = ({
   const [selectedUrl, setSelectedUrl] = useState<string>('');
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchResponseData = async () => {
       if (activeResponse) {
         const data = await getActiveResponseData(activeResponse);
         setSelectedUrl(data?.url ?? '');
@@ -46,8 +56,15 @@ const PostmanMainSection: React.FC<PostmanMainSectionProps> = ({
       }
     };
 
-    fetchData();
-  }, [activeResponse]);
+    const fetchEnvironmentData = async () => {
+      if (activeEnvironment) {
+        await getActiveEnvironmentData(activeEnvironment);
+      }
+    };
+
+    fetchResponseData();
+    fetchEnvironmentData();
+  }, [activeResponse, activeEnvironment]);
 
   return (
     <Box display="flex" flexDirection="column" flex="1" padding="1rem" bg="#333333" gap="1rem">
