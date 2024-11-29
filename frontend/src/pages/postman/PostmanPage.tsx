@@ -6,17 +6,22 @@ import EnvironmentList from '../../components/postman/EnvironmentList.tsx';
 import PostmanMainSection from '../../components/postman/PostmanMainSection.tsx';
 
 const PostmanPage: FC<{}> = () => {
-  // Environment
-  const [activeEnvironmentData, setActiveEnvironmentData] = useState<string>('');
-
-  const [selectedMethod, setSelectedMethod] = useState<string>('');
-  const [selectedUrl, setSelectedUrl] = useState<string>('');
+  // Layout
   const [activeSection, setActiveSection] = useState<string>('collections');
   const [activeResponseSection, setActiveResponseSection] = useState<string>('params');
 
+  // Environment
+  const [activeEnvironment, setActiveEnvironment] = useState<string>('');
+
+  // Collection
+  const [activeResponse, setActiveResponse] = useState<string>('');
+
+  // Response Form
+  const [selectedMethod, setSelectedMethod] = useState<string>('');
+  const [selectedUrl, setSelectedUrl] = useState<string>('');
+
   const handleOnSubmit = async () => {
-    console.log(selectedMethod);
-    console.log(selectedUrl);
+    console.log(activeResponse);
   };
 
   return (
@@ -24,13 +29,13 @@ const PostmanPage: FC<{}> = () => {
       <PostmanSidebar setActiveSection={setActiveSection} activeSection={activeSection} />
 
       {activeSection === 'collections' && (
-        <ResponseList setSelectedMethod={setSelectedMethod} setSelectedUrl={setSelectedUrl} />
+        <ResponseList setActiveResponse={setActiveResponse} activeResponse={activeResponse} />
       )}
 
       {activeSection === 'environments' && (
         <EnvironmentList
-          setActiveEnvironmentData={setActiveEnvironmentData}
-          activeEnvironmentData={activeEnvironmentData}
+          setActiveEnvironment={setActiveEnvironment}
+          activeEnvironment={activeEnvironment}
         />
       )}
 

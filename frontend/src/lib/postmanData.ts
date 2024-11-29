@@ -1,4 +1,5 @@
 import { API_URL } from '../utils/axiosUtils.ts';
+import API from '../utils/apiRoutes.ts';
 
 export type MethodVariantProps = {
   name: string;
@@ -6,7 +7,7 @@ export type MethodVariantProps = {
 };
 
 export const methodVariants: MethodVariantProps[] = [
-  { name: 'GET', color: 'green.700' },
+  { name: 'GET', color: 'green' },
   { name: 'POST', color: 'orange' },
   { name: 'PATCH', color: '#6b03fc' },
   { name: 'DELETE', color: 'red' },
@@ -23,29 +24,37 @@ export const methodCollection: MethodCollectionProps[] = methodVariants.flatMap(
 }));
 
 export type ResponseListDataProps = {
-  tag: string;
-  displayName: string;
-  method: string;
-  url: string;
+  [envName: string]: {
+    displayName: string;
+    method: string;
+    url: string;
+  }[];
 };
 
 export const fullApiUrl = `${API_URL}/api/v1`;
 
 export const responseList: ResponseListDataProps[] = [
   {
-    tag: 'Auth',
-    displayName: 'Register',
-    method: 'POST',
-    url: `${fullApiUrl}/auth/register`,
+    auth: [
+      {
+        displayName: 'Register',
+        method: 'POST',
+        url: API.auth.register,
+      },
+      {
+        displayName: 'Login',
+        method: 'POST',
+        url: API.auth.login,
+      },
+    ],
+    user: [
+      {
+        displayName: 'Get all users',
+        method: 'GET',
+        url: API.users.all,
+      },
+    ],
   },
-  { tag: 'Auth', displayName: 'Login', method: 'POST', url: `${fullApiUrl}/auth/login` },
-
-  { tag: 'User', displayName: 'Get users', method: 'GET', url: `${fullApiUrl}/users` },
-  { tag: 'User', displayName: 'Get user', method: 'GET', url: `${fullApiUrl}/users/:id` },
-
-  { tag: 'Company', displayName: 'Get companies', method: 'GET', url: `${fullApiUrl}/companies` },
-  { tag: 'Company', displayName: 'Get company', method: 'GET', url: `${fullApiUrl}/companies/:id` },
-  { tag: 'Company', displayName: 'Add company', method: 'POST', url: `${fullApiUrl}/companies` },
 ];
 
 export type EnvironmentListDataProps = {

@@ -1,10 +1,10 @@
 const API = {
   auth: {
-    login: 'auth/login/',
+    login: 'auth/login',
     register: 'auth/register',
   },
   users: {
-    all: '/users/',
+    all: '/users',
     user: (id: number) => `/users/${id}`,
   },
 };

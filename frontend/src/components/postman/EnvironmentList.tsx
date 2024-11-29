@@ -4,16 +4,16 @@ import { environmentList, EnvironmentListDataProps } from '../../lib/postmanData
 import CustomButton from '../button/CustomButton.tsx';
 
 type EnvironmentListProps = {
-  setActiveEnvironmentData: (value: string) => void;
-  activeEnvironmentData: string;
+  setActiveEnvironment: (value: string) => void;
+  activeEnvironment: string;
 };
 
 const EnvironmentList: React.FC<EnvironmentListProps> = ({
-  setActiveEnvironmentData,
-  activeEnvironmentData,
+  setActiveEnvironment,
+  activeEnvironment,
 }) => {
   const handleOnClick = async (value: string) => {
-    setActiveEnvironmentData(value);
+    setActiveEnvironment(value);
   };
 
   return (
@@ -23,7 +23,7 @@ const EnvironmentList: React.FC<EnvironmentListProps> = ({
 
         return (
           <CustomButton
-            variant={activeEnvironmentData === envName ? 'primary' : 'outline'}
+            variant={activeEnvironment === envName ? 'primary' : 'outline'}
             onClick={() => handleOnClick(envName)}
             key={index}
           >
