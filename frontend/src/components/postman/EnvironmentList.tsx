@@ -1,74 +1,36 @@
-import React, { useState } from 'react';
-import { Box, Flex, Text } from '@chakra-ui/react';
+import React from 'react';
+import { Box } from '@chakra-ui/react';
+import { environmentList, EnvironmentListDataProps } from '../../lib/postmanData.ts';
 import CustomButton from '../button/CustomButton.tsx';
-import CustomInput from '../input/CustomInput.tsx';
 
 type EnvironmentListProps = {
-  setEnvironmentData: (data: Record<string, string>) => void;
-  environmentData: Record<string, string>;
+  setActiveEnvironmentData: (value: string) => void;
+  activeEnvironmentData: string;
 };
 
 const EnvironmentList: React.FC<EnvironmentListProps> = ({
-  setEnvironmentData,
-  environmentData,
+  setActiveEnvironmentData,
+  activeEnvironmentData,
 }) => {
-  const [key, setKey] = useState<string>('');
-  const [value, setValue] = useState<string>('');
-  const [environment, setEnvironment] = useState<Record<string, string>>(environmentData);
-
-  const handleAddPair = () => {
-    if (key.trim() && value.trim()) {
-      const updatedEnvironment = { ...environment, [key]: value };
-      setEnvironment(updatedEnvironment);
-      setEnvironmentData(updatedEnvironment);
-      setKey('');
-      setValue('');
-    }
-  };
-
-  const handleDeletePair = (keyToDelete: string) => {
-    const { [keyToDelete]: _, ...updatedEnvironment } = environment;
-    setEnvironment(updatedEnvironment);
-    setEnvironmentData(updatedEnvironment);
+  const handleOnClick = async (value: string) => {
+    setActiveEnvironmentData(value);
   };
 
   return (
     <Box display="flex" flexDirection="column" gap="1rem" width="20rem" padding="1rem 0">
-      <Box display="flex" flexDirection="column" gap="1rem">
-        <CustomInput
-          placeholder="Key"
-          value={key}
-          onChange={(value) => setKey(value as string)}
-          style={{ borderColor: 'white', color: 'white' }}
-        />
-        <CustomInput
-          placeholder="Value"
-          value={value}
-          onChange={(value) => setValue(value as string)}
-          style={{ borderColor: 'white', color: 'white' }}
-        />
-        <CustomButton onClick={handleAddPair} variant="primary">
-          Add
-        </CustomButton>
-      </Box>
+      {environmentList.map((env: EnvironmentListDataProps, index) => {
+        const envName = Object.keys(env)[0];
 
-      <Box>
-        {Object.entries(environment).map(([envKey, envValue]) => (
-          <Flex
-            key={envKey}
-            justifyContent="space-between"
-            alignItems="center"
-            borderBottom="1px solid gray"
-            padding="0.5rem"
+        return (
+          <CustomButton
+            variant={activeEnvironmentData === envName ? 'primary' : 'outline'}
+            onClick={() => handleOnClick(envName)}
+            key={index}
           >
-            <Box display="flex" flexDirection="column">
-              <Text fontWeight="bold">{envKey}</Text>
-              <Text color="gray.400">{envValue}</Text>
-            </Box>
-            <CustomButton onClick={() => handleDeletePair(envKey)}>Delete</CustomButton>
-          </Flex>
-        ))}
-      </Box>
+            {envName}
+          </CustomButton>
+        );
+      })}
     </Box>
   );
 };

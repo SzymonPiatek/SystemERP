@@ -47,3 +47,22 @@ export const responseList: ResponseListDataProps[] = [
   { tag: 'Company', displayName: 'Get company', method: 'GET', url: `${fullApiUrl}/companies/:id` },
   { tag: 'Company', displayName: 'Add company', method: 'POST', url: `${fullApiUrl}/companies` },
 ];
+
+export type EnvironmentListDataProps = {
+  [envName: string]: Record<string, string>;
+};
+
+export const environmentList: EnvironmentListDataProps[] = [
+  {
+    admin: {
+      email: 'admin@example.com',
+      password: 'admin123',
+    },
+  },
+  {
+    user: {
+      email: 'user@example.com',
+      password: 'user123',
+    },
+  },
+];

@@ -6,11 +6,13 @@ import EnvironmentList from '../../components/postman/EnvironmentList.tsx';
 import PostmanMainSection from '../../components/postman/PostmanMainSection.tsx';
 
 const PostmanPage: FC<{}> = () => {
+  // Environment
+  const [activeEnvironmentData, setActiveEnvironmentData] = useState<string>('');
+
   const [selectedMethod, setSelectedMethod] = useState<string>('');
   const [selectedUrl, setSelectedUrl] = useState<string>('');
   const [activeSection, setActiveSection] = useState<string>('collections');
-  const [activeResponseSection, setActiveResponseSection] = useState<string>('queryParams');
-  const [environmentData, setEnvironmentData] = useState<Record<string, string>>({});
+  const [activeResponseSection, setActiveResponseSection] = useState<string>('params');
 
   const handleOnSubmit = async () => {
     console.log(selectedMethod);
@@ -27,8 +29,8 @@ const PostmanPage: FC<{}> = () => {
 
       {activeSection === 'environments' && (
         <EnvironmentList
-          setEnvironmentData={setEnvironmentData}
-          environmentData={environmentData}
+          setActiveEnvironmentData={setActiveEnvironmentData}
+          activeEnvironmentData={activeEnvironmentData}
         />
       )}
 

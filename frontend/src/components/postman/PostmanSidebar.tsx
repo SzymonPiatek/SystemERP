@@ -16,6 +16,7 @@ const PostmanSidebar: React.FC<PostmanSidebarProps> = ({ setActiveSection, activ
       height="100dvh"
       padding="1rem"
       bg="#111111"
+      width="12rem"
     >
       <CustomButton
         onClick={() => setActiveSection('collections')}

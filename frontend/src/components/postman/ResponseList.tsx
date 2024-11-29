@@ -63,7 +63,7 @@ const ResponseList: React.FC<ResponseListProps> = ({ setSelectedMethod, setSelec
             <AccordionItemContent display="flex" flexDirection="column" gap="0.5rem">
               {responses.map((response) => (
                 <Box
-                  key={response.url}
+                  key={response.displayName}
                   display="grid"
                   gridTemplateColumns="auto 1fr"
                   gap="1rem"

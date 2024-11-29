@@ -45,10 +45,10 @@ const PostmanMainSection: React.FC<PostmanMainSectionProps> = ({
       <Box display="flex" flexDirection="column" gap="1rem">
         <Box display="flex" justifyContent="start" gap="1rem">
           <CustomButton
-            variant={activeResponseSection === 'queryParams' ? 'primary' : 'outline'}
-            onClick={() => setActiveResponseSection('queryParams')}
+            variant={activeResponseSection === 'params' ? 'primary' : 'outline'}
+            onClick={() => setActiveResponseSection('params')}
           >
-            Query Params
+            Params
           </CustomButton>
           <CustomButton
             variant={activeResponseSection === 'headers' ? 'primary' : 'outline'}
@@ -57,10 +57,10 @@ const PostmanMainSection: React.FC<PostmanMainSectionProps> = ({
             Headers
           </CustomButton>
           <CustomButton
-            variant={activeResponseSection === 'json' ? 'primary' : 'outline'}
-            onClick={() => setActiveResponseSection('json')}
+            variant={activeResponseSection === 'body' ? 'primary' : 'outline'}
+            onClick={() => setActiveResponseSection('body')}
           >
-            JSON
+            Body
           </CustomButton>
         </Box>
       </Box>
