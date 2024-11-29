@@ -8,8 +8,6 @@ type CustomButtonProps = ButtonProps & {
 
 const CustomButton: React.FC<CustomButtonProps> = ({
   variant = 'primary',
-  value,
-  onChange,
   style,
   ...props
 }) => {

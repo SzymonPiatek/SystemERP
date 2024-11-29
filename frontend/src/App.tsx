@@ -9,35 +9,46 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ToastProvider from './components/toaster/ToastProvider.tsx';
 import PostmanPage from './pages/postman/PostmanPage.tsx';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <HomePage />,
+      errorElement: <Error />,
+      children: [
+        {
+          index: true,
+          element: <Dashboard />,
+          errorElement: <Error />,
+        },
+        {
+          path: '/schedule',
+          element: <Schedule />,
+          errorElement: <Error />,
+        },
+      ],
+    },
+    {
+      path: '/login',
+      element: <LoginPage />,
+      errorElement: <Error />,
+    },
+    {
+      path: '/postman',
+      element: <PostmanPage />,
+      errorElement: <Error />,
+    },
+  ],
   {
-    path: '/',
-    element: <HomePage />,
-    errorElement: <Error />,
-    children: [
-      {
-        index: true,
-        element: <Dashboard />,
-        errorElement: <Error />,
-      },
-      {
-        path: '/schedule',
-        element: <Schedule />,
-        errorElement: <Error />,
-      },
-    ],
+    future: {
+      v7_relativeSplatPath: true,
+      v7_fetcherPersist: true,
+      v7_normalizeFormMethod: true,
+      v7_partialHydration: true,
+      v7_skipActionErrorRevalidation: true,
+    },
   },
-  {
-    path: '/login',
-    element: <LoginPage />,
-    errorElement: <Error />,
-  },
-  {
-    path: '/postman',
-    element: <PostmanPage />,
-    errorElement: <Error />,
-  },
-]);
+);
 
 const queryClient = new QueryClient();
 
