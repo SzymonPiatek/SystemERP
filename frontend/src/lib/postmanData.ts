@@ -1,3 +1,5 @@
+import { API_URL } from '../utils/axiosUtils.ts';
+
 export type MethodVariantProps = {
   name: string;
   color: string;
@@ -21,12 +23,27 @@ export const methodCollection: MethodCollectionProps[] = methodVariants.flatMap(
 }));
 
 export type ResponseListDataProps = {
+  tag: string;
   displayName: string;
   method: string;
   url: string;
 };
 
+export const fullApiUrl = `${API_URL}/api/v1`;
+
 export const responseList: ResponseListDataProps[] = [
-  { displayName: 'Get users', method: 'GET', url: 'http://localhost/api/v1/users' },
-  { displayName: 'Login', method: 'PATCH', url: 'http://localhost/api/v1/auth/login' },
+  {
+    tag: 'Auth',
+    displayName: 'Register',
+    method: 'POST',
+    url: `${fullApiUrl}/auth/register`,
+  },
+  { tag: 'Auth', displayName: 'Login', method: 'POST', url: `${fullApiUrl}/auth/login` },
+
+  { tag: 'User', displayName: 'Get users', method: 'GET', url: `${fullApiUrl}/users` },
+  { tag: 'User', displayName: 'Get user', method: 'GET', url: `${fullApiUrl}/users/:id` },
+
+  { tag: 'Company', displayName: 'Get companies', method: 'GET', url: `${fullApiUrl}/companies` },
+  { tag: 'Company', displayName: 'Get company', method: 'GET', url: `${fullApiUrl}/companies/:id` },
+  { tag: 'Company', displayName: 'Add company', method: 'POST', url: `${fullApiUrl}/companies` },
 ];
