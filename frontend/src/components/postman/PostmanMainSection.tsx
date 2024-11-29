@@ -1,28 +1,54 @@
 import { Box } from '@chakra-ui/react';
 import ClientFormWrapper from '../form/formWrapper/ClientFormWrapper.tsx';
 import CustomSelect from '../select/CustomSelect.tsx';
-import { methodCollection } from '../../lib/postmanData.ts';
+import { methodCollection, ResponseElementsProps, responseList } from '../../lib/postmanData.ts';
 import CustomInput from '../input/CustomInput.tsx';
 import CustomButton from '../button/CustomButton.tsx';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 type PostmanMainSectionProps = {
   handleOnSubmit: () => Promise<void>;
-  setSelectedMethod: (section: string) => void;
-  selectedUrl: string;
-  setSelectedUrl: (section: string) => void;
+  activeEnvironment: string;
+  activeResponse: string;
   activeResponseSection: string;
   setActiveResponseSection: (section: string) => void;
 };
 
+const getActiveResponseData = async (response: string) => {
+  for (const group of responseList) {
+    for (const groupName in group) {
+      const responses = group[groupName];
+      const foundResponse = responses.find((res) => res.displayName === response);
+      if (foundResponse) {
+        return foundResponse;
+      }
+    }
+  }
+  return null;
+};
+
 const PostmanMainSection: React.FC<PostmanMainSectionProps> = ({
   handleOnSubmit,
-  setSelectedMethod,
-  selectedUrl,
-  setSelectedUrl,
+  activeEnvironment,
+  activeResponse,
   activeResponseSection,
   setActiveResponseSection,
 }) => {
+  const [selectedMethod, setSelectedMethod] = useState<string>('');
+  const [selectedUrl, setSelectedUrl] = useState<string>('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (activeResponse) {
+        const data = await getActiveResponseData(activeResponse);
+        setSelectedUrl(data?.url ?? '');
+        setSelectedMethod(data?.method ?? '');
+      }
+    };
+
+    fetchData();
+  }, [activeResponse]);
+
   return (
     <Box display="flex" flexDirection="column" flex="1" padding="1rem" bg="#333333" gap="1rem">
       <ClientFormWrapper onSubmit={handleOnSubmit}>

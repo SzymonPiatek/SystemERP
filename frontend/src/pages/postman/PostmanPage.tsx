@@ -16,10 +16,6 @@ const PostmanPage: FC<{}> = () => {
   // Collection
   const [activeResponse, setActiveResponse] = useState<string>('');
 
-  // Response Form
-  const [selectedMethod, setSelectedMethod] = useState<string>('');
-  const [selectedUrl, setSelectedUrl] = useState<string>('');
-
   const handleOnSubmit = async () => {
     console.log(activeResponse);
   };
@@ -41,11 +37,10 @@ const PostmanPage: FC<{}> = () => {
 
       <PostmanMainSection
         handleOnSubmit={handleOnSubmit}
-        setSelectedMethod={setSelectedMethod}
-        selectedUrl={selectedUrl}
-        setSelectedUrl={setSelectedUrl}
         activeResponseSection={activeResponseSection}
         setActiveResponseSection={setActiveResponseSection}
+        activeResponse={activeResponse}
+        activeEnvironment={activeEnvironment}
       />
     </Box>
   );

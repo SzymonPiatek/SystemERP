@@ -23,12 +23,14 @@ export const methodCollection: MethodCollectionProps[] = methodVariants.flatMap(
   value: method.name,
 }));
 
+export type ResponseElementsProps = {
+  displayName: string;
+  method: string;
+  url: string;
+};
+
 export type ResponseListDataProps = {
-  [envName: string]: {
-    displayName: string;
-    method: string;
-    url: string;
-  }[];
+  [envName: string]: ResponseElementsProps[];
 };
 
 export const fullApiUrl = `${API_URL}/api/v1`;
@@ -39,19 +41,19 @@ export const responseList: ResponseListDataProps[] = [
       {
         displayName: 'Register',
         method: 'POST',
-        url: API.auth.register,
+        url: `${fullApiUrl}${API.auth.register}`,
       },
       {
         displayName: 'Login',
         method: 'POST',
-        url: API.auth.login,
+        url: `${fullApiUrl}${API.auth.login}`,
       },
     ],
     user: [
       {
         displayName: 'Get all users',
         method: 'GET',
-        url: API.users.all,
+        url: `${fullApiUrl}${API.users.all}`,
       },
     ],
   },
