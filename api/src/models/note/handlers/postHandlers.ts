@@ -10,7 +10,7 @@ const notesSchema = Joi.object({
   ownerId: Joi.number().required(),
 });
 
-export const postNotesHandler: RequestHandler = async (req, res): Promise<void> => {
+export const postNotesHandler: RequestHandler = async (req, res) => {
   try {
     const { error, value } = notesSchema.validate(req.body);
     if (error) {
