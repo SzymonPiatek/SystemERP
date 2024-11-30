@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from 'react';
 import { User } from '../utils/types';
-import toast from 'react-hot-toast';
 
 type AuthContextProps = {
   user: User | null;
@@ -29,7 +28,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const isAuthenticated = !!user;
 
   const logout = () => {
-    toast.success('Successfully logged out!');
     localStorage.clear();
     setUser(null);
   };
