@@ -55,10 +55,11 @@ body {
 }
 
 .rbc-event {
+  border-radius: 1rem;
   border: none !important;
   color: black !important;
   padding: 10px !important;
-  margin: 10px !important;
+  margin: 0px !important;
   width: 99% !important;
 }
 
