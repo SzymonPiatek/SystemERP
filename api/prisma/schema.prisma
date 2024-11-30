@@ -8,22 +8,24 @@ datasource db {
 }
 
 model User {
-  id              Int           @id @default(autoincrement())
-  email           String        @unique
-  password        String
-  firstName       String
-  lastName        String
-  isActive        Boolean       @default(false)
-  company         Company?      @relation(fields: [companyId], references: [id])
-  companyId       Int?
-  profile         Profile?
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  isActive  Boolean  @default(false)
+  company   Company? @relation(fields: [companyId], references: [id])
+  companyId Int?
+  profile   Profile?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  events Event[]
 }
 
 model Company {
-  id              Int           @id @default(autoincrement())
-  name            String        @unique
+  id              Int     @id @default(autoincrement())
+  name            String  @unique
   country         String
   voivodeship     String?
   district        String?
@@ -36,52 +38,65 @@ model Company {
   nip             String
   regon           String
 
-  users           User[]
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  users     User[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Role {
-  id              Int           @id @default(autoincrement())
-  name            String        @unique
+  id   Int    @id @default(autoincrement())
+  name String @unique
 
-  permissionRole  PermissionRole[]
-  Profile         Profile[]
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  permissionRole PermissionRole[]
+  Profile        Profile[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 }
 
 model Permission {
-  id              Int           @id @default(autoincrement())
-  name            String        @unique
-  action          String
-  subject         String
+  id      Int    @id @default(autoincrement())
+  name    String @unique
+  action  String
+  subject String
 
-  permissionRole  PermissionRole[]
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  permissionRole PermissionRole[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 }
 
 model PermissionRole {
-  permission      Permission    @relation(fields: [permissionId], references: [id], onDelete: Cascade)
-  permissionId    Int
-  role            Role          @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  roleId          Int
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  permissionId Int
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  roleId       Int
 
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@id([permissionId, roleId])
 }
 
 model Profile {
-  id                 Int        @id @default(autoincrement())
-  profilePicPath     String?
-  roleId             Int
-  userId             Int        @unique
-  role               Role       @relation(fields: [roleId], references: [id])
-  user               User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             Int     @id @default(autoincrement())
+  profilePicPath String?
+  roleId         Int
+  userId         Int     @unique
+  role           Role    @relation(fields: [roleId], references: [id])
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  createdAt          DateTime   @default(now())
-  updatedAt          DateTime   @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id        Int      @id @default(autoincrement())
+  title     String
+  isAllDay  Boolean  @default(false)
+  startDate DateTime
+  endDate   DateTime
+  ownerId   Int
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

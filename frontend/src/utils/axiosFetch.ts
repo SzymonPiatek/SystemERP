@@ -1,5 +1,3 @@
-'use server';
-
 import { AxiosError } from 'axios';
 import axiosAuth from './axiosUtils';
 import { ErrorResponse } from './types';
