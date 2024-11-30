@@ -1,4 +1,4 @@
-import { createListCollection, Stack } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 import {
   SelectContent,
   SelectTrigger,
@@ -8,28 +8,27 @@ import {
   SelectValueText,
 } from '../ui/select.tsx';
 import React from 'react';
+import { methodVariantsCollections } from '../../lib/postmanData.ts';
 
-type CustomSelectProps = {
-  collection: { label: string; value: string }[];
+type PostmanSelectProps = {
   placeholder: string;
   label?: string;
+  defaultValue?: string[];
+  value?: string[];
   variant?: 'subtle' | 'outline';
   stackStyle?: React.CSSProperties;
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-const CustomSelect: React.FC<CustomSelectProps> = ({
-  collection,
+const PostmanSelect: React.FC<PostmanSelectProps> = ({
   placeholder,
   label,
+  defaultValue = ['GET'],
+  value = ['GET'],
   variant = 'subtle',
   stackStyle = {},
   onChange = () => {},
 }) => {
-  const formattedCollection = createListCollection({
-    items: collection,
-  });
-
   const handleSelectChange = (itemValue: string) => {
     onChange({
       target: { value: itemValue } as HTMLSelectElement,
@@ -38,15 +37,20 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 
   return (
     <Stack style={stackStyle}>
-      <SelectRoot collection={formattedCollection} variant={variant}>
+      <SelectRoot
+        collection={methodVariantsCollections}
+        variant={variant}
+        defaultValue={defaultValue}
+        value={value}
+      >
         {label && <SelectLabel>{label}</SelectLabel>}
         <SelectTrigger>
           <SelectValueText placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
-          {formattedCollection.items.map((item) => (
-            <SelectItem item={item} key={item.value} onClick={() => handleSelectChange(item.value)}>
-              {item.label}
+          {methodVariantsCollections.items.map((item) => (
+            <SelectItem item={item} key={item.name} onClick={() => handleSelectChange(item.name)}>
+              {item.name}
             </SelectItem>
           ))}
         </SelectContent>
@@ -55,4 +59,4 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   );
 };
 
-export default CustomSelect;
+export default PostmanSelect;

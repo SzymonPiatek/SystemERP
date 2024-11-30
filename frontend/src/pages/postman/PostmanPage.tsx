@@ -16,10 +16,6 @@ const PostmanPage: FC<{}> = () => {
   // Collection
   const [activeResponse, setActiveResponse] = useState<string>('');
 
-  const handleOnSubmit = async () => {
-    console.log(activeResponse);
-  };
-
   return (
     <Box bg="#222222" minH="100vh" display="flex" gap="1rem">
       <PostmanSidebar setActiveSection={setActiveSection} activeSection={activeSection} />
@@ -36,7 +32,6 @@ const PostmanPage: FC<{}> = () => {
       )}
 
       <PostmanMainSection
-        handleOnSubmit={handleOnSubmit}
         activeResponseSection={activeResponseSection}
         setActiveResponseSection={setActiveResponseSection}
         activeResponse={activeResponse}

@@ -1,5 +1,6 @@
 import { API_URL } from '../utils/axiosUtils.ts';
 import API from '../utils/apiRoutes.ts';
+import { createListCollection } from '@chakra-ui/react';
 
 export type MethodVariantProps = {
   name: string;
@@ -13,15 +14,11 @@ export const methodVariants: MethodVariantProps[] = [
   { name: 'DELETE', color: 'red' },
 ];
 
-export type MethodCollectionProps = {
-  label: string;
-  value: string;
-};
-
-export const methodCollection: MethodCollectionProps[] = methodVariants.flatMap((method) => ({
-  label: method.name,
-  value: method.name,
-}));
+export const methodVariantsCollections = createListCollection({
+  items: methodVariants,
+  itemToString: (item) => item.name,
+  itemToValue: (item) => item.name,
+});
 
 export type ResponseElementsProps = {
   displayName: string;

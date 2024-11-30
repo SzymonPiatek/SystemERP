@@ -1,13 +1,12 @@
 import { Box } from '@chakra-ui/react';
 import ClientFormWrapper from '../form/formWrapper/ClientFormWrapper.tsx';
-import CustomSelect from '../select/CustomSelect.tsx';
-import { environmentList, methodCollection, responseList } from '../../lib/postmanData.ts';
+import PostmanSelect from './PostmanSelect.tsx';
+import { environmentList, responseList } from '../../lib/postmanData.ts';
 import CustomInput from '../input/CustomInput.tsx';
 import CustomButton from '../button/CustomButton.tsx';
 import React, { useEffect, useState } from 'react';
 
 type PostmanMainSectionProps = {
-  handleOnSubmit: () => Promise<void>;
   activeEnvironment: string;
   activeResponse: string;
   activeResponseSection: string;
@@ -38,13 +37,12 @@ const getActiveEnvironmentData = async (environment: string) => {
   return null;
 };
 const PostmanMainSection: React.FC<PostmanMainSectionProps> = ({
-  handleOnSubmit,
   activeEnvironment,
   activeResponse,
   activeResponseSection,
   setActiveResponseSection,
 }) => {
-  const [selectedMethod, setSelectedMethod] = useState<string>('');
+  const [selectedMethod, setSelectedMethod] = useState<string>('GET');
   const [selectedUrl, setSelectedUrl] = useState<string>('');
 
   useEffect(() => {
@@ -66,13 +64,21 @@ const PostmanMainSection: React.FC<PostmanMainSectionProps> = ({
     fetchEnvironmentData();
   }, [activeResponse, activeEnvironment]);
 
+  const handleOnSubmit = async () => {
+    console.log(selectedMethod);
+    console.log(selectedUrl);
+    console.log(activeResponse);
+    console.log(activeEnvironment);
+  };
+
   return (
     <Box display="flex" flexDirection="column" flex="1" padding="1rem" bg="#333333" gap="1rem">
       <ClientFormWrapper onSubmit={handleOnSubmit}>
         <Box display="flex" gap="1rem">
-          <CustomSelect
-            collection={methodCollection}
+          <PostmanSelect
             placeholder="Method"
+            defaultValue={[selectedMethod]}
+            value={[selectedMethod]}
             stackStyle={{ width: '8rem' }}
             onChange={(e) => setSelectedMethod(e.target.value)}
           />
