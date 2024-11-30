@@ -4,6 +4,8 @@ import { createPermissions } from '../src/fixtures/permissions/createPermissions
 import { createPermissionRoles } from '../src/fixtures/permissionRoles/createPermissionRoles';
 import { createAdminUserData } from '../src/fixtures/users/createAdminUserData';
 import { createCompanies } from '../src/fixtures/companies/createCompanies';
+import { create } from 'node:domain';
+import { createEvents } from '../src/fixtures/events/createEvents';
 
 async function main() {
   // Creating roles, permissions, permissionRoles
@@ -17,6 +19,9 @@ async function main() {
     update: {},
     create: adminUserData,
   });
+
+  // Creating events
+  await Promise.all([...createEvents]);
 
   // Creating companies
   await Promise.all([...createCompanies]);
