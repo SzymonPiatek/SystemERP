@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
-import { LoginDataProps, LoginResponse } from '../utils/types.ts';
-import { login } from '../actions/authActions.ts';
+import { LoginDataProps, LoginResponse } from '../utils/types';
+import { login } from '../actions/authActions';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { AuthContext } from '../contexts/AuthContext.tsx';
+import { AuthContext } from '../contexts/AuthContext';
 import { useContext } from 'react';
 
 export const useLoginUser = () => {

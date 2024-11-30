@@ -1,6 +1,6 @@
 import axiosFetch from '../utils/axiosFetch';
 import API from '../utils/apiRoutes';
-import { User } from '../utils/types.ts';
+import { User } from '../utils/types';
 
 type LoginResponse = {
   success: boolean;

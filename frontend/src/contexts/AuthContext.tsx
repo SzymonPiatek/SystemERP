@@ -1,9 +1,11 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from 'react';
 import { User } from '../utils/types';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 type AuthContextProps = {
   user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  setUser: Dispatch<SetStateAction<User | null>>;
   isAuthenticated: boolean;
   logout: () => void;
 };
@@ -17,6 +19,7 @@ export const AuthContext = createContext<AuthContextProps>({
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -30,6 +33,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     localStorage.clear();
     setUser(null);
+    toast.success('Successfully logged out!');
+    navigate('/login');
   };
 
   return (

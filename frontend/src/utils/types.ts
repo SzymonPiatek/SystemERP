@@ -50,10 +50,11 @@ export type Profile = {
 };
 
 export type Event = {
+  id: number;
   title: string;
   start: Date;
   end: Date;
-  [key: string]: any;
+  ownerId: number;
 };
 
 export type LoginDataProps = {
