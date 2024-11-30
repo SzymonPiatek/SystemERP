@@ -13,7 +13,7 @@ import { LoginPage } from './pages/auth/LoginPage';
 import PostmanPage from './pages/postman/PostmanPage';
 import Orders from './pages/Orders';
 import { AuthProvider } from './contexts/AuthContext';
-import PrivateRoute from './routes/PrivateRoute.tsx';
+import PrivateRoute from './routes/PrivateRoute';
 
 const router = createBrowserRouter(
   [
