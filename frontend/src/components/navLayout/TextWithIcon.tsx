@@ -7,7 +7,7 @@ export const TextWithIcon: FC<TextWithIconProps> = (props) => {
   const { title, Icon } = props;
 
   return (
-    <Flex gap="2">
+    <Flex gap="2" alignItems="center">
       {Icon && <Icon />} <Text hideBelow="lg">{title}</Text>
     </Flex>
   );
