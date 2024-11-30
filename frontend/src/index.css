@@ -55,14 +55,17 @@ body {
 }
 
 .rbc-event {
+  border-radius: 1rem;
   border: none !important;
   color: black !important;
   padding: 10px !important;
-  margin: 10px !important;
+  margin: 0px !important;
   width: 99% !important;
 }
-
-.rbc-event:nth-child(1) {
+.rbc-event {
+  background-color: #22c55e;
+}
+/* .rbc-event:nth-child(1) {
   background-color: #e2f8ff !important;
 }
 .rbc-event:nth-child(2) {
@@ -84,8 +87,8 @@ body {
   background-color: #f2f1ff !important;
 }
 .rbc-event:nth-child(8) {
-  background-color: #fdf2fb !important;
-}
+  background-color: #fdf2fb !important; */
+/*  */
 
 .rbc-event-label {
   color: gray !important;

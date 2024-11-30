@@ -49,9 +49,24 @@ export type Profile = {
   userId: number;
 };
 
+export type Event = {
+  title: string;
+  start: Date;
+  end: Date;
+  [key: string]: any;
+};
+
 export type LoginDataProps = {
   email: string;
   password: string;
+};
+
+export type LoginResponse = {
+  success: boolean;
+  message: string;
+  accessToken: string;
+  refreshToken: string;
+  user: User;
 };
 
 export interface ErrorResponse {

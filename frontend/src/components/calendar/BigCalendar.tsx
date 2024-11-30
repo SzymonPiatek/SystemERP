@@ -1,13 +1,16 @@
+import { useState, FC } from 'react';
 import { Calendar, momentLocalizer, View, Views } from 'react-big-calendar';
 import moment from 'moment';
-import { calendarEvents } from '../../lib/data.ts';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { useState } from 'react';
 import { Box } from '@chakra-ui/react';
 
 const localizer = momentLocalizer(moment);
 
-const BigCalendar = () => {
+interface BigCalendarProps {
+  events: any[];
+}
+
+const BigCalendar: FC<BigCalendarProps> = ({ events }) => {
   const [view, setView] = useState<View>(Views.WORK_WEEK);
 
   const handleOnChangeView = (selectedView: View) => {
@@ -18,7 +21,7 @@ const BigCalendar = () => {
     <Box>
       <Calendar
         localizer={localizer}
-        events={calendarEvents}
+        events={events}
         startAccessor="start"
         endAccessor="end"
         views={['work_week', 'week', 'day']}
