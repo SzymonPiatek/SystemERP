@@ -8,7 +8,7 @@ import { Box } from '@chakra-ui/react';
 const localizer = momentLocalizer(moment);
 
 const BigCalendar = () => {
-  const [view, setView] = useState<View>(Views.WEEK);
+  const [view, setView] = useState<View>(Views.WORK_WEEK);
 
   const handleOnChangeView = (selectedView: View) => {
     setView(selectedView);
@@ -21,7 +21,7 @@ const BigCalendar = () => {
         events={calendarEvents}
         startAccessor="start"
         endAccessor="end"
-        views={['week', 'day']}
+        views={['work_week', 'week', 'day']}
         view={view}
         style={{ height: '98%' }}
         onView={handleOnChangeView}
