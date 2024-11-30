@@ -27,7 +27,7 @@ export const LoginPage: FC = () => {
       <Box width="100%" maxWidth="400px" display="flex" flexDirection="column" gap="2rem">
         <Box width="100%" display="flex" justifyContent="center">
           <Heading size="3xl" color="black">
-            Logowanie
+            Login
           </Heading>
         </Box>
         <ClientFormWrapper onSubmit={handleLogin}>
@@ -50,7 +50,7 @@ export const LoginPage: FC = () => {
             />
             <Box width="100%" display="flex" justifyContent="center" marginTop="1rem">
               <CustomButton type="submit" variant="primary">
-                Zaloguj się
+                Sign in
               </CustomButton>
             </Box>
           </Box>

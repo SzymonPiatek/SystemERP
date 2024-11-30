@@ -15,14 +15,14 @@ export const useLoginUser = () => {
     onSuccess: async (data: LoginResponse) => {
       if (data.accessToken) {
         localStorage.setItem('accessToken', data.accessToken);
-        toast.success('Pomyślnie zalogowano!');
+        toast.success('Successfully logged in!');
         navigate('/');
       } else {
-        toast.error('Brak tokenu w odpowiedzi.');
+        toast.error('Error');
       }
     },
     onError: (error: any) => {
-      toast.error('Błąd podczas logowania');
+      toast.error('Error');
       toast.error(error.message);
     },
   });
