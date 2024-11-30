@@ -100,3 +100,14 @@ model Event {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Notes {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String
+  isActive    Boolean @default(false)
+  ownerId     Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
