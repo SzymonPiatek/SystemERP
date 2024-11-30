@@ -56,6 +56,23 @@ export const responseList: ResponseListDataProps[] = [
         method: 'GET',
         url: `${fullApiUrl}${API.users.all}`,
       },
+      {
+        displayName: 'Get user by id',
+        method: 'GET',
+        url: `${fullApiUrl}${API.users.all}/1`,
+      },
+    ],
+    company: [
+      {
+        displayName: 'Get all companies',
+        method: 'GET',
+        url: `${fullApiUrl}${API.companies.all}`,
+      },
+      {
+        displayName: 'Get company by id',
+        method: 'GET',
+        url: `${fullApiUrl}${API.companies.all}/1`,
+      },
     ],
   },
 ];
