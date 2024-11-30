@@ -1,9 +1,10 @@
 import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { Avatar } from '../ui/avatar';
 
 import { MdOutlineAnnouncement, MdOutlineLogout, MdPerson } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 
 type TopBarProps = {
   FirstName: string;
@@ -12,6 +13,8 @@ type TopBarProps = {
 };
 
 export const TopBarLayout: FC<TopBarProps> = (props) => {
+  const { logout } = useContext(AuthContext);
+
   return (
     <Flex
       justify="space-between"
@@ -37,7 +40,7 @@ export const TopBarLayout: FC<TopBarProps> = (props) => {
       {/* ICONS AND USER */}
       <Flex align="center" gap="6">
         <Box>
-          <IconButton size="xs">
+          <IconButton size="xs" onClick={logout}>
             <MdOutlineLogout />
           </IconButton>
           <IconButton size="xs">

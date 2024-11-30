@@ -15,7 +15,16 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
 
 export const getUserByIdHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
-    const user = await prisma.user.findUnique({ where: { id: Number(req.params.id) } });
+    const user = await prisma.user.findUnique({
+      where: { id: Number(req.params.id) },
+      include: {
+        profile: {
+          include: {
+            role: true,
+          },
+        },
+      },
+    });
 
     if (user) {
       res.status(200).json({ success: true, message: 'User found', user });

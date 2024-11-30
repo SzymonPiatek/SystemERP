@@ -5,6 +5,7 @@ export type User = {
   lastName: string;
   isActive: boolean;
   companyId: number;
+  profile?: Profile;
 };
 
 export type Company = {
@@ -47,13 +48,15 @@ export type Profile = {
   profilePicPath?: string;
   roleId: number;
   userId: number;
+  role?: Role;
 };
 
 export type Event = {
+  id: number;
   title: string;
   start: Date;
   end: Date;
-  [key: string]: any;
+  ownerId: number;
 };
 
 export type LoginDataProps = {
