@@ -6,9 +6,9 @@ import {
   SelectLabel,
   SelectItem,
   SelectValueText,
-} from '../ui/select.tsx';
+} from '../../ui/select.tsx';
 import React from 'react';
-import { methodVariantsCollections } from '../../lib/postmanData.ts';
+import { methodVariantsCollections } from '../../../lib/postmanData.ts';
 
 type PostmanSelectProps = {
   placeholder: string;

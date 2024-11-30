@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, Text } from '@chakra-ui/react';
-import { fullApiUrl, methodVariants, responseList } from '../../lib/postmanData.ts';
+import { fullApiUrl, methodVariants, responseList } from '../../../lib/postmanData.ts';
 import {
   AccordionItem,
   AccordionItemContent,
   AccordionItemTrigger,
   AccordionRoot,
-} from '../ui/accordion.tsx';
+} from '../../ui/accordion.tsx';
 
 type ResponseListProps = {
   setActiveResponse: (value: string) => void;

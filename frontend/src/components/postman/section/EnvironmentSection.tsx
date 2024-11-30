@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
-import CustomButton from '../button/CustomButton.tsx';
-import CustomInput from '../input/CustomInput.tsx';
+import CustomButton from '../../button/CustomButton.tsx';
+import CustomInput from '../../input/CustomInput.tsx';
 
 type EnvironmentSectionProps = {
   setEnvironmentData: (data: Record<string, string>) => void;

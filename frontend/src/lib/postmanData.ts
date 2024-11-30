@@ -2,9 +2,25 @@ import { API_URL } from '../utils/axiosUtils.ts';
 import API from '../utils/apiRoutes.ts';
 import { createListCollection } from '@chakra-ui/react';
 
+export const fullApiUrl = `${API_URL}/api/v1`;
+
 export type MethodVariantProps = {
   name: string;
   color: string;
+};
+
+export type ResponseElementsProps = {
+  displayName: string;
+  method: string;
+  url: string;
+};
+
+export type ResponseListDataProps = {
+  [envName: string]: ResponseElementsProps[];
+};
+
+export type EnvironmentListDataProps = {
+  [envName: string]: Record<string, string>;
 };
 
 export const methodVariants: MethodVariantProps[] = [
@@ -19,18 +35,6 @@ export const methodVariantsCollections = createListCollection({
   itemToString: (item) => item.name,
   itemToValue: (item) => item.name,
 });
-
-export type ResponseElementsProps = {
-  displayName: string;
-  method: string;
-  url: string;
-};
-
-export type ResponseListDataProps = {
-  [envName: string]: ResponseElementsProps[];
-};
-
-export const fullApiUrl = `${API_URL}/api/v1`;
 
 export const responseList: ResponseListDataProps[] = [
   {
@@ -55,10 +59,6 @@ export const responseList: ResponseListDataProps[] = [
     ],
   },
 ];
-
-export type EnvironmentListDataProps = {
-  [envName: string]: Record<string, string>;
-};
 
 export const environmentList: EnvironmentListDataProps[] = [
   {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@chakra-ui/react';
-import { environmentList, EnvironmentListDataProps } from '../../lib/postmanData.ts';
-import CustomButton from '../button/CustomButton.tsx';
+import { environmentList, EnvironmentListDataProps } from '../../../lib/postmanData.ts';
+import CustomButton from '../../button/CustomButton.tsx';
 
 type EnvironmentListProps = {
   setActiveEnvironment: (value: string) => void;

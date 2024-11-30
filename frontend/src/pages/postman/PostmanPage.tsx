@@ -1,9 +1,9 @@
 import { Box } from '@chakra-ui/react';
 import { FC, useState } from 'react';
-import ResponseList from '../../components/postman/ResponseList.tsx';
-import PostmanSidebar from '../../components/postman/PostmanSidebar.tsx';
-import EnvironmentList from '../../components/postman/EnvironmentList.tsx';
-import PostmanMainSection from '../../components/postman/PostmanMainSection.tsx';
+import ResponseList from '../../components/postman/list/ResponseList.tsx';
+import PostmanSidebar from '../../components/postman/sidebar/PostmanSidebar.tsx';
+import EnvironmentList from '../../components/postman/list/EnvironmentList.tsx';
+import PostmanMainSection from '../../components/postman/section/PostmanMainSection.tsx';
 
 const PostmanPage: FC<{}> = () => {
   // Layout

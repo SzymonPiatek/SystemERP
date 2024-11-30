@@ -1,9 +1,9 @@
 import { Box } from '@chakra-ui/react';
-import ClientFormWrapper from '../form/formWrapper/ClientFormWrapper.tsx';
-import PostmanSelect from './PostmanSelect.tsx';
-import { environmentList, responseList } from '../../lib/postmanData.ts';
-import CustomInput from '../input/CustomInput.tsx';
-import CustomButton from '../button/CustomButton.tsx';
+import ClientFormWrapper from '../../form/formWrapper/ClientFormWrapper.tsx';
+import PostmanSelect from '../select/PostmanSelect.tsx';
+import { environmentList, responseList } from '../../../lib/postmanData.ts';
+import CustomInput from '../../input/CustomInput.tsx';
+import CustomButton from '../../button/CustomButton.tsx';
 import React, { useEffect, useState } from 'react';
 
 type PostmanMainSectionProps = {

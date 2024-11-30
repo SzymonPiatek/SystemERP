@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomButton from '../button/CustomButton.tsx';
+import CustomButton from '../../button/CustomButton.tsx';
 import { Box } from '@chakra-ui/react';
 
 type PostmanSidebarProps = {
