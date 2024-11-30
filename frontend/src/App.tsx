@@ -12,54 +12,60 @@ import { ProfilePage } from './pages/ProfilePage';
 import { LoginPage } from './pages/auth/LoginPage.tsx';
 import PostmanPage from './pages/postman/PostmanPage.tsx';
 import Orders from './pages/Orders.tsx';
+import { AuthProvider } from './contexts/AuthContext.tsx';
 
 const router = createBrowserRouter(
   [
     {
-      path: '/',
-      element: <HomePage />,
-      errorElement: <Error />,
+      element: '',
       children: [
         {
-          index: true,
-          element: <Dashboard />,
+          path: '/',
+          element: <HomePage />,
           errorElement: <Error />,
-        },
-        {
-          path: '/schedule',
-          element: <Schedule />,
-          errorElement: <Error />,
-        },
-        {
-          path: '/employees',
-          element: <Employees />,
-          errorElement: <Error />,
-        },
-        {
-          path: '/notes',
-          element: <Notes />,
-          errorElement: <Error />,
-        },
-        {
-          path: '/profile',
-          element: <ProfilePage />,
-          errorElement: <Error />,
-        },
-        {
-          path: '/orders',
-          element: <Orders />,
-          errorElement: <Error />,
+          children: [
+            {
+              index: true,
+              element: <Dashboard />,
+              errorElement: <Error />,
+            },
+            {
+              path: '/schedule',
+              element: <Schedule />,
+              errorElement: <Error />,
+            },
+            {
+              path: '/employees',
+              element: <Employees />,
+              errorElement: <Error />,
+            },
+            {
+              path: '/notes',
+              element: <Notes />,
+              errorElement: <Error />,
+            },
+            {
+              path: '/profile',
+              element: <ProfilePage />,
+              errorElement: <Error />,
+            },
+            {
+              path: '/orders',
+              element: <Orders />,
+              errorElement: <Error />,
+            },
+            {
+              path: '/postman',
+              element: <PostmanPage />,
+              errorElement: <Error />,
+            },
+          ],
         },
       ],
     },
     {
       path: '/login',
       element: <LoginPage />,
-      errorElement: <Error />,
-    },
-    {
-      path: '/postman',
-      element: <PostmanPage />,
       errorElement: <Error />,
     },
   ],
@@ -78,10 +84,12 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <ToastProvider />
-    </QueryClientProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <ToastProvider />
+      </QueryClientProvider>
+    </AuthProvider>
   );
 }
 
