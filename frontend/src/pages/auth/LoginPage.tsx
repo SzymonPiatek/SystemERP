@@ -6,8 +6,8 @@ import CustomInput from '../../components/input/CustomInput.tsx';
 import CustomButton from '../../components/button/CustomButton.tsx';
 
 export const LoginPage: FC = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>('admin@test.pl');
+  const [password, setPassword] = useState<string>('Testowe123!');
 
   const { mutate } = useLoginUser();
 

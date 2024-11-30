@@ -8,10 +8,13 @@ const localizer = momentLocalizer(moment);
 
 interface BigCalendarProps {
   events: any[];
+  set: string;
+  classes?: string;
 }
 
-const BigCalendar: FC<BigCalendarProps> = ({ events }) => {
-  const [view, setView] = useState<View>(Views.WORK_WEEK);
+const BigCalendar: FC<BigCalendarProps> = ({ events, set, classes }) => {
+  const initialView = Views[set as keyof typeof Views] || Views.WORK_WEEK;
+  const [view, setView] = useState<View>(initialView);
 
   const handleOnChangeView = (selectedView: View) => {
     setView(selectedView);
@@ -30,6 +33,7 @@ const BigCalendar: FC<BigCalendarProps> = ({ events }) => {
         onView={handleOnChangeView}
         min={new Date(2025, 1, 0, 7, 0, 0)}
         max={new Date(2025, 1, 0, 20, 0, 0)}
+        className={classes}
       />
     </Box>
   );

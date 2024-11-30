@@ -60,7 +60,6 @@ body {
   color: black !important;
   padding: 10px !important;
   margin: 0px !important;
-  width: 99% !important;
 }
 
 .rbc-event:nth-child(1) {
@@ -91,4 +90,7 @@ body {
 .rbc-event-label {
   color: gray !important;
   margin-bottom: 5px;
+}
+.daily.rbc-calendar .rbc-toolbar .rbc-btn-group:nth-child(3) {
+  display: none;
 }
