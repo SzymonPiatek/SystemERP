@@ -79,6 +79,7 @@ const ResponseList: React.FC<ResponseListProps> = ({ setActiveResponse, activeRe
                       textAlign="center"
                       borderRadius="md"
                       padding="0.25rem 0"
+                      userSelect="none"
                     >
                       {response.method}
                     </Box>
