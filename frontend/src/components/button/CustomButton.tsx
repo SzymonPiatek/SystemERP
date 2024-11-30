@@ -3,9 +3,14 @@ import { Button, ButtonProps } from '@chakra-ui/react';
 
 type CustomButtonProps = ButtonProps & {
   variant?: 'primary' | 'outline';
+  style?: React.CSSProperties;
 };
 
-const CustomButton: React.FC<CustomButtonProps> = ({ variant = 'primary', ...props }) => {
+const CustomButton: React.FC<CustomButtonProps> = ({
+  variant = 'primary',
+  style,
+  ...props
+}) => {
   const styles =
     variant === 'primary'
       ? {
@@ -26,7 +31,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ variant = 'primary', ...pro
           },
         };
 
-  return <Button {...props} {...styles} paddingLeft="8" paddingRight="8" />;
+  return <Button {...props} {...styles} paddingLeft="8" paddingRight="8" style={style} />;
 };
 
 export default CustomButton;

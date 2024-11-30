@@ -10,6 +10,8 @@ import { Notes } from './pages/Notes';
 import { Employees } from './pages/Employees';
 import { ProfilePage } from './pages/ProfilePage';
 import { LoginPage } from './pages/auth/LoginPage.tsx';
+import PostmanPage from './pages/postman/PostmanPage.tsx';
+
 
 const router = createBrowserRouter(
   [
@@ -48,6 +50,11 @@ const router = createBrowserRouter(
     {
       path: '/login',
       element: <LoginPage />,
+      errorElement: <Error />,
+    },
+    {
+      path: '/postman',
+      element: <PostmanPage />,
       errorElement: <Error />,
     },
   ],
