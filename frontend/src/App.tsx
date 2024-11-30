@@ -11,7 +11,7 @@ import { Employees } from './pages/Employees';
 import { ProfilePage } from './pages/ProfilePage';
 import { LoginPage } from './pages/auth/LoginPage.tsx';
 import PostmanPage from './pages/postman/PostmanPage.tsx';
-
+import Orders from './pages/Orders.tsx';
 
 const router = createBrowserRouter(
   [
@@ -45,6 +45,11 @@ const router = createBrowserRouter(
           element: <ProfilePage />,
           errorElement: <Error />,
         },
+        {
+          path: '/orders',
+          element: <Orders />,
+          errorElement: <Error />,
+        },
       ],
     },
     {
@@ -66,7 +71,7 @@ const router = createBrowserRouter(
       v7_partialHydration: true,
       v7_skipActionErrorRevalidation: true,
     },
-  }
+  },
 );
 
 const queryClient = new QueryClient();

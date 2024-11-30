@@ -4,7 +4,7 @@ import { FC, PropsWithChildren } from 'react';
 import { Logo } from '../logo/Logo.tsx';
 import { TopBarLayout } from '../topBarLayout/TopBarLayout.tsx';
 import { NavLink } from './NavLink.tsx';
-import { MdDashboard, MdCalendarMonth, MdPeopleAlt, MdNotes } from 'react-icons/md';
+import { MdDashboard, MdCalendarMonth, MdPeopleAlt, MdNotes, MdChecklist } from 'react-icons/md';
 import { TextWithIcon } from './TextWithIcon';
 import NavFooter from './NavFooter.tsx';
 
@@ -32,7 +32,7 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
           <Box p="4">
             <Logo />
           </Box>
-          <Stack as="nav" px={4} pb={8}>
+          <Stack as="nav" px={4} pb={8} mt="2">
             <NavLink to="/">
               <TextWithIcon title="Dashboard" Icon={MdDashboard}></TextWithIcon>
             </NavLink>
@@ -44,6 +44,9 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
             </NavLink>
             <NavLink to="/notes">
               <TextWithIcon title="Notes" Icon={MdNotes}></TextWithIcon>
+            </NavLink>
+            <NavLink to="/orders">
+              <TextWithIcon title="Orders" Icon={MdChecklist}></TextWithIcon>
             </NavLink>
           </Stack>
         </Box>

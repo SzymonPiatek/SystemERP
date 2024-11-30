@@ -15,9 +15,7 @@ export const Logo: FC<LogoProps> = (props) => {
           color="gray.700"
           textStyle={{ base: 'xs', lg: 'md', xl: 'lg' }}
         >
-          System ERP
-          <br />
-          <small>Manager</small>
+          ERP
         </Text>
       </Box>
     </Link>
