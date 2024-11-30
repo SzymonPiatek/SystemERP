@@ -5,6 +5,9 @@ import { environmentList, responseList } from '../../../lib/postmanData.ts';
 import CustomInput from '../../input/CustomInput.tsx';
 import CustomButton from '../../button/CustomButton.tsx';
 import React, { useEffect, useState } from 'react';
+import ParamsSection from './ParamsSection.tsx';
+import HeadersSection from './HeadersSection.tsx';
+import BodySection from './BodySection.tsx';
 
 type PostmanMainSectionProps = {
   activeEnvironment: string;
@@ -91,7 +94,7 @@ const PostmanMainSection: React.FC<PostmanMainSectionProps> = ({
           <CustomButton type="submit">Send</CustomButton>
         </Box>
       </ClientFormWrapper>
-      <Box display="flex" flexDirection="column" gap="1rem">
+      <Box display="flex" flexDirection="column" gap="1rem" flex="1">
         <Box display="flex" justifyContent="start" gap="1rem">
           <CustomButton
             variant={activeResponseSection === 'params' ? 'primary' : 'outline'}
@@ -111,6 +114,14 @@ const PostmanMainSection: React.FC<PostmanMainSectionProps> = ({
           >
             Body
           </CustomButton>
+        </Box>
+        <Box display="flex" flex="1" border="1px solid gray" padding="1rem">
+          {activeResponseSection === 'params' && <ParamsSection />}
+          {activeResponseSection === 'headers' && <HeadersSection />}
+          {activeResponseSection === 'body' && <BodySection />}
+        </Box>
+        <Box display="flex" flex="1" border="1px solid gray" padding="1rem">
+          Response
         </Box>
       </Box>
     </Box>
