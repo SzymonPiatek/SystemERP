@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from 'react';
 import { User } from '../utils/types';
-import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 type AuthContextProps = {
@@ -19,7 +18,6 @@ export const AuthContext = createContext<AuthContextProps>({
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -31,10 +29,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const isAuthenticated = !!user;
 
   const logout = () => {
+    toast.success('Successfully logged out!');
     localStorage.clear();
     setUser(null);
-    toast.success('Successfully logged out!');
-    navigate('/login');
   };
 
   return (
