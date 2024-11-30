@@ -21,6 +21,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   events Event[]
+  notes  Note[]
 }
 
 model Company {
@@ -101,13 +102,14 @@ model Event {
   updatedAt DateTime @updatedAt
 }
 
-model Notes {
-  id          Int     @id @default(autoincrement())
+model Note {
+  id          Int       @id @default(autoincrement())
   title       String
   description String
-  isActive    Boolean @default(false)
+  isActive    Boolean   @default(false)
   ownerId     Int
+  owner       User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
