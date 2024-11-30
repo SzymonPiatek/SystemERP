@@ -7,56 +7,6 @@ export const Dashboard: FC<{}> = () => {
   return (
     <Flex wrap="wrap">
       <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle> <BigCalendar></BigCalendar>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
-      <BoxWithTitle Title="Dashboard" Text="Test box"></BoxWithTitle>
     </Flex>
   );
 };

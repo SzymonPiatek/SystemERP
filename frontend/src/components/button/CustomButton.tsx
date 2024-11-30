@@ -6,11 +6,7 @@ type CustomButtonProps = ButtonProps & {
   style?: React.CSSProperties;
 };
 
-const CustomButton: React.FC<CustomButtonProps> = ({
-  variant = 'primary',
-  style,
-  ...props
-}) => {
+const CustomButton: React.FC<CustomButtonProps> = ({ variant = 'primary', style, ...props }) => {
   const styles =
     variant === 'primary'
       ? {
