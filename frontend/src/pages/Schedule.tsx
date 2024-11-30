@@ -5,10 +5,7 @@ import BigCalendar from '../components/calendar/BigCalendar.tsx';
 export const Schedule: FC<{}> = () => {
   return (
     <Box>
-      Schedule
-      <Box>
-        <BigCalendar />
-      </Box>
+      <BigCalendar />
     </Box>
   );
 };

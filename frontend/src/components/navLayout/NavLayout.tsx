@@ -4,6 +4,9 @@ import { FC, PropsWithChildren } from 'react';
 import { Logo } from '../logo/Logo.tsx';
 import { TopBarLayout } from '../topBarLayout/TopBarLayout.tsx';
 import { NavLink } from './NavLink.tsx';
+import { MdDashboard, MdCalendarMonth, MdPeopleAlt, MdNotes } from 'react-icons/md';
+import { TextWithIcon } from './TextWithIcon';
+import NavFooter from './NavFooter.tsx';
 
 export type NavLayoutProps = PropsWithChildren<{}>;
 
@@ -12,30 +15,46 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
 
   return (
     <Flex background="gray.100" p={0} minH="100vh">
+      {/* Left Menu */}
       <Stack
         as="aside"
-        height="full"
         background="white"
         minWidth={[null, '15%', '13%']}
         maxWidth={[null, '15%', '13%']}
         minH="100vh"
-        position="sticky"
+        position="fixed"
         left="0"
         top="0"
+        justifyContent="space-between"
+        flex="1"
       >
-        <Box px={8} py={5}>
-          <Logo />
-        </Box>
-        <Stack as="nav" height="full" overflowY="auto">
-          <Box px={4} pb={8}>
-            <NavLink to="/">Dashboard</NavLink>
-            <NavLink to="/schedule">Schedule</NavLink>
+        <Box>
+          <Box p="4">
+            <Logo />
           </Box>
-        </Stack>
+          <Stack as="nav" px={4} pb={8}>
+            <NavLink to="/">
+              <TextWithIcon title="Dashboard" Icon={MdDashboard}></TextWithIcon>
+            </NavLink>
+            <NavLink to="/schedule">
+              <TextWithIcon title="Schedule" Icon={MdCalendarMonth}></TextWithIcon>
+            </NavLink>
+            <NavLink to="/employees">
+              <TextWithIcon title="Employees" Icon={MdPeopleAlt}></TextWithIcon>
+            </NavLink>
+            <NavLink to="/notes">
+              <TextWithIcon title="Notes" Icon={MdNotes}></TextWithIcon>
+            </NavLink>
+          </Stack>
+        </Box>
+        <Box p={4}>
+          <NavFooter />
+        </Box>
       </Stack>
-      <VStack w="full">
-        <TopBarLayout />
-        <Box flex={1} pl={8} w="full">
+
+      <VStack w="full" ml={[null, '15%', '13%']}>
+        <TopBarLayout FirstName="John" LastName="Doe" Role="Admin" />
+        <Box flex={1} w="full">
           {children}
         </Box>
       </VStack>
