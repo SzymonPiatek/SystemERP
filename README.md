@@ -138,7 +138,7 @@
         <span>Zrobione</span><br>
         <span>Zrobione</span><br>
         <span>Zrobione</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>
     <tr>
@@ -211,9 +211,9 @@
         <span>* Edycja notatki</span>
       </td>
       <td>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
+        <span>Zrobione</span><br>
+        <span>Zrobione</span><br>
+        <span>Zrobione</span><br>
         <span>W trakcie</span>
       </td>
     </tr>  
