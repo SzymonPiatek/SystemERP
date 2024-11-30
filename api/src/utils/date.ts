@@ -9,3 +9,8 @@ export function getISODateTimeWithOffset(daysOffset: number, hoursOffset: number
 
   return now.toISOString();
 }
+
+export const isWeekday = (date: Date) => {
+  const day = date.getDay();
+  return day >= 1 && day <= 5;
+};
