@@ -1,12 +1,13 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { FC } from 'react';
-import BigCalendar from '../components/calendar/BigCalendar.tsx';
+import BigCalendar from '../../components/calendar/BigCalendar.tsx';
 import { AxiosError } from 'axios';
-import { Event } from '../utils/types';
+import { Event } from '../../utils/types';
 import { useState, useEffect } from 'react';
-import { getEvents } from '../actions/eventActions';
+import { getEvents } from '../../actions/eventActions';
+import { BoxWithTitle } from '../ui/BoxWithTitle.tsx';
 
-export const Schedule: FC<{}> = () => {
+export const DailyCalendar: FC<{}> = () => {
   const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {
@@ -16,7 +17,6 @@ export const Schedule: FC<{}> = () => {
         console.log(response);
 
         if (!(response instanceof AxiosError)) {
-          // @ts-ignore
           setEvents(response.events);
         }
         console.log(response.data.events);
@@ -38,7 +38,8 @@ export const Schedule: FC<{}> = () => {
   return (
     <Flex wrap="wrap">
       <Box bg="white" rounded="2xl" p="4" pt="8" pb="8" m="2" w="full">
-        <BigCalendar events={formattedEvents} set="WORK_WEEK" />
+        <BoxWithTitle Title="Daily Schedule" />
+        <BigCalendar events={formattedEvents} set="DAY" classes="daily" />
       </Box>
     </Flex>
   );

@@ -6,6 +6,7 @@ import prisma from '../../../prismaClient';
 const notesSchema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().required(),
+  date: Joi.date().optional(),
   isActive: Joi.boolean().required(),
   ownerId: Joi.number().required(),
 });
@@ -18,7 +19,7 @@ export const postNotesHandler: RequestHandler = async (req, res) => {
       return;
     }
 
-    const { title, description, isActive, ownerId } = value;
+    const { title, description, date, isActive, ownerId } = value;
 
     const userExists = await prisma.user.findUnique({
       where: { id: ownerId },
@@ -33,6 +34,7 @@ export const postNotesHandler: RequestHandler = async (req, res) => {
       data: {
         title,
         description,
+        date,
         isActive,
         ownerId,
       },

@@ -2,17 +2,16 @@ import prisma from '../src/prismaClient';
 import { createRoles } from '../src/fixtures/roles/createRoles';
 import { createPermissions } from '../src/fixtures/permissions/createPermissions';
 import { createPermissionRoles } from '../src/fixtures/permissionRoles/createPermissionRoles';
-import { createAdminUserData } from '../src/fixtures/users/createAdminUserData';
 import { createCompanies } from '../src/fixtures/companies/createCompanies';
 import { createEvents } from '../src/fixtures/events/createEvents';
 import { createNotes } from '../src/fixtures/notes/createNotes';
+import { createAdminUserData } from '../src/fixtures/users/createAdminUser';
 
 async function main() {
-  // Creating roles, permissions, permissionRoles
-  await Promise.all([...createRoles, ...createPermissions]);
+  await createRoles();
+  await createPermissions();
   await createPermissionRoles();
 
-  // Creating admin user
   const adminUserData = await createAdminUserData();
   await prisma.user.upsert({
     where: { email: adminUserData.email },
@@ -20,14 +19,9 @@ async function main() {
     create: adminUserData,
   });
 
-  // Creating events
-  await Promise.all([...createEvents]);
-
-  // Creating notes
+  await createEvents();
   await createNotes();
-
-  // Creating companies
-  await Promise.all([...createCompanies]);
+  await createCompanies();
 }
 
 main()

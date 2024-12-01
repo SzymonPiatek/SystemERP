@@ -1,13 +1,47 @@
 import { RequestHandler } from 'express';
 import { returnError } from '../../../utils/error';
 import prisma from '../../../prismaClient';
+import { excludePassword } from '../services/returnSafeUserData';
+import { User } from '../../../types/types';
 
 export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
-    const users = await prisma.user.findMany();
-    const countUsers = users.length;
+    const { email, firstName, lastName, isActive, companyId, search } = req.query;
 
-    res.status(200).json({ success: true, count: countUsers, users });
+    const queryConditions: Record<string, any> = {};
+    if (email !== undefined) {
+      queryConditions.email = { contains: email, mode: 'insensitive' };
+    }
+    if (firstName !== undefined) {
+      queryConditions.firstName = { contains: firstName, mode: 'insensitive' };
+    }
+    if (lastName !== undefined) {
+      queryConditions.lastName = { contains: lastName, mode: 'insensitive' };
+    }
+    if (isActive !== undefined) {
+      queryConditions.isActive = isActive === 'true';
+    }
+    if (companyId !== undefined) {
+      queryConditions.companyId = Number(companyId);
+    }
+
+    if (search !== undefined) {
+      const searchText = search as string;
+
+      queryConditions.OR = [
+        { email: { contains: searchText, mode: 'insensitive' } },
+        { firstName: { contains: searchText, mode: 'insensitive' } },
+        { lastName: { contains: searchText, mode: 'insensitive' } },
+      ];
+    }
+
+    const users = await prisma.user.findMany({
+      where: queryConditions,
+    });
+    const countUsers = users.length;
+    const usersWithoutPasswords = users.map((user: User) => excludePassword(user));
+
+    res.status(200).json({ success: true, count: countUsers, users: usersWithoutPasswords });
   } catch (error) {
     returnError(res, error);
   }
@@ -27,7 +61,8 @@ export const getUserByIdHandler: RequestHandler = async (req, res): Promise<void
     });
 
     if (user) {
-      res.status(200).json({ success: true, message: 'User found', user });
+      const safeData = excludePassword(user);
+      res.status(200).json({ success: true, message: 'User found', user: safeData });
     } else {
       res.status(404).json({ success: false, message: 'User not found' });
     }
