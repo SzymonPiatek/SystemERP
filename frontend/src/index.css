@@ -94,3 +94,9 @@ body {
 .daily.rbc-calendar .rbc-toolbar .rbc-btn-group:nth-child(3) {
   display: none;
 }
+
+.rbc-event:hover {
+  z-index: 1000;
+  width: 20vw !important;
+  height: 20vh !important;
+}

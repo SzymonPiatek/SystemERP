@@ -5,6 +5,7 @@ import { AxiosError } from 'axios';
 import { Event } from '../../utils/types';
 import { useState, useEffect } from 'react';
 import { getEvents } from '../../actions/eventActions';
+import { BoxWithTitle } from '../ui/BoxWithTitle.tsx';
 
 export const DailyCalendar: FC<{}> = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -37,6 +38,7 @@ export const DailyCalendar: FC<{}> = () => {
   return (
     <Flex wrap="wrap">
       <Box bg="white" rounded="2xl" p="4" pt="8" pb="8" m="2" w="full">
+        <BoxWithTitle Title="Daily Schedule" />
         <BigCalendar events={formattedEvents} set="DAY" classes="daily" />
       </Box>
     </Flex>
