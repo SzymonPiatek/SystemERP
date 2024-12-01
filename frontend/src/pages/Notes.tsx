@@ -6,9 +6,13 @@ export const Notes: FC<{}> = () => {
   return (
     <Box>
       <Flex wrap="wrap">
-        {new Array(10).fill('testowe notatki').map((name, idx) => {
-          return <SingleNote title={name} desc={name} status="active" />;
-        })}
+        {new Array(10)
+          .fill(
+            'testowe notatki kokoh kukyr kftr u fkyu gjtdk hku kyf liu kyuglhi gy, fmyfd mu hli yf myg ,u .u',
+          )
+          .map((name, idx) => {
+            return <SingleNote title={name} desc={name} status="active" />;
+          })}
       </Flex>
     </Box>
   );
