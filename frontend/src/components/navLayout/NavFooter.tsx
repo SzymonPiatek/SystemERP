@@ -1,4 +1,4 @@
-import { Flex, IconButton, Text } from '@chakra-ui/react';
+import { Flex, IconButton, Text, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { MdOutlineLogout, MdPerson } from 'react-icons/md';
 import { useContext } from 'react';
@@ -22,13 +22,14 @@ const NavFooter = () => {
           </IconButton>
         </Link>
       </Flex>
-      <Text fontSize="xs" color="gray.600">
-        &copy; {currentYear} Cebulki Programowania.
-      </Text>
-      <Text fontSize="xs" color="gray.600" hideBelow="lg">
-        {' '}
-        All rights reserved.
-      </Text>
+      <VStack justify="center" align="center">
+        <Text fontSize="xs" color="gray.600" textAlign="center">
+          &copy; {currentYear} Cebulki Programowania.
+        </Text>
+        <Text fontSize="xs" color="gray.600" hideBelow="lg">
+          All rights reserved.
+        </Text>
+      </VStack>
     </Flex>
   );
 };

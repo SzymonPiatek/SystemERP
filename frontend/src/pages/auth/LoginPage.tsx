@@ -8,8 +8,8 @@ import { AuthContext } from '../../contexts/AuthContext.tsx';
 import { Navigate } from 'react-router-dom';
 
 export const LoginPage: FC = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>('admin@test.pl');
+  const [password, setPassword] = useState<string>('Testowe123!');
 
   const { isAuthenticated } = useContext(AuthContext);
   const { mutate } = useLoginUser();
