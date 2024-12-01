@@ -4,6 +4,7 @@ import { comparePassword } from '../../../modules/authModule';
 import { returnError } from '../../../utils/error';
 import prisma from '../../../prismaClient';
 import { generateAccessToken, generateRefreshToken } from '../services/authService';
+import { excludePassword } from '../../user/services/returnSafeUserData';
 
 const loginSchema = Joi.object({
   email: Joi.string().email().required(),
@@ -45,13 +46,14 @@ export const loginHandler: RequestHandler = async (req, res): Promise<void> => {
 
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
+    const safeData = excludePassword(user);
 
     res.status(200).json({
       success: true,
       message: 'Login successful',
       accessToken,
       refreshToken,
-      user,
+      user: safeData,
     });
     return;
   } catch (error) {

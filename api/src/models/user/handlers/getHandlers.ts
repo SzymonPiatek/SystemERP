@@ -6,9 +6,29 @@ import { User } from '../../../types/types';
 
 export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
-    const users = await prisma.user.findMany();
-    const countUsers = users.length;
+    const { email, firstName, lastName, isActive, companyId } = req.query;
 
+    const queryConditions: Record<string, any> = {};
+    if (email !== undefined) {
+      queryConditions.email = email;
+    }
+    if (firstName !== undefined) {
+      queryConditions.firstName = firstName;
+    }
+    if (lastName !== undefined) {
+      queryConditions.lastName = lastName;
+    }
+    if (isActive !== undefined) {
+      queryConditions.isActive = isActive === 'true';
+    }
+    if (companyId !== undefined) {
+      queryConditions.companyId = Number(companyId);
+    }
+
+    const users = await prisma.user.findMany({
+      where: queryConditions,
+    });
+    const countUsers = users.length;
     const usersWithoutPasswords = users.map((user: User) => excludePassword(user));
 
     res.status(200).json({ success: true, count: countUsers, users: usersWithoutPasswords });
