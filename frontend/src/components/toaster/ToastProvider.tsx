@@ -19,6 +19,9 @@ function ToastProvider() {
           lineHeight: '1.5',
         },
       }}
+      containerStyle={{
+        top: 84,
+      }}
     />
   );
 }

@@ -1,14 +1,17 @@
 import { Flex, IconButton, Text, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { MdOutlineLogout, MdPerson } from 'react-icons/md';
+import { useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthContext.tsx';
 
 const NavFooter = () => {
+  const { logout } = useContext(AuthContext);
   const currentYear = new Date().getFullYear();
 
   return (
     <Flex color="black" justify="center" direction="column" alignItems="center">
       <Flex mb={2} direction={{ base: 'column', lg: 'row' }}>
-        <IconButton size="xs" aria-label="Logout" _hover={{ color: 'green.600' }}>
+        <IconButton size="xs" aria-label="Logout" _hover={{ color: 'green.600' }} onClick={logout}>
           <MdOutlineLogout />
           <Text display={{ base: 'none', lg: 'block' }}>Logout</Text>
         </IconButton>

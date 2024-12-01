@@ -1,5 +1,5 @@
 import { Box, Stack, Flex, VStack } from '@chakra-ui/react';
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useContext } from 'react';
 
 import { Logo } from '../logo/Logo.tsx';
 import { TopBarLayout } from '../topBarLayout/TopBarLayout.tsx';
@@ -7,11 +7,14 @@ import { NavLink } from './NavLink.tsx';
 import { MdDashboard, MdCalendarMonth, MdPeopleAlt, MdNotes, MdChecklist } from 'react-icons/md';
 import { TextWithIcon } from './TextWithIcon';
 import NavFooter from './NavFooter.tsx';
+import { AuthContext } from '../../contexts/AuthContext.tsx';
 
 export type NavLayoutProps = PropsWithChildren<{}>;
 
 export const NavLayout: FC<NavLayoutProps> = (props) => {
   const { children } = props;
+  const { user } = useContext(AuthContext);
+  console.log(user);
 
   return (
     <Flex background="gray.100" p={0} minH="100vh">
@@ -56,7 +59,11 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
       </Stack>
 
       <VStack w="full" ml={[null, '15%', '13%']}>
-        <TopBarLayout FirstName="John" LastName="Doe" Role="Admin" />
+        <TopBarLayout
+          FirstName={user!.firstName}
+          LastName={user!.lastName}
+          Role={user!.profile!.role!.name}
+        />
         <Box flex={1} w="full">
           {children}
         </Box>

@@ -23,6 +23,13 @@ export const loginHandler: RequestHandler = async (req, res): Promise<void> => {
 
     const user = await prisma.user.findUnique({
       where: { email },
+      include: {
+        profile: {
+          include: {
+            role: true,
+          },
+        },
+      },
     });
 
     if (!user || !user.isActive) {
