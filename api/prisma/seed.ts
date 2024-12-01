@@ -8,8 +8,8 @@ import { createEvents } from '../src/fixtures/events/createEvents';
 import { createNotes } from '../src/fixtures/notes/createNotes';
 
 async function main() {
-  // Creating roles, permissions, permissionRoles
-  await Promise.all([...createRoles, ...createPermissions]);
+  await createRoles();
+  await createPermissions();
   await createPermissionRoles();
 
   // Creating admin user
@@ -20,10 +20,7 @@ async function main() {
     create: adminUserData,
   });
 
-  // Creating events
-  await Promise.all([...createEvents]);
-
-  // Creating notes
+  await createEvents();
   await createNotes();
 
   // Creating companies
