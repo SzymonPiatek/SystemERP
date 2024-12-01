@@ -15,7 +15,6 @@ export const notesData = (() => {
         id: noteCount + 1,
         title: `Note ${noteCount + 1}`,
         description: 'Lorem ipsum odor amet, consectetuer adipiscing elit.',
-        isActive: true,
         ownerId: 1,
         date: hasDate ? getISODateTimeWithOffset(dayOffset, 0, 0) : null,
       });
