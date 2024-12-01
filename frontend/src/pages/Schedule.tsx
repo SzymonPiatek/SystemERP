@@ -13,13 +13,11 @@ export const Schedule: FC<{}> = () => {
     const fetchEvents = async () => {
       try {
         const response = await getEvents();
-        console.log(response);
 
         if (!(response instanceof AxiosError)) {
           // @ts-ignore
           setEvents(response.events);
         }
-        console.log(response.data.events);
       } catch (error) {
         console.error('Error fetching events:', error);
       }

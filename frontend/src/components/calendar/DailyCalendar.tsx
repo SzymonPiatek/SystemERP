@@ -14,12 +14,10 @@ export const DailyCalendar: FC<{}> = () => {
     const fetchEvents = async () => {
       try {
         const response = await getEvents();
-        console.log(response);
 
         if (!(response instanceof AxiosError)) {
           setEvents(response.events);
         }
-        console.log(response.data.events);
       } catch (error) {
         console.error('Error fetching events:', error);
       }
