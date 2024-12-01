@@ -126,12 +126,14 @@ export const environmentList: EnvironmentListDataProps[] = [
     admin: {
       email: 'admin@example.com',
       password: 'admin123',
+      token: '',
     },
   },
   {
     user: {
       email: 'user@example.com',
       password: 'user123',
+      token: '',
     },
   },
 ];
