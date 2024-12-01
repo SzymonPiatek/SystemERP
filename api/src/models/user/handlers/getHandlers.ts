@@ -10,13 +10,13 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
 
     const queryConditions: Record<string, any> = {};
     if (email !== undefined) {
-      queryConditions.email = email;
+      queryConditions.email = { contains: email, mode: 'insensitive' };
     }
     if (firstName !== undefined) {
-      queryConditions.firstName = firstName;
+      queryConditions.firstName = { contains: firstName, mode: 'insensitive' };
     }
     if (lastName !== undefined) {
-      queryConditions.lastName = lastName;
+      queryConditions.lastName = { contains: lastName, mode: 'insensitive' };
     }
     if (isActive !== undefined) {
       queryConditions.isActive = isActive === 'true';
