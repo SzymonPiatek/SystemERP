@@ -106,7 +106,8 @@ model Note {
   id          Int       @id @default(autoincrement())
   title       String
   description String
-  isActive    Boolean   @default(false)
+  date        DateTime?
+  isActive    Boolean   @default(true)
   ownerId     Int
   owner       User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
