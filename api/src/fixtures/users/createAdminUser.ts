@@ -1,11 +1,7 @@
 import { hashPassword } from '../../modules/authModule';
 
-const getHashedPassword = async (password: string): Promise<string> => {
-  return await hashPassword(password);
-};
-
 export const createAdminUserData = async () => {
-  const hashedPassword = await getHashedPassword('Testowe123!');
+  const hashedPassword = await hashPassword('Testowe123!');
 
   return {
     email: 'admin@test.pl',
