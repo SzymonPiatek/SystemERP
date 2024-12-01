@@ -5,20 +5,13 @@ import { createPermissionRoles } from '../src/fixtures/permissionRoles/createPer
 import { createCompanies } from '../src/fixtures/companies/createCompanies';
 import { createEvents } from '../src/fixtures/events/createEvents';
 import { createNotes } from '../src/fixtures/notes/createNotes';
-import { createAdminUserData } from '../src/fixtures/users/createAdminUser';
+import { createUsers } from '../src/fixtures/users/createUsers';
 
 async function main() {
   await createRoles();
   await createPermissions();
   await createPermissionRoles();
-
-  const adminUserData = await createAdminUserData();
-  await prisma.user.upsert({
-    where: { email: adminUserData.email },
-    update: {},
-    create: adminUserData,
-  });
-
+  await createUsers();
   await createEvents();
   await createNotes();
   await createCompanies();
