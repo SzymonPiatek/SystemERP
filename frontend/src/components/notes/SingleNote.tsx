@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 
 import { MdEdit, MdDelete } from 'react-icons/md';
 
-export type SingleNoteProps = { title: string; status: string; desc: string };
+export type SingleNoteProps = { title: string; status: boolean; desc: string };
 
 export const SingleNote: FC<SingleNoteProps> = (props) => {
   const { title, status, desc } = props;
@@ -14,12 +14,12 @@ export const SingleNote: FC<SingleNoteProps> = (props) => {
     <Box bg="white" rounded="2xl" p="4" m="4" maxW="30%">
       <BoxWithTitle Title={title} Text={desc} />
       <HStack gap="0" m="4" justifyContent="space-between" alignItems="center">
-        {status == 'active' ? (
+        {status == true ? (
           <Badge colorPalette="green" variant="solid">
-            {status}
+            Active
           </Badge>
         ) : (
-          <Badge colorPalette="orange">{status}</Badge>
+          <Badge colorPalette="orange">Deactivated</Badge>
         )}
         <Box>
           <Button

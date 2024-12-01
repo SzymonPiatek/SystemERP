@@ -100,3 +100,6 @@ body {
   width: 20vw !important;
   height: 20vh !important;
 }
+.rbc-day-slot .rbc-events-container {
+  overflow: hidden;
+}

@@ -59,10 +59,11 @@ export type Event = {
   ownerId: number;
 };
 
-export type Notes = {
+export type Note = {
   id: number;
   title: string;
   description: string;
+  date: Date;
   isActive: boolean;
   ownerId: number;
   createdAt: Date;

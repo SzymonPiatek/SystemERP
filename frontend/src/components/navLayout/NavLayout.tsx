@@ -58,7 +58,7 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
         </Box>
       </Stack>
 
-      <VStack w="full" ml={[null, '15%', '13%']}>
+      <VStack w="full" ml={[null, '15%', '13%']} gap="0">
         <TopBarLayout
           FirstName={user!.firstName}
           LastName={user!.lastName}

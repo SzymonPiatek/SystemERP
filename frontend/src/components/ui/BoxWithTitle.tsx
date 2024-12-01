@@ -9,7 +9,7 @@ type BoxProps = {
 
 export const BoxWithTitle: FC<BoxProps> = (props) => {
   return (
-    <Flex p="4" justify="space-between">
+    <Flex pb="4" justify="space-between">
       <Box>
         <Box mt="1" lineHeight="tight" fontSize="xl">
           {props.Title}
