@@ -59,6 +59,16 @@ export type Event = {
   ownerId: number;
 };
 
+export type Notes = {
+  id: number;
+  title: string;
+  description: string;
+  isActive: boolean;
+  ownerId: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 export type LoginDataProps = {
   email: string;
   password: string;

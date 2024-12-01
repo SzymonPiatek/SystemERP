@@ -1,14 +1,15 @@
 import { Box, Flex, VStack } from '@chakra-ui/react';
 import { FC } from 'react';
+import { SingleNote } from '../components/notes/SingleNote';
 
 export const Notes: FC<{}> = () => {
   return (
     <Box>
-      <VStack>
+      <Flex wrap="wrap">
         {new Array(10).fill('testowe notatki').map((name, idx) => {
-          return <Flex key={idx}>{name}</Flex>;
+          return <SingleNote title={name} desc={name} status="active" />;
         })}
-      </VStack>
+      </Flex>
     </Box>
   );
 };
