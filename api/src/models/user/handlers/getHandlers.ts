@@ -6,7 +6,7 @@ import { User } from '../../../types/types';
 
 export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
-    const { email, firstName, lastName, isActive, companyId } = req.query;
+    const { email, firstName, lastName, isActive, companyId, search } = req.query;
 
     const queryConditions: Record<string, any> = {};
     if (email !== undefined) {
@@ -23,6 +23,16 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
     }
     if (companyId !== undefined) {
       queryConditions.companyId = Number(companyId);
+    }
+
+    if (search !== undefined) {
+      const searchText = search as string;
+
+      queryConditions.OR = [
+        { email: { contains: searchText, mode: 'insensitive' } },
+        { firstName: { contains: searchText, mode: 'insensitive' } },
+        { lastName: { contains: searchText, mode: 'insensitive' } },
+      ];
     }
 
     const users = await prisma.user.findMany({
