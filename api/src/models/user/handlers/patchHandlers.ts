@@ -2,6 +2,7 @@ import { RequestHandler } from 'express';
 import prisma from '../../../prismaClient';
 import { comparePassword, hashPassword } from '../../../modules/authModule';
 import { returnError } from '../../../utils/error';
+import { excludePassword } from '../services/returnSafeUserData';
 
 export const changeUserPasswordHandler: RequestHandler = async (req, res): Promise<void> => {
   const { oldPassword, newPassword } = req.body;
@@ -68,7 +69,9 @@ export const editUserDataHandler: RequestHandler = async (req, res): Promise<voi
       data: updatedData,
     });
 
-    res.status(200).json({ success: true, message: 'User updated successfully', user: updatedUser });
+    const safeData = excludePassword(updatedUser);
+
+    res.status(200).json({ success: true, message: 'User updated successfully', user: safeData });
     return;
   } catch (error) {
     returnError(res, error);
