@@ -11,10 +11,10 @@ const PostmanPage: FC<{}> = () => {
   const [activeResponseSection, setActiveResponseSection] = useState<string>('params');
 
   // Environment
-  const [activeEnvironment, setActiveEnvironment] = useState<string>('');
+  const [activeEnvironment, setActiveEnvironment] = useState<string>('admin');
 
   // Collection
-  const [activeResponse, setActiveResponse] = useState<string>('');
+  const [activeResponse, setActiveResponse] = useState<string>('Login');
 
   return (
     <Box bg="#222222" minH="100vh" display="flex" gap="1rem">
