@@ -4,7 +4,8 @@ import prisma from '../../../prismaClient';
 
 export const getAllCompaniesHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
-    const { name, country, voivodeship, district, commune, city, zipCode, street, houseNumber, apartmentNumber, nip, regon } = req.query;
+    const { name, country, voivodeship, district, commune, city, zipCode, street, houseNumber, apartmentNumber, nip, regon, search } =
+      req.query;
 
     const queryConditions: Record<string, any> = {};
     if (name !== undefined) {
@@ -42,6 +43,25 @@ export const getAllCompaniesHandler: RequestHandler = async (req, res): Promise<
     }
     if (regon !== undefined) {
       queryConditions.regon = { contains: regon, mode: 'insensitive' };
+    }
+
+    if (search !== undefined) {
+      const searchText = search as string;
+
+      queryConditions.OR = [
+        { name: { contains: searchText, mode: 'insensitive' } },
+        { country: { contains: searchText, mode: 'insensitive' } },
+        { voivodeship: { contains: searchText, mode: 'insensitive' } },
+        { district: { contains: searchText, mode: 'insensitive' } },
+        { commune: { contains: searchText, mode: 'insensitive' } },
+        { city: { contains: searchText, mode: 'insensitive' } },
+        { zipCode: { contains: searchText, mode: 'insensitive' } },
+        { street: { contains: searchText, mode: 'insensitive' } },
+        { houseNumber: { contains: searchText, mode: 'insensitive' } },
+        { apartmentNumber: { contains: searchText, mode: 'insensitive' } },
+        { nip: { contains: searchText, mode: 'insensitive' } },
+        { regon: { contains: searchText, mode: 'insensitive' } },
+      ];
     }
 
     const companies = await prisma.company.findMany({
