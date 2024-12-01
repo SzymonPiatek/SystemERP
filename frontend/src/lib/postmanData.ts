@@ -32,8 +32,8 @@ export const methodVariants: MethodVariantProps[] = [
 
 export const methodVariantsCollections = createListCollection({
   items: methodVariants,
-  itemToString: (item) => item.name,
-  itemToValue: (item) => item.name,
+  itemToString: (item: MethodVariantProps) => item.name,
+  itemToValue: (item: MethodVariantProps) => item.name,
 });
 
 export const responseList: ResponseListDataProps[] = [
@@ -61,6 +61,21 @@ export const responseList: ResponseListDataProps[] = [
         method: 'GET',
         url: `${fullApiUrl}${API.users.all}/1`,
       },
+      {
+        displayName: 'Edit user data',
+        method: 'PATCH',
+        url: `${fullApiUrl}${API.users.all}/1`,
+      },
+      {
+        displayName: 'Change user password',
+        method: 'PATCH',
+        url: `${fullApiUrl}${API.users.all}/1/change_password`,
+      },
+      {
+        displayName: 'Change user isActive',
+        method: 'PATCH',
+        url: `${fullApiUrl}${API.users.all}/1/change_active`,
+      },
     ],
     company: [
       {
@@ -73,6 +88,35 @@ export const responseList: ResponseListDataProps[] = [
         method: 'GET',
         url: `${fullApiUrl}${API.companies.all}/1`,
       },
+      {
+        displayName: 'Edit company data',
+        method: 'PATCH',
+        url: `${fullApiUrl}${API.companies.all}/1`,
+      },
+    ],
+    events: [
+      {
+        displayName: 'Get all events',
+        method: 'GET',
+        url: `${fullApiUrl}${API.events.all}`,
+      },
+      {
+        displayName: 'Get event by id',
+        method: 'GET',
+        url: `${fullApiUrl}${API.events.all}/1`,
+      },
+    ],
+    notes: [
+      {
+        displayName: 'Get all notes',
+        method: 'GET',
+        url: `${fullApiUrl}${API.notes.all}`,
+      },
+      {
+        displayName: 'Get note by id',
+        method: 'GET',
+        url: `${fullApiUrl}${API.notes.all}/1`,
+      },
     ],
   },
 ];
@@ -82,12 +126,14 @@ export const environmentList: EnvironmentListDataProps[] = [
     admin: {
       email: 'admin@example.com',
       password: 'admin123',
+      token: '',
     },
   },
   {
     user: {
       email: 'user@example.com',
       password: 'user123',
+      token: '',
     },
   },
 ];

@@ -55,12 +55,12 @@ const router = createBrowserRouter(
               element: <Orders />,
               errorElement: <Error />,
             },
-            {
-              path: '/postman',
-              element: <PostmanPage />,
-              errorElement: <Error />,
-            },
           ],
+        },
+        {
+          path: '/postman',
+          element: <PostmanPage />,
+          errorElement: <Error />,
         },
       ],
     },

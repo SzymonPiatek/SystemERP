@@ -1,19 +1,25 @@
 import React from 'react';
 import { Box } from '@chakra-ui/react';
+import { IoMdArrowDroprightCircle } from 'react-icons/io';
 import { environmentList, EnvironmentListDataProps } from '../../../lib/postmanData.ts';
-import CustomButton from '../../button/CustomButton.tsx';
 
 type EnvironmentListProps = {
   setActiveEnvironment: (value: string) => void;
   activeEnvironment: string;
+  setActiveMainSection: (value: string) => void;
 };
 
 const EnvironmentList: React.FC<EnvironmentListProps> = ({
   setActiveEnvironment,
   activeEnvironment,
+  setActiveMainSection,
 }) => {
   const handleOnClick = async (value: string) => {
     setActiveEnvironment(value);
+  };
+
+  const handleChangeMainSection = async () => {
+    setActiveMainSection('environment');
   };
 
   return (
@@ -22,13 +28,30 @@ const EnvironmentList: React.FC<EnvironmentListProps> = ({
         const envName = Object.keys(env)[0];
 
         return (
-          <CustomButton
-            variant={activeEnvironment === envName ? 'primary' : 'outline'}
+          <Box
             onClick={() => handleOnClick(envName)}
             key={index}
+            border="1px solid"
+            bg={activeEnvironment === envName ? 'green.600' : 'transparent'}
+            borderColor="green.600"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            rounded="lg"
+            padding="0.5rem 1rem"
           >
-            {envName}
-          </CustomButton>
+            <Box>{envName}</Box>
+            <Box
+              h="full"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              fontSize="2rem"
+              onClick={handleChangeMainSection}
+            >
+              <IoMdArrowDroprightCircle />
+            </Box>
+          </Box>
         );
       })}
     </Box>

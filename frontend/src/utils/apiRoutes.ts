@@ -15,6 +15,10 @@ const API = {
     all: '/events',
     event: (id: number) => `/events/${id}`,
   },
+  notes: {
+    all: '/notes',
+    note: (id: number) => `/notes/${id}`,
+  },
 };
 
 export default API;

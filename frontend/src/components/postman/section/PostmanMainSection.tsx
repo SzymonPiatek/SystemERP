@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import ClientFormWrapper from '../../form/formWrapper/ClientFormWrapper.tsx';
 import PostmanSelect from '../select/PostmanSelect.tsx';
-import { environmentList, responseList } from '../../../lib/postmanData.ts';
+import { responseList } from '../../../lib/postmanData.ts';
 import CustomInput from '../../input/CustomInput.tsx';
 import CustomButton from '../../button/CustomButton.tsx';
 import React, { useEffect, useState } from 'react';
@@ -10,7 +10,6 @@ import HeadersSection from './HeadersSection.tsx';
 import BodySection from './BodySection.tsx';
 
 type PostmanMainSectionProps = {
-  activeEnvironment: string;
   activeResponse: string;
   activeResponseSection: string;
   setActiveResponseSection: (section: string) => void;
@@ -29,18 +28,7 @@ const getActiveResponseData = async (response: string) => {
   return null;
 };
 
-const getActiveEnvironmentData = async (environment: string) => {
-  for (const group of environmentList) {
-    for (const envKey in group) {
-      if (envKey === environment) {
-        return group[envKey];
-      }
-    }
-  }
-  return null;
-};
 const PostmanMainSection: React.FC<PostmanMainSectionProps> = ({
-  activeEnvironment,
   activeResponse,
   activeResponseSection,
   setActiveResponseSection,
@@ -57,21 +45,13 @@ const PostmanMainSection: React.FC<PostmanMainSectionProps> = ({
       }
     };
 
-    const fetchEnvironmentData = async () => {
-      if (activeEnvironment) {
-        await getActiveEnvironmentData(activeEnvironment);
-      }
-    };
-
     fetchResponseData();
-    fetchEnvironmentData();
-  }, [activeResponse, activeEnvironment]);
+  }, [activeResponse]);
 
   const handleOnSubmit = async () => {
     console.log(selectedMethod);
     console.log(selectedUrl);
     console.log(activeResponse);
-    console.log(activeEnvironment);
   };
 
   return (
