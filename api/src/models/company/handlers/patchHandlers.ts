@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 import { returnError } from '../../../utils/error';
 import prisma from '../../../prismaClient';
 
-export const editCompanyHandler: RequestHandler = async (req, res): Promise<void> => {
+export const editCompanyDataHandler: RequestHandler = async (req, res): Promise<void> => {
   const { name, country, voivodeship, district, commune, city, zipCode, street, houseNumber, apartmentNumber, nip, regon } = req.body;
   const { id } = req.params;
 
