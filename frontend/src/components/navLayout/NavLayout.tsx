@@ -4,14 +4,7 @@ import { FC, PropsWithChildren, useContext } from 'react';
 import { Logo } from '../logo/Logo.tsx';
 import { TopBarLayout } from '../topBarLayout/TopBarLayout.tsx';
 import { NavLink } from './NavLink.tsx';
-import {
-  MdDashboard,
-  MdCalendarMonth,
-  MdPeopleAlt,
-  MdNotes,
-  MdChecklist,
-  MdSupervisedUserCircle,
-} from 'react-icons/md';
+import { MdDashboard, MdCalendarMonth, MdPeopleAlt, MdNotes, MdChecklist } from 'react-icons/md';
 import { TextWithIcon } from './TextWithIcon';
 import NavFooter from './NavFooter.tsx';
 import { AuthContext } from '../../contexts/AuthContext.tsx';
@@ -55,9 +48,6 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
             </NavLink>
             <NavLink to="/orders">
               <TextWithIcon title="Orders" Icon={MdChecklist}></TextWithIcon>
-            </NavLink>
-            <NavLink to="/postman">
-              <TextWithIcon title="Postman" Icon={MdSupervisedUserCircle}></TextWithIcon>
             </NavLink>
           </Stack>
         </Box>
