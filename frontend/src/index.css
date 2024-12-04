@@ -63,7 +63,6 @@ body {
 .rbc-events-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr)) !important;
-  gap: 5px;
   overflow: hidden;
 }
 
@@ -95,6 +94,7 @@ body {
   margin: 2px;
   box-sizing: border-box;
 }
+
 .rbc-event-content {
   color: black;
   text-align: left;
