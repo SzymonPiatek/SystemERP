@@ -8,7 +8,8 @@
     "prettier": "prettier . --check",
     "format": "prettier . --write",
     "build": "tsc",
-    "tsc": "tsc --watch"
+    "tsc": "tsc --watch",
+    "seed": "npx prisma db seed"
   },
   "keywords": [],
   "author": "",
