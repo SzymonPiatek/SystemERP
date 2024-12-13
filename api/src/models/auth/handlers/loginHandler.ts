@@ -3,7 +3,7 @@ import Joi from 'joi';
 import { comparePassword } from '../../../modules/authModule';
 import { returnError } from '../../../utils/error';
 import prisma from '../../../prismaClient';
-import { generateAccessToken, generateRefreshToken } from '../services/authService';
+import { generateAndSetTokens } from '../services/authService';
 import { excludePassword } from '../../user/services/returnSafeUserData';
 
 const loginSchema = Joi.object({
@@ -44,16 +44,14 @@ export const loginHandler: RequestHandler = async (req, res): Promise<void> => {
       return;
     }
 
-    const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user);
+    const tokens = await generateAndSetTokens(res, user);
     const safeData = excludePassword(user);
 
     res.status(200).json({
       success: true,
       message: 'Login successful',
-      accessToken,
-      refreshToken,
       user: safeData,
+      ...tokens,
     });
     return;
   } catch (error) {

@@ -1,6 +1,7 @@
 const API = {
   auth: {
     login: '/auth/login',
+    logout: '/auth/logout',
     register: '/auth/register',
   },
   users: {
