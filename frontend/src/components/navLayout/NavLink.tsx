@@ -29,6 +29,7 @@ export const NavLink: FC<NavLinkProps> = (props) => {
             _hover={{
               color: 'gray.700',
             }}
+            justifyContent={{ base: 'center', lg: 'left' }}
           />
         );
       }}
