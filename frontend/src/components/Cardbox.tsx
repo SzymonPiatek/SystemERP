@@ -1,7 +1,7 @@
-import { Box, Flex, Image, Text, Icon } from "@chakra-ui/react";
-import { FC } from "react";
+import { Box, Flex, Image, Text, Icon } from '@chakra-ui/react';
+import { FC } from 'react';
 
-export const CardBox:FC = () => {
+export const CardBox: FC = () => {
   return (
     <Box
       maxW="sm"
@@ -34,7 +34,6 @@ export const CardBox:FC = () => {
       {/* Sekcja danych */}
       <Flex justify="space-between" align="center">
         <Flex align="center">
-          <Icon as={Image} color="blue.500" mr={2} />
           <Text fontSize="sm">user@gmail.com</Text>
         </Flex>
       </Flex>

@@ -137,8 +137,8 @@
       <td>
         <span>Zrobione</span><br>
         <span>Zrobione</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span><br>
+        <span>Zrobione</span>
       </td>
     </tr>
     <tr>
@@ -153,7 +153,7 @@
       <td>
         <span>Zrobione</span><br>
         <span>Zrobione</span><br>
-        <span>W trakcie</span><br>
+        <span>Zrobione</span><br>
         <span>W trakcie</span>
       </td>
     </tr>
@@ -169,7 +169,7 @@
       <td>
         <span>Zrobione</span><br>
         <span>Zrobione</span><br>
-        <span>W trakcie</span><br>
+        <span>Zrobione</span><br>
         <span>Zrobione</span>
       </td>
     </tr>   
@@ -195,9 +195,9 @@
         <span>* Edycja wydarzenia</span>
       </td>
       <td>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
+        <span>Zrobione</span><br>
+        <span>Zrobione</span><br>
+        <span>Zrobione</span><br>
         <span>W trakcie</span>
       </td>
     </tr>
@@ -211,9 +211,9 @@
         <span>* Edycja notatki</span>
       </td>
       <td>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
+        <span>Zrobione</span><br>
+        <span>Zrobione</span><br>
+        <span>Zrobione</span><br>
         <span>W trakcie</span>
       </td>
     </tr>  
@@ -238,7 +238,7 @@
       <td>
         <span>TypeScript, React, Chakra UI, Storybook?</span>
       </td>
-      <td>W trakcie</td>
+      <td>Zrobione</td>
     </tr>
     <tr>
       <td>2</td>
@@ -269,7 +269,7 @@
       </td>
       <td>
         <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
+        <span>Zrobione</span><br>
         <span>W trakcie</span><br>
         <span>W trakcie</span><br>
         <span>W trakcie</span><br>
@@ -285,7 +285,7 @@
         <span>* Spotkanie/Wydarzenie</span>
       </td>
       <td>
-        <span>W trakcie</span><br>
+        <span>Zrobione</span><br>
         <span>W trakcie</span><br>
         <span>W trakcie</span>
       </td>
@@ -470,5 +470,3 @@
     </tr>
   </tbody>
 </table>
-
-

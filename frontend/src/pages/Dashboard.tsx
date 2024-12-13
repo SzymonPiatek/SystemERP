@@ -1,9 +1,14 @@
-import { Box } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { FC } from 'react';
-import {CardBox} from '../components/Cardbox';
+import { EventCalendar } from '../components/calendar/EventCalendar';
+import { DailyCalendar } from '../components/calendar/DailyCalendar';
+import { CardBox } from '../components/Cardbox';
 
 export const Dashboard: FC<{}> = () => {
-  return <Box>Dashboard
-    <CardBox/>
-  </Box>;
+  return (
+    <Flex wrap="wrap">
+      <DailyCalendar />
+      <EventCalendar />
+    </Flex>
+  );
 };

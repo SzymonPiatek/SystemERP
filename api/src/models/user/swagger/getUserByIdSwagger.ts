@@ -37,10 +37,6 @@
  *                       type: string
  *                       format: email
  *                       example: user@example.com
- *                     password:
- *                       type: string
- *                       description: The hashed password of the user.
- *                       example: $2a$10$MCZo6zMdui/UeuuA5n2freIgJdIWYoqmRc3tIZEdpbcOn.f6tUvHK
  *                     firstName:
  *                       type: string
  *                       example: John
