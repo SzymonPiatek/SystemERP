@@ -15,7 +15,6 @@ export const Schedule: FC<{}> = () => {
         const response = await getEvents();
 
         if (!(response instanceof AxiosError)) {
-          // @ts-ignore
           setEvents(response.events);
         }
       } catch (error) {
