@@ -1,24 +1,28 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET as string;
+import { ACCESS_TOKEN_SECRET, verifyToken } from '../models/auth/services/authService';
 
 if (!ACCESS_TOKEN_SECRET) {
   throw new Error('ACCESS_TOKEN_SECRET is not defined');
 }
 
 export function authenticateToken(req: Request, res: Response, next: NextFunction): void {
-  const authHeader = req.headers.authorization;
-  const token = authHeader && authHeader.split(' ')[1];
-
-  if (token == null) {
-    res.status(401).json({ success: false, message: 'Unauthorized' });
+  const token = req.cookies.accessToken;
+  if (!token) {
+    res.status(401).json({ message: 'Access token not found in cookies' });
     return;
   }
 
-  jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user as any;
+  try {
+    const decoded = verifyToken(token, ACCESS_TOKEN_SECRET);
+    // @ts-ignore
+    req.userId = decoded.id;
     next();
-  });
+  } catch (err) {
+    if (err instanceof jwt.TokenExpiredError) {
+      res.status(401).json({ message: 'Token has expired' });
+      return;
+    }
+    res.status(401).json({ message: 'Token is invalid' });
+  }
 }

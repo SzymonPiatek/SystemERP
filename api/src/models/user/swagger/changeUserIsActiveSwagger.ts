@@ -1,21 +1,21 @@
 /**
  * @swagger
- * /users/{id}:
- *   get:
- *     summary: Get user by ID
+ * /users/{id}/status:
+ *   patch:
+ *     summary: Toggle the active status of a user
  *     tags: [Users]
- *     description: Retrieve a specific user by their ID.
+ *     description: Activates or deactivates a user by toggling their `isActive` status.
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
+ *         description: The ID of the user whose active status is to be toggled.
  *         schema:
  *           type: integer
  *           example: 1
- *         description: The ID of the user to retrieve.
  *     responses:
  *       '200':
- *         description: Successfully retrieved the user.
+ *         description: User status updated successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -26,7 +26,7 @@
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: User found
+ *                   example: User activated successfully
  *                 user:
  *                   type: object
  *                   properties:
@@ -36,7 +36,7 @@
  *                     email:
  *                       type: string
  *                       format: email
- *                       example: user@example.com
+ *                       example: john.doe@example.com
  *                     firstName:
  *                       type: string
  *                       example: John
@@ -47,7 +47,7 @@
  *                       type: boolean
  *                       example: true
  *                     companyId:
- *                       type: integer
+ *                       type: number
  *                       nullable: true
  *                       example: null
  *                     createdAt:

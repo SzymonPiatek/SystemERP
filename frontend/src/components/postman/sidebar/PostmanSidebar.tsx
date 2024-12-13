@@ -5,9 +5,18 @@ import { Box } from '@chakra-ui/react';
 type PostmanSidebarProps = {
   setActiveSection: (section: string) => void;
   activeSection: string;
+  setActiveMainSection: (value: string) => void;
 };
 
-const PostmanSidebar: React.FC<PostmanSidebarProps> = ({ setActiveSection, activeSection }) => {
+const PostmanSidebar: React.FC<PostmanSidebarProps> = ({
+  setActiveSection,
+  activeSection,
+  setActiveMainSection,
+}) => {
+  const handleCollectionButton = async () => {
+    setActiveSection('collections');
+    setActiveMainSection('response');
+  };
   return (
     <Box
       display="flex"
@@ -19,7 +28,7 @@ const PostmanSidebar: React.FC<PostmanSidebarProps> = ({ setActiveSection, activ
       width="12rem"
     >
       <CustomButton
-        onClick={() => setActiveSection('collections')}
+        onClick={handleCollectionButton}
         variant={activeSection === 'collections' ? 'primary' : 'outline'}
       >
         Collections

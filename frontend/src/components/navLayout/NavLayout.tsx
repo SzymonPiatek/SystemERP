@@ -14,11 +14,9 @@ export type NavLayoutProps = PropsWithChildren<{}>;
 export const NavLayout: FC<NavLayoutProps> = (props) => {
   const { children } = props;
   const { user } = useContext(AuthContext);
-  console.log(user);
 
   return (
     <Flex background="gray.100" p={0} minH="100vh">
-      {/* Left Menu */}
       <Stack
         as="aside"
         background="white"

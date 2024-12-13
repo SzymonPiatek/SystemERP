@@ -3,6 +3,7 @@ export type User = {
   email: string;
   firstName: string;
   lastName: string;
+  isActive: boolean;
   password?: string;
   createdAt: Date;
   updatedAt: Date;

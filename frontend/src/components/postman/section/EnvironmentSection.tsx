@@ -33,8 +33,8 @@ const EnvironmentSection: React.FC<EnvironmentSectionProps> = ({
   };
 
   return (
-    <Box display="flex" flexDirection="column" gap="1rem" width="20rem" padding="1rem 0">
-      <Box display="flex" flexDirection="column" gap="1rem">
+    <Box display="flex" flexDirection="column" flex="1" padding="1rem" bg="#333333" gap="1rem">
+      <Box display="flex" gap="1rem">
         <CustomInput
           placeholder="Key"
           value={key}

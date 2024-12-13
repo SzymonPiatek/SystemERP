@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import axiosAuth from './axiosUtils';
-import { ErrorResponse } from './types';
+import { ErrorResponse } from './types.ts';
 
 type AxiosFetchProps = {
   method?: 'get' | 'post' | 'put' | 'patch' | 'delete';

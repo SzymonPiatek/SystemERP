@@ -1,11 +1,14 @@
 const API = {
   auth: {
     login: '/auth/login',
+    logout: '/auth/logout',
     register: '/auth/register',
   },
   users: {
     all: '/users',
     user: (id: number) => `/users/${id}`,
+    changeActive: (id: number) => `/users/${id}/change_active`,
+    changePassword: (id: number) => `/users/${id}/change_password`,
   },
   companies: {
     all: '/companies',
@@ -17,7 +20,7 @@ const API = {
   },
   notes: {
     all: '/notes',
-    event: (id: number) => `/notes/${id}`,
+    note: (id: number) => `/notes/${id}`,
   },
 };
 

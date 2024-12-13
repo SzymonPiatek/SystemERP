@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from 'react';
 import { User } from '../utils/types';
+import { logout as apiLogout } from '../actions/authActions.ts';
+import toast from 'react-hot-toast';
 
 type AuthContextProps = {
   user: User | null;
@@ -7,6 +9,18 @@ type AuthContextProps = {
   isAuthenticated: boolean;
   logout: () => void;
 };
+
+function getInitialUser() {
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    try {
+      return JSON.parse(storedUser) as User;
+    } catch (err) {
+      console.error('Błąd parsowania użytkownika z localStorage:', err);
+    }
+  }
+  return null;
+}
 
 export const AuthContext = createContext<AuthContextProps>({
   user: null,
@@ -16,19 +30,26 @@ export const AuthContext = createContext<AuthContextProps>({
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      setUser(JSON.parse(userData));
-    }
-  }, []);
+  const [user, setUser] = useState<User | null>(getInitialUser());
 
   const isAuthenticated = !!user;
 
-  const logout = () => {
-    localStorage.clear();
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [user]);
+
+  const logout = async () => {
+    try {
+      await apiLogout();
+      toast.success('Successfully logged out!');
+    } catch (err) {
+      console.error('Błąd podczas wylogowywania:', err);
+    }
+    localStorage.removeItem('user');
     setUser(null);
   };
 
