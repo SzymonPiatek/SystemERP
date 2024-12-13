@@ -15,20 +15,14 @@ export const useLoginUser = () => {
     mutationFn: async (loginData: LoginDataProps) => {
       return await login(loginData);
     },
-    onSuccess: async (data: LoginResponse) => {
-      if (data.accessToken) {
-        localStorage.setItem('accessToken', data.accessToken);
-        localStorage.setItem('refreshToken', data.refreshToken);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        setUser(data.user);
-        toast.success('Successfully logged in!');
-        navigate('/');
-      } else {
-        toast.error('Error during login.');
-      }
+    onSuccess: (data: LoginResponse) => {
+      setUser(data.user);
+      console.log(data);
+      toast.success('Successfully logged in!');
+      navigate('/');
     },
     onError: (error: any) => {
-      toast.error('Error');
+      toast.error('Error during login.');
       toast.error(error.message);
     },
   });
