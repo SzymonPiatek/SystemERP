@@ -1,14 +1,34 @@
-import { Box, Flex, VStack } from '@chakra-ui/react';
-import { FC } from 'react';
+import { Flex } from '@chakra-ui/react';
+import { FC, useEffect, useState } from 'react';
+import { SingleNote } from '../components/notes/SingleNote';
+import { AxiosError } from 'axios';
+import { Note } from '../utils/types';
+import { getNotes } from '../actions/noteActions';
 
 export const Notes: FC<{}> = () => {
+  const [notes, setNotes] = useState<Note[]>([]);
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await getNotes();
+
+        if (!(response instanceof AxiosError)) {
+          setNotes(response.notes);
+        }
+      } catch (error) {
+        console.error('Error fetching notes:', error);
+      }
+    };
+
+    fetchNotes();
+  }, []);
+
   return (
-    <Box>
-      <VStack>
-        {new Array(10).fill('testowe notatki').map((name, idx) => {
-          return <Flex key={idx}>{name}</Flex>;
-        })}
-      </VStack>
-    </Box>
+    <Flex wrap="wrap" justify="center">
+      {notes.map((note) => (
+        <SingleNote key={note.id} title={note.title} desc={note.description} />
+      ))}
+    </Flex>
   );
 };

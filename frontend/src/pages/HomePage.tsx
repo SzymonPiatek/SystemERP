@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom';
 export const HomePage: FC<{}> = () => {
   return (
     <NavLayout>
-      <Box color="black" p="8">
+      <Box color="black" p="4">
         <Outlet />
       </Box>
     </NavLayout>

@@ -35,7 +35,7 @@ export const EventCalendar: FC<{}> = () => {
   const [value, onChange] = useState<Value>(new Date());
 
   return (
-    <Box p="4" bg="white" m="4" rounded="2xl">
+    <Box p="4" bg="white" rounded="2xl">
       <BoxWithTitle Title="Calendar" />
       <Calendar onChange={onChange} value={value} />
       <Box>
