@@ -19,8 +19,10 @@ export const getUserByIdHandler: RequestHandler = async (req, res): Promise<void
     if (user) {
       const safeData = excludePassword(user);
       res.status(200).json({ success: true, message: 'User found', user: safeData });
+      return;
     } else {
       res.status(404).json({ success: false, message: 'User not found' });
+      return;
     }
   } catch (error) {
     returnError(res, error);

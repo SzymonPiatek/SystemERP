@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { authenticateToken } from '../../../middlewares/authMiddleware';
-import { changeUserIsActiveHandler, changeUserPasswordHandler, editUserDataHandler } from '../handlers/patchHandlers';
 import { apiLimiter, authLimiter } from '../../../middlewares/limiterMiddleware';
 import { authorizeRole } from '../../../middlewares/roleMiddleware';
 import { getAllUsersHandler } from '../handlers/getAllUsersHandler';
@@ -8,6 +7,9 @@ import { getUserByIdHandler } from '../handlers/getUserByIdHandler';
 import checkEmptyBody from '../../../middlewares/bodyMiddleware';
 import { validateIdParam } from '../../../middlewares/idMiddleware';
 import { checkTheSameUser } from '../../../middlewares/theSameUserMiddleware';
+import { editUserDataHandler } from '../handlers/editUserDataHandler';
+import { changeUserIsActiveHandler } from '../handlers/changeUserIsActiveHandler';
+import { changeUserPasswordHandler } from '../handlers/changeUserPasswordHandler';
 
 const router = Router();
 
