@@ -3,10 +3,11 @@ import { getAllUsersHandler, getUserByIdHandler } from '../handlers/getHandlers'
 import { authenticateToken } from '../../../middlewares/authMiddleware';
 import { changeUserIsActiveHandler, changeUserPasswordHandler, editUserDataHandler } from '../handlers/patchHandlers';
 import { apiLimiter, authLimiter } from '../../../middlewares/limiterMiddleware';
+import { authorizeRole } from '../../../middlewares/roleMiddleware';
 
 const router = Router();
 
-router.get('/', apiLimiter, authenticateToken, getAllUsersHandler);
+router.get('/', apiLimiter, authenticateToken, authorizeRole(['ADMIN']), getAllUsersHandler);
 router.get('/:id', apiLimiter, authenticateToken, getUserByIdHandler);
 
 router.patch('/:id', authLimiter, authenticateToken, editUserDataHandler);
