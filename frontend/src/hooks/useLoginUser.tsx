@@ -17,7 +17,6 @@ export const useLoginUser = () => {
     },
     onSuccess: (data: LoginResponse) => {
       setUser(data.user);
-      console.log(data);
       toast.success('Successfully logged in!');
       navigate('/');
     },

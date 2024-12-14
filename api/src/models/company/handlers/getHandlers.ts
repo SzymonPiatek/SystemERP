@@ -47,6 +47,8 @@ export const getAllCompaniesHandler: RequestHandler = async (req, res): Promise<
 
     const companies = await prisma.company.findMany({
       where: queryConditions,
+      skip: (page - 1) * limit,
+      take: limit,
     });
     const total = companies.length;
 

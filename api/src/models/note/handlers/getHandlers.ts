@@ -8,7 +8,10 @@ export const getAllNotesHandler: RequestHandler = async (req, res) => {
     const limit = parseInt(req.query.limit as string, 10) || 10;
     const page = parseInt(req.query.page as string, 10) || 1;
 
-    const notes = await prisma.note.findMany();
+    const notes = await prisma.note.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
 
     const total = notes.length;
 
