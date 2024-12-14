@@ -7,7 +7,7 @@ import { authorizeRole } from '../../../middlewares/roleMiddleware';
 
 const router = Router();
 
-router.get('/', apiLimiter, authenticateToken, authorizeRole(['ADMIN']), getAllUsersHandler);
+router.get('/', apiLimiter, authenticateToken, authorizeRole(['ADMIN', 'ENTITY_ADMIN', 'OWNER', 'MANAGER']), getAllUsersHandler);
 router.get('/:id', apiLimiter, authenticateToken, getUserByIdHandler);
 
 router.patch('/:id', authLimiter, authenticateToken, editUserDataHandler);

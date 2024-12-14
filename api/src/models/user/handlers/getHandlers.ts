@@ -4,6 +4,7 @@ import prisma from '../../../prismaClient';
 import { excludePassword } from '../services/returnSafeUserData';
 import { addTextCondition } from '../../../utils/queryConditions';
 import paginateData from '../../../utils/pagination';
+import type { User } from '../../../types/types';
 
 export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
@@ -35,22 +36,61 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
     const limit = parseInt(req.query.limit as string, 10) || 10;
     const page = parseInt(req.query.page as string, 10) || 1;
 
-    const total = await prisma.user.count({
-      where: queryConditions,
-    });
-    const users = await prisma.user.findMany({
-      where: queryConditions,
-      skip: (page - 1) * limit,
-      take: limit,
+    let total: number;
+    let users: User[];
+
+    // @ts-ignore
+    const userId = req.userId;
+    const currentUser = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { company: true, profile: { include: { role: true } } },
     });
 
-    const paginatedResponse = paginateData(users, limit, page, total);
+    if (!currentUser) {
+      res.status(404).json({
+        success: false,
+        message: 'Access denied',
+      });
+      return;
+    }
 
-    res.status(200).json({
-      success: true,
-      ...paginatedResponse,
-      total,
-    });
+    if (currentUser && currentUser.profile && currentUser.profile.role) {
+      if (currentUser.profile.role.name !== 'ADMIN') {
+        const userCompanyId = currentUser.companyId;
+
+        if (userCompanyId === undefined) {
+          res.status(404).json({
+            success: false,
+            message: 'Access denied',
+          });
+          return;
+        }
+
+        queryConditions.companyId = Number(userCompanyId);
+      }
+
+      total = await prisma.user.count({
+        where: queryConditions,
+      });
+
+      users = await prisma.user.findMany({
+        where: queryConditions,
+        skip: (page - 1) * limit,
+        take: limit,
+      });
+
+      const paginatedResponse = paginateData(users, limit, page, total);
+
+      res.status(200).json({
+        success: true,
+        ...paginatedResponse,
+        total,
+      });
+      return;
+    }
+
+    res.status(403).json({ success: false, message: 'Access denied' });
+    return;
   } catch (error) {
     returnError(res, error);
   }
