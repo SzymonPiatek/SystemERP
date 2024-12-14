@@ -9,7 +9,7 @@ const NavFooter = () => {
         <Text fontSize="xs" color="gray.600" textAlign="center">
           &copy; {currentYear} NovaERP
         </Text>
-        <Text fontSize="xs" color="gray.600" hideBelow="lg">
+        <Text fontSize="xs" color="gray.600" textAlign="center">
           All rights reserved.
         </Text>
       </VStack>
