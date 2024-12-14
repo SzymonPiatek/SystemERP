@@ -4,11 +4,11 @@ import { comparePassword, hashPassword } from '../../../modules/authModule';
 import { returnError } from '../../../utils/error';
 
 export const changeUserPasswordHandler: RequestHandler = async (req, res): Promise<void> => {
-  const { oldPassword, newPassword } = req.body;
-  const { id } = req.params;
-
   try {
-    const user = await prisma.user.findUnique({ where: { id: Number(id) } });
+    const { oldPassword, newPassword } = req.body;
+    const id = Number(req.params.id);
+
+    const user = await prisma.user.findUnique({ where: { id: id } });
     if (!user) {
       res.status(404).json({ success: false, message: 'User not found' });
       return;
@@ -29,7 +29,7 @@ export const changeUserPasswordHandler: RequestHandler = async (req, res): Promi
     const hashedPassword = await hashPassword(newPassword);
 
     await prisma.user.update({
-      where: { id: Number(id) },
+      where: { id: id },
       data: { password: hashedPassword },
     });
 

@@ -13,11 +13,19 @@ import { changeUserPasswordHandler } from '../handlers/changeUserPasswordHandler
 
 const router = Router();
 
+// GET ALL USERS
 router.get('/', apiLimiter, authenticateToken, authorizeRole(['ADMIN', 'ENTITY_ADMIN', 'OWNER', 'MANAGER']), getAllUsersHandler);
+
+// GET USER BY ID
 router.get('/:id', apiLimiter, authenticateToken, validateIdParam, getUserByIdHandler);
 
-router.patch('/:id', authLimiter, authenticateToken, checkTheSameUser, checkEmptyBody, validateIdParam, editUserDataHandler);
+// EDIT USER
+router.patch('/:id', authLimiter, authenticateToken, checkEmptyBody, validateIdParam, editUserDataHandler);
+
+// (DE)ACTIVATE USER
 router.patch('/:id/change_active', authLimiter, authenticateToken, validateIdParam, changeUserIsActiveHandler);
+
+// CHANGE PASSWORD
 router.patch(
   '/:id/change_password',
   authLimiter,

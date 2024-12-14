@@ -4,17 +4,17 @@ import { returnError } from '../../../utils/error';
 import { excludePassword } from '../services/returnSafeUserData';
 
 export const changeUserIsActiveHandler: RequestHandler = async (req, res): Promise<void> => {
-  const { id } = req.params;
-
   try {
-    const user = await prisma.user.findUnique({ where: { id: Number(id) } });
+    const id = Number(req.params.id);
+
+    const user = await prisma.user.findUnique({ where: { id: id } });
     if (!user) {
       res.status(404).json({ success: false, message: 'User not found' });
       return;
     }
 
     const updatedUser = await prisma.user.update({
-      where: { id: Number(id) },
+      where: { id: id },
       data: {
         isActive: !user.isActive,
       },

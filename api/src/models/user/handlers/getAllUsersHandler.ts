@@ -7,6 +7,8 @@ import { returnError } from '../../../utils/error';
 
 export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
+    const userId = Number(req.userId);
+
     const { email, firstName, lastName, isActive, companyId, search } = req.query;
 
     const queryConditions: Record<string, any> = {};
@@ -38,10 +40,8 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
     let total: number;
     let users: User[];
 
-    // @ts-ignore
-    const userId = req.userId;
     const currentUser = await prisma.user.findUnique({
-      where: { id: Number(userId) },
+      where: { id: userId },
       include: { company: true, profile: { include: { role: true } } },
     });
 
