@@ -13,6 +13,11 @@ const eventSchema = Joi.object({
 export const editEventHandler: RequestHandler = async (req, res): Promise<void> => {
   const { id } = req.params;
 
+  if (!Object.keys(req.body).length) {
+    res.status(400).json({ success: false, message: 'Request body cannot be empty' });
+    return;
+  }
+
   try {
     const { error, value } = eventSchema.validate(req.body);
     if (error) {

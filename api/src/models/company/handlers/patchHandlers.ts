@@ -1,17 +1,50 @@
 import { RequestHandler } from 'express';
 import { returnError } from '../../../utils/error';
 import prisma from '../../../prismaClient';
+import Joi from 'joi';
+
+const companySchema = Joi.object({
+  name: Joi.string().optional(),
+  country: Joi.string().optional(),
+  voivodeship: Joi.string().optional(),
+  district: Joi.string().optional(),
+  commune: Joi.string().optional(),
+  city: Joi.string().optional(),
+  zipCode: Joi.string().optional(),
+  street: Joi.string().optional(),
+  houseNumber: Joi.string().optional(),
+  apartmentNumber: Joi.string().optional(),
+  nip: Joi.string().optional(),
+  regon: Joi.string().optional(),
+});
 
 export const editCompanyDataHandler: RequestHandler = async (req, res): Promise<void> => {
-  const { name, country, voivodeship, district, commune, city, zipCode, street, houseNumber, apartmentNumber, nip, regon } = req.body;
   const { id } = req.params;
 
+  if (!Object.keys(req.body).length) {
+    res.status(400).json({ success: false, message: 'Request body cannot be empty' });
+    return;
+  }
+
+  if (!Object.keys(req.body).length) {
+    res.status(400).json({ success: false, message: 'Request body cannot be empty' });
+    return;
+  }
+
   try {
+    const { error, value } = companySchema.validate(req.body);
+    if (error) {
+      res.status(400).json({ success: false, message: error.details[0].message });
+      return;
+    }
+
     const company = await prisma.company.findUnique({ where: { id: Number(id) } });
     if (!company) {
       res.status(404).json({ success: false, message: 'Company not found' });
       return;
     }
+
+    const { name, country, voivodeship, district, commune, city, zipCode, street, houseNumber, apartmentNumber, nip, regon } = value;
 
     if (name) {
       const existingCompany = await prisma.company.findFirst({
