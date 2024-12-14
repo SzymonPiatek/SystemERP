@@ -11,23 +11,17 @@ const notesSchema = Joi.object({
 
 export const editNoteHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
+    const userId = Number(req.userId);
+    const noteId = Number(req.params.id);
+
     const { error, value } = notesSchema.validate(req.body);
     if (error) {
       res.status(400).json({ success: false, message: error.details[0].message });
       return;
     }
 
-    const userId = req.userId;
-
-    if (!userId) {
-      res.status(403).json({ success: false, message: 'Access denied' });
-      return;
-    }
-
-    const id = req.params.id;
-
     const isExist = await prisma.note.findUnique({
-      where: { id: Number(id), ownerId: Number(userId) },
+      where: { id: noteId, ownerId: userId },
     });
 
     if (!isExist) {
@@ -48,7 +42,7 @@ export const editNoteHandler: RequestHandler = async (req, res): Promise<void> =
     if (date) updatedData.date = date;
 
     const updatedNote = await prisma.note.update({
-      where: { id: Number(id) },
+      where: { id: noteId },
       data: updatedData,
     });
 

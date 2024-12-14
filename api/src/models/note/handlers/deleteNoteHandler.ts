@@ -4,18 +4,11 @@ import prisma from '../../../prismaClient';
 
 export const deleteNoteHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
-    const { id } = req.params;
-    const noteId = Number(id);
-
-    const userId = req.userId;
-
-    if (!userId) {
-      res.status(403).json({ success: false, message: 'Access denied' });
-      return;
-    }
+    const noteId = Number(req.params.id);
+    const userId = Number(req.userId);
 
     const isExist = await prisma.note.findUnique({
-      where: { id: noteId, ownerId: Number(userId) },
+      where: { id: noteId, ownerId: userId },
     });
 
     if (!isExist) {
@@ -34,6 +27,7 @@ export const deleteNoteHandler: RequestHandler = async (req, res): Promise<void>
       success: true,
       message: 'Note deleted',
     });
+    return;
   } catch (error) {
     returnError(res, error);
   }
