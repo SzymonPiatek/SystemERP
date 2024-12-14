@@ -36,12 +36,6 @@
  *                 message:
  *                   type: string
  *                   example: Login successful
- *                 accessToken:
- *                   type: string
- *                   description: JWT access token.
- *                 refreshToken:
- *                   type: string
- *                   description: JWT refresh token.
  *                 user:
  *                   type: object
  *                   properties:

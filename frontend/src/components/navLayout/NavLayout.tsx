@@ -30,10 +30,10 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
         flex="1"
       >
         <Box>
-          <Box p="4">
+          <Box h="4rem" display="flex" placeItems="center">
             <Logo />
           </Box>
-          <Stack as="nav" px={4} pb={8} mt="2">
+          <Stack as="nav" px={4} pb={8}>
             <NavLink to="/">
               <TextWithIcon title="Dashboard" Icon={MdDashboard}></TextWithIcon>
             </NavLink>
@@ -46,9 +46,9 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
             <NavLink to="/notes">
               <TextWithIcon title="Notes" Icon={MdNotes}></TextWithIcon>
             </NavLink>
-            <NavLink to="/orders">
-              <TextWithIcon title="Orders" Icon={MdChecklist}></TextWithIcon>
-            </NavLink>
+            {/*<NavLink to="/orders">*/}
+            {/*  <TextWithIcon title="Orders" Icon={MdChecklist}></TextWithIcon>*/}
+            {/*</NavLink>*/}
           </Stack>
         </Box>
         <Box p={4}>

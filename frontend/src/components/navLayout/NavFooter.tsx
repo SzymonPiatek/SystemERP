@@ -24,7 +24,7 @@ const NavFooter = () => {
       </Flex>
       <VStack justify="center" align="center">
         <Text fontSize="xs" color="gray.600" textAlign="center">
-          &copy; {currentYear} Cebulki Programowania.
+          &copy; {currentYear} NovaERP
         </Text>
         <Text fontSize="xs" color="gray.600" hideBelow="lg">
           All rights reserved.

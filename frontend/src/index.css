@@ -6,6 +6,10 @@ body {
 }
 
 /* Toolbar */
+.rbc-toolbar {
+  padding: 20px 0 !important;
+}
+
 .rbc-toolbar-label {
   text-align: right !important;
   padding: 0 20px !important;
@@ -29,6 +33,7 @@ body {
 /* Time View and Slots */
 .rbc-time-view {
   border-color: #eee !important;
+  height: 100% !important;
 }
 
 .rbc-time-header {

@@ -33,8 +33,8 @@ export const Schedule: FC<{}> = () => {
   }));
 
   return (
-    <Flex wrap="wrap">
-      <Box bg="white" rounded="2xl" p="4" pt="8" pb="8" w="full">
+    <Flex w="full" h="full">
+      <Box bg="white" rounded="2xl" p="4" pt="4" pb="4" w="full" h="fit">
         <BigCalendar events={formattedEvents} set="WORK_WEEK" />
       </Box>
     </Flex>

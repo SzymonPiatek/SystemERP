@@ -44,14 +44,13 @@ export const loginHandler: RequestHandler = async (req, res): Promise<void> => {
       return;
     }
 
-    const tokens = await generateAndSetTokens(res, user);
+    await generateAndSetTokens(res, user);
     const safeData = excludePassword(user);
 
     res.status(200).json({
       success: true,
       message: 'Login successful',
       user: safeData,
-      ...tokens,
     });
     return;
   } catch (error) {
