@@ -1,35 +1,31 @@
 import { Router } from 'express';
 import { authenticateToken } from '../../../middlewares/authMiddleware';
-import { getAllCompaniesHandler, getCompanyByIdHandler } from '../handlers/getHandlers';
-import { postCompanyHandler } from '../handlers/postHandlers';
-import { editCompanyDataHandler } from '../handlers/patchHandlers';
 import { apiLimiter, authLimiter } from '../../../middlewares/limiterMiddleware';
 import checkEmptyBody from '../../../middlewares/bodyMiddleware';
 import { validateIdParam } from '../../../middlewares/idMiddleware';
 import { authorizeRole } from '../../../middlewares/roleMiddleware';
-import checkUserId from '../../../middlewares/userIdMiddleware';
+import { getAllCompaniesHandler } from '../handlers/getAllCompaniesHandler';
+import { getCompanyByIdHandler } from '../handlers/getCompanyByIdHandler';
+import { createCompanyHandler } from '../handlers/createCompanyHandler';
+import { editCompanyDataHandler } from '../handlers/editCompanyDataHandler';
 
 const router = Router();
 
-router.get('/', apiLimiter, authenticateToken, authorizeRole(['ADMIN']), checkUserId, getAllCompaniesHandler);
-router.get(
-  '/:id',
-  apiLimiter,
-  authenticateToken,
-  validateIdParam,
-  authorizeRole(['ADMIN', 'ENTITY_ADMIN', 'OWNER', 'MANAGER']),
-  checkUserId,
-  getCompanyByIdHandler,
-);
+// GET ALL COMPANIES
+router.get('/', apiLimiter, authenticateToken, authorizeRole(['ADMIN']), getAllCompaniesHandler);
 
-router.post('/', authLimiter, authenticateToken, authorizeRole(['ADMIN']), checkUserId, checkEmptyBody, postCompanyHandler);
+// GET COMPANY BY ID
+router.get('/:id', apiLimiter, authenticateToken, validateIdParam, getCompanyByIdHandler);
 
+// CREATE COMPANY
+router.post('/', authLimiter, authenticateToken, authorizeRole(['ADMIN']), checkEmptyBody, createCompanyHandler);
+
+// EDIT COMPANY
 router.patch(
   '/:id',
   authLimiter,
   authenticateToken,
   authorizeRole(['ADMIN', 'ENTITY_ADMIN', 'OWNER']),
-  checkUserId,
   validateIdParam,
   checkEmptyBody,
   editCompanyDataHandler,

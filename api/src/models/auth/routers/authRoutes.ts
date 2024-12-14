@@ -7,9 +7,16 @@ import checkEmptyBody from '../../../middlewares/bodyMiddleware';
 
 const router = Router();
 
+// REGISTER NEW USER
 router.post('/register', checkEmptyBody, registerHandler);
+
+// LOGIN USER
 router.post('/login', checkEmptyBody, loginHandler);
+
+// LOGOUT USER
 router.post('/logout', logoutHandler);
+
+// REFRESH TOKENS
 router.post('/token/refresh', refreshTokensHandler);
 
 export default router;

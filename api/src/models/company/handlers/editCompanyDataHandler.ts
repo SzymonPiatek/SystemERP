@@ -19,38 +19,46 @@ const companySchema = Joi.object({
 });
 
 export const editCompanyDataHandler: RequestHandler = async (req, res): Promise<void> => {
-  const { id } = req.params;
-
-  if (!Object.keys(req.body).length) {
-    res.status(400).json({ success: false, message: 'Request body cannot be empty' });
-    return;
-  }
-
-  if (!Object.keys(req.body).length) {
-    res.status(400).json({ success: false, message: 'Request body cannot be empty' });
-    return;
-  }
-
   try {
+    const companyId = Number(req.params.id);
+    const userId = Number(req.userId);
+
+    const currentUser = await prisma.user.findUnique({
+      where: { id: userId },
+      include: { profile: { include: { role: true } } },
+    });
+
+    if (!currentUser) {
+      res.status(403).json({ success: false, message: 'User not found' });
+      return;
+    }
+
+    if (currentUser.profile && currentUser.profile.role.name !== 'ADMIN') {
+      if (currentUser.companyId !== companyId) {
+        res.status(404).json({ success: false, message: 'Access denied' });
+        return;
+      }
+    }
+
     const { error, value } = companySchema.validate(req.body);
     if (error) {
       res.status(400).json({ success: false, message: error.details[0].message });
       return;
     }
 
-    const company = await prisma.company.findUnique({ where: { id: Number(id) } });
+    const { name, country, voivodeship, district, commune, city, zipCode, street, houseNumber, apartmentNumber, nip, regon } = value;
+
+    const company = await prisma.company.findUnique({ where: { id: companyId } });
     if (!company) {
       res.status(404).json({ success: false, message: 'Company not found' });
       return;
     }
 
-    const { name, country, voivodeship, district, commune, city, zipCode, street, houseNumber, apartmentNumber, nip, regon } = value;
-
     if (name) {
       const existingCompany = await prisma.company.findFirst({
         where: {
           name,
-          id: { not: Number(id) },
+          id: { not: companyId },
         },
       });
       if (existingCompany) {
@@ -87,7 +95,7 @@ export const editCompanyDataHandler: RequestHandler = async (req, res): Promise<
     if (regon) updatedData.regon = regon;
 
     const updatedCompany = await prisma.company.update({
-      where: { id: Number(id) },
+      where: { id: companyId },
       data: updatedData,
     });
 

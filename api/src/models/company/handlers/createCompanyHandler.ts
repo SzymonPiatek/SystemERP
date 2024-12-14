@@ -18,7 +18,7 @@ const companySchema = Joi.object({
   regon: Joi.string().required(),
 });
 
-export const postCompanyHandler: RequestHandler = async (req, res): Promise<void> => {
+export const createCompanyHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
     const { error, value } = companySchema.validate(req.body);
     if (error) {
