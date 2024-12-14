@@ -22,7 +22,7 @@ export const TopBarLayout: FC<TopBarProps> = ({ user }) => {
       height="4rem"
       color="black"
       width="full"
-      hideBelow="lg"
+      hideBelow="sm"
       position="sticky"
       top="0"
       zIndex="999"
