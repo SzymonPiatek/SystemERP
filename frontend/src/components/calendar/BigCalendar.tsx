@@ -29,7 +29,7 @@ const BigCalendar: FC<BigCalendarProps> = ({ events, set, classes }) => {
         endAccessor="end"
         views={['work_week', 'week', 'day']}
         view={view}
-        style={{ height: '98%' }}
+        style={{ height: '100%' }}
         onView={handleOnChangeView}
         min={new Date(2025, 1, 0, 7, 0, 0)}
         max={new Date(2025, 1, 0, 20, 0, 0)}

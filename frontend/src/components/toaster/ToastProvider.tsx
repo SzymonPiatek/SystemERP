@@ -3,8 +3,7 @@ import { Toaster } from 'react-hot-toast';
 function ToastProvider() {
   return (
     <Toaster
-      position="top-right"
-      reverseOrder
+      position="bottom-right"
       gutter={20}
       toastOptions={{
         duration: 3000,
@@ -18,9 +17,6 @@ function ToastProvider() {
           padding: '1rem',
           lineHeight: '1.5',
         },
-      }}
-      containerStyle={{
-        top: 84,
       }}
     />
   );

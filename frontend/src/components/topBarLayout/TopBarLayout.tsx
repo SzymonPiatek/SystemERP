@@ -21,6 +21,7 @@ export const TopBarLayout: FC<TopBarProps> = (props) => {
       p="4"
       align="center"
       bg="white"
+      height="4rem"
       color="black"
       width="full"
       hideBelow="lg"
@@ -28,17 +29,19 @@ export const TopBarLayout: FC<TopBarProps> = (props) => {
       top="0"
       zIndex="999"
     >
-      {/* NOTES */}
-      <Flex align="center" gap="1">
-        <Box bg="red.600" h="4" w="4" rounded="full"></Box>
-        <Text textStyle="xs">2</Text>
-        <Box bg="yellow.600" h="4" w="4" rounded="full"></Box>
-        <Text textStyle="xs">12</Text>
-        <Box bg="green.600" h="4" w="4" rounded="full"></Box>
-        <Text textStyle="xs">5</Text>
-      </Flex>
+      {/* ORDERS */}
+      {/*<Flex align="center" gap="1">*/}
+      {/*  <Box bg="red.600" h="4" w="4" rounded="full"></Box>*/}
+      {/*  <Text textStyle="xs">2</Text>*/}
+      {/*  <Box bg="yellow.600" h="4" w="4" rounded="full"></Box>*/}
+      {/*  <Text textStyle="xs">12</Text>*/}
+      {/*  <Box bg="green.600" h="4" w="4" rounded="full"></Box>*/}
+      {/*  <Text textStyle="xs">5</Text>*/}
+      {/*</Flex>*/}
+      <Flex></Flex>
+
       {/* ICONS AND USER */}
-      <Flex align="center" gap="6">
+      <Flex align="center" gap="6" justifySelf="end">
         <Box>
           <IconButton size="xs" onClick={logout}>
             <MdOutlineLogout />
