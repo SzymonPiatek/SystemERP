@@ -1,6 +1,8 @@
 import { RequestHandler } from 'express';
 import { returnError } from '../../../utils/error';
 import prisma from '../../../prismaClient';
+import { addTextCondition } from '../../../utils/queryConditions';
+import paginateData from '../../../utils/pagination';
 
 export const getAllCompaniesHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
@@ -8,68 +10,55 @@ export const getAllCompaniesHandler: RequestHandler = async (req, res): Promise<
       req.query;
 
     const queryConditions: Record<string, any> = {};
-    if (name !== undefined) {
-      queryConditions.name = { contains: name, mode: 'insensitive' };
-    }
-    if (country !== undefined) {
-      queryConditions.country = { contains: country, mode: 'insensitive' };
-    }
-    if (voivodeship !== undefined) {
-      queryConditions.voivodeship = { contains: voivodeship, mode: 'insensitive' };
-    }
-    if (district !== undefined) {
-      queryConditions.district = { contains: district, mode: 'insensitive' };
-    }
-    if (commune !== undefined) {
-      queryConditions.commune = { contains: commune, mode: 'insensitive' };
-    }
-    if (city !== undefined) {
-      queryConditions.city = { contains: city, mode: 'insensitive' };
-    }
-    if (zipCode !== undefined) {
-      queryConditions.zipCode = { contains: zipCode, mode: 'insensitive' };
-    }
-    if (street !== undefined) {
-      queryConditions.street = { contains: street, mode: 'insensitive' };
-    }
-    if (houseNumber !== undefined) {
-      queryConditions.houseNumber = { contains: houseNumber, mode: 'insensitive' };
-    }
-    if (apartmentNumber !== undefined) {
-      queryConditions.apartmentNumber = { contains: apartmentNumber, mode: 'insensitive' };
-    }
-    if (nip !== undefined) {
-      queryConditions.nip = { contains: nip, mode: 'insensitive' };
-    }
-    if (regon !== undefined) {
-      queryConditions.regon = { contains: regon, mode: 'insensitive' };
+
+    addTextCondition(queryConditions, 'name', name as string | string[] | undefined);
+    addTextCondition(queryConditions, 'country', country as string | string[] | undefined);
+    addTextCondition(queryConditions, 'voivodeship', voivodeship as string | string[] | undefined);
+    addTextCondition(queryConditions, 'district', district as string | string[] | undefined);
+    addTextCondition(queryConditions, 'commune', commune as string | string[] | undefined);
+    addTextCondition(queryConditions, 'city', city as string | string[] | undefined);
+    addTextCondition(queryConditions, 'zipCode', zipCode as string | string[] | undefined);
+    addTextCondition(queryConditions, 'street', street as string | string[] | undefined);
+    addTextCondition(queryConditions, 'houseNumber', houseNumber as string | string[] | undefined);
+    addTextCondition(queryConditions, 'apartmentNumber', apartmentNumber as string | string[] | undefined);
+    addTextCondition(queryConditions, 'nip', nip as string | string[] | undefined);
+    addTextCondition(queryConditions, 'regon', regon as string | string[] | undefined);
+
+    if (search) {
+      const searchWords = search.toString().trim().split(/\s+/);
+      queryConditions.OR = searchWords.flatMap((word) => [
+        { name: { contains: word, mode: 'insensitive' } },
+        { country: { contains: word, mode: 'insensitive' } },
+        { voivodeship: { contains: word, mode: 'insensitive' } },
+        { district: { contains: word, mode: 'insensitive' } },
+        { commune: { contains: word, mode: 'insensitive' } },
+        { city: { contains: word, mode: 'insensitive' } },
+        { zipCode: { contains: word, mode: 'insensitive' } },
+        { street: { contains: word, mode: 'insensitive' } },
+        { houseNumber: { contains: word, mode: 'insensitive' } },
+        { apartmentNumber: { contains: word, mode: 'insensitive' } },
+        { nip: { contains: word, mode: 'insensitive' } },
+        { regon: { contains: word, mode: 'insensitive' } },
+      ]);
     }
 
-    if (search !== undefined) {
-      const searchText = search as string;
+    const limit = parseInt(req.query.limit as string, 10) || 10;
+    const page = parseInt(req.query.page as string, 10) || 1;
 
-      queryConditions.OR = [
-        { name: { contains: searchText, mode: 'insensitive' } },
-        { country: { contains: searchText, mode: 'insensitive' } },
-        { voivodeship: { contains: searchText, mode: 'insensitive' } },
-        { district: { contains: searchText, mode: 'insensitive' } },
-        { commune: { contains: searchText, mode: 'insensitive' } },
-        { city: { contains: searchText, mode: 'insensitive' } },
-        { zipCode: { contains: searchText, mode: 'insensitive' } },
-        { street: { contains: searchText, mode: 'insensitive' } },
-        { houseNumber: { contains: searchText, mode: 'insensitive' } },
-        { apartmentNumber: { contains: searchText, mode: 'insensitive' } },
-        { nip: { contains: searchText, mode: 'insensitive' } },
-        { regon: { contains: searchText, mode: 'insensitive' } },
-      ];
-    }
-
+    const total = await prisma.company.count();
     const companies = await prisma.company.findMany({
       where: queryConditions,
+      skip: (page - 1) * limit,
+      take: limit,
     });
-    const countCompanies = companies.length;
 
-    res.status(200).json({ success: true, count: countCompanies, companies });
+    const paginatedResponse = paginateData(companies, limit, page, total);
+
+    res.status(200).json({
+      success: true,
+      ...paginatedResponse,
+      total,
+    });
   } catch (error) {
     returnError(res, error);
   }

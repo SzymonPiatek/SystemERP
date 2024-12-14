@@ -70,6 +70,18 @@ export type Note = {
   updatedAt: Date;
 };
 
+export type TableData<T> = {
+  data: T[];
+  limit: number;
+  page: number;
+  previous: number;
+  next: number;
+  total: number;
+  totalPages: number;
+};
+
+export type FilterParams = Record<string, string | number>;
+
 export type LoginDataProps = {
   email: string;
   password: string;
@@ -78,8 +90,6 @@ export type LoginDataProps = {
 export type LoginResponse = {
   success: boolean;
   message: string;
-  accessToken: string;
-  refreshToken: string;
   user: User;
 };
 
