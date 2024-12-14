@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Image } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 export type LogoProps = {};
@@ -8,15 +8,7 @@ export const Logo: FC<LogoProps> = (props) => {
   return (
     <Link to="/">
       <Box {...props}>
-        <Text
-          fontWeight="700"
-          textTransform="uppercase"
-          lineHeight="1"
-          color="gray.700"
-          textStyle={{ base: 'xs', lg: 'md', xl: 'lg' }}
-        >
-          ERP
-        </Text>
+        <Image src="../../../public/logo.png" alt="Logo" />
       </Box>
     </Link>
   );

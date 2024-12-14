@@ -30,10 +30,10 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
         flex="1"
       >
         <Box>
-          <Box p="4">
+          <Box p="4" h="4rem" display="flex" placeItems="center">
             <Logo />
           </Box>
-          <Stack as="nav" px={4} pb={8} mt="2">
+          <Stack as="nav" px={4} pb={8}>
             <NavLink to="/">
               <TextWithIcon title="Dashboard" Icon={MdDashboard}></TextWithIcon>
             </NavLink>

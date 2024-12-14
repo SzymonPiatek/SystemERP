@@ -21,6 +21,7 @@ export const TopBarLayout: FC<TopBarProps> = (props) => {
       p="4"
       align="center"
       bg="white"
+      height="4rem"
       color="black"
       width="full"
       hideBelow="lg"
