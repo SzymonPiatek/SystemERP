@@ -1,10 +1,9 @@
 import { RequestHandler } from 'express';
-import { returnError } from '../../../utils/error';
-import prisma from '../../../prismaClient';
-import { excludePassword } from '../services/returnSafeUserData';
 import { addTextCondition } from '../../../utils/queryConditions';
-import paginateData from '../../../utils/pagination';
 import type { User } from '../../../types/types';
+import prisma from '../../../prismaClient';
+import paginateData from '../../../utils/pagination';
+import { returnError } from '../../../utils/error';
 
 export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
@@ -91,30 +90,6 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
 
     res.status(403).json({ success: false, message: 'Access denied' });
     return;
-  } catch (error) {
-    returnError(res, error);
-  }
-};
-
-export const getUserByIdHandler: RequestHandler = async (req, res): Promise<void> => {
-  try {
-    const user = await prisma.user.findUnique({
-      where: { id: Number(req.params.id) },
-      include: {
-        profile: {
-          include: {
-            role: true,
-          },
-        },
-      },
-    });
-
-    if (user) {
-      const safeData = excludePassword(user);
-      res.status(200).json({ success: true, message: 'User found', user: safeData });
-    } else {
-      res.status(404).json({ success: false, message: 'User not found' });
-    }
   } catch (error) {
     returnError(res, error);
   }
