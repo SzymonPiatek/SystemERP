@@ -11,16 +11,17 @@ const eventSchema = Joi.object({
 });
 
 export const editEventHandler: RequestHandler = async (req, res): Promise<void> => {
-  const { id } = req.params;
-
   try {
+    const id = Number(req.params.id);
+    const userId = Number(req.userId);
+
     const { error, value } = eventSchema.validate(req.body);
     if (error) {
       res.status(400).json({ success: false, message: error.details[0].message });
       return;
     }
 
-    const isExist = await prisma.event.findUnique({ where: { id: Number(id) } });
+    const isExist = await prisma.event.findUnique({ where: { id: id, ownerId: userId } });
     if (!isExist) {
       res.status(404).json({ success: false, message: 'Event not found' });
       return;
@@ -41,7 +42,7 @@ export const editEventHandler: RequestHandler = async (req, res): Promise<void> 
     if (isAllDay) updatedData.isAllDay = isAllDay;
 
     const updatedEvent = await prisma.event.update({
-      where: { id: Number(id) },
+      where: { id: id },
       data: updatedData,
     });
 
