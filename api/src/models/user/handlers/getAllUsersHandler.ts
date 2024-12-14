@@ -41,7 +41,7 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
     // @ts-ignore
     const userId = req.userId;
     const currentUser = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { id: Number(userId) },
       include: { company: true, profile: { include: { role: true } } },
     });
 

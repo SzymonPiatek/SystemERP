@@ -5,11 +5,10 @@ import prisma from '../prismaClient';
 export const authorizeRole = (allowedRoles: string[]) => {
   return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      // @ts-ignore
       const userId = req.userId;
 
       const user = await prisma.user.findUnique({
-        where: { id: userId },
+        where: { id: Number(userId!) },
         include: { profile: { include: { role: true } } },
       });
 

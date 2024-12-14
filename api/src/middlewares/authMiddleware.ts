@@ -15,7 +15,6 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
 
   try {
     const decoded = verifyToken(token, ACCESS_TOKEN_SECRET);
-    // @ts-ignore
     req.userId = decoded.id;
     next();
   } catch (err) {
