@@ -57,7 +57,6 @@ export const getAllCompaniesHandler: RequestHandler = async (req, res): Promise<
       ...paginatedResponse,
       total,
     });
-    return;
   } catch (error) {
     returnError(res, error);
   }
