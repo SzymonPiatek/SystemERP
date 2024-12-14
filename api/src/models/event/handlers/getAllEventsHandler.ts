@@ -6,7 +6,7 @@ export const getAllEventsHandler: RequestHandler = async (req, res) => {
   try {
     const userId = Number(req.userId);
 
-    const events = await prisma.event.findMany({ where: { id: userId } });
+    const events = await prisma.event.findMany({ where: { ownerId: userId } });
     const countEvents = events.length;
 
     res.status(200).json({ success: true, count: countEvents, events });

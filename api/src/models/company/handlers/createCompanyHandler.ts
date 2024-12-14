@@ -28,6 +28,15 @@ export const createCompanyHandler: RequestHandler = async (req, res): Promise<vo
 
     const { name, country, voivodeship, district, commune, city, zipCode, street, houseNumber, apartmentNumber, nip, regon } = value;
 
+    const isNameExist = await prisma.company.findFirst({
+      where: { name: name },
+    });
+
+    if (isNameExist) {
+      res.status(400).json({ success: false, message: 'Name already exists' });
+      return;
+    }
+
     const newCompany = await prisma.company.create({
       data: {
         name,

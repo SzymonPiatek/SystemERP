@@ -4,6 +4,7 @@ import type { User } from '../../../types/types';
 import prisma from '../../../prismaClient';
 import paginateData from '../../../utils/pagination';
 import { returnError } from '../../../utils/error';
+import { excludePassword } from '../services/returnSafeUserData';
 
 export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
@@ -78,7 +79,11 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
         take: limit,
       });
 
-      const paginatedResponse = paginateData(users, limit, page, total);
+      const safeUsers = users.map((user: User) => {
+        return excludePassword(user);
+      });
+
+      const paginatedResponse = paginateData(safeUsers, limit, page, total);
 
       res.status(200).json({
         success: true,
