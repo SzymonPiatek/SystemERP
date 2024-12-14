@@ -12,6 +12,13 @@ const notesSchema = Joi.object({
 
 export const postNoteHandler: RequestHandler = async (req, res) => {
   try {
+    const userId = req.userId;
+
+    if (!userId) {
+      res.status(403).json({ success: false, message: 'Access denied' });
+      return;
+    }
+
     const { error, value } = notesSchema.validate(req.body);
     if (error) {
       res.status(400).json({ success: false, message: error.details[0].message });

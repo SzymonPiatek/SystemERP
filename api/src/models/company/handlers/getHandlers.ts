@@ -11,18 +11,25 @@ export const getAllCompaniesHandler: RequestHandler = async (req, res): Promise<
 
     const queryConditions: Record<string, any> = {};
 
-    addTextCondition(queryConditions, 'name', name as string | string[] | undefined);
-    addTextCondition(queryConditions, 'country', country as string | string[] | undefined);
-    addTextCondition(queryConditions, 'voivodeship', voivodeship as string | string[] | undefined);
-    addTextCondition(queryConditions, 'district', district as string | string[] | undefined);
-    addTextCondition(queryConditions, 'commune', commune as string | string[] | undefined);
-    addTextCondition(queryConditions, 'city', city as string | string[] | undefined);
-    addTextCondition(queryConditions, 'zipCode', zipCode as string | string[] | undefined);
-    addTextCondition(queryConditions, 'street', street as string | string[] | undefined);
-    addTextCondition(queryConditions, 'houseNumber', houseNumber as string | string[] | undefined);
-    addTextCondition(queryConditions, 'apartmentNumber', apartmentNumber as string | string[] | undefined);
-    addTextCondition(queryConditions, 'nip', nip as string | string[] | undefined);
-    addTextCondition(queryConditions, 'regon', regon as string | string[] | undefined);
+    const conditionsList: any[][] = [
+      ['name', name],
+      ['country', country],
+      ['voivodeship', voivodeship],
+      ['district', district],
+      ['commune', commune],
+      ['city', city],
+      ['country', country],
+      ['zipCode', zipCode],
+      ['street', street],
+      ['houseNumber', houseNumber],
+      ['apartmentNumber', apartmentNumber],
+      ['nip', nip],
+      ['regon', regon],
+    ];
+
+    for (const condition of conditionsList) {
+      addTextCondition(queryConditions, condition[0], condition[1] as string | string[] | undefined);
+    }
 
     if (search) {
       const searchWords = search.toString().trim().split(/\s+/);
@@ -61,6 +68,7 @@ export const getAllCompaniesHandler: RequestHandler = async (req, res): Promise<
       ...paginatedResponse,
       total,
     });
+    return;
   } catch (error) {
     returnError(res, error);
   }
@@ -68,12 +76,31 @@ export const getAllCompaniesHandler: RequestHandler = async (req, res): Promise<
 
 export const getCompanyByIdHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
-    const company = await prisma.company.findUnique({ where: { id: Number(req.params.id) } });
+    const userId = Number(req.userId);
+    const companyId = Number(req.params.id);
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      res.status(403).json({ success: false, message: 'User not found' });
+      return;
+    }
+
+    if (user.companyId !== companyId) {
+      res.status(404).json({ success: false, message: 'Access denied' });
+      return;
+    }
+
+    const company = await prisma.company.findUnique({ where: { id: companyId } });
 
     if (company) {
       res.status(200).json({ success: true, message: 'Company found', company });
+      return;
     } else {
       res.status(404).json({ success: false, message: 'Company not found' });
+      return;
     }
   } catch (error) {
     returnError(res, error);
