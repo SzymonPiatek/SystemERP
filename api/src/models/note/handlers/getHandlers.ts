@@ -26,7 +26,7 @@ export const getAllNotesHandler: RequestHandler = async (req, res) => {
   }
 };
 
-export const getNotesByIdHandler: RequestHandler = async (req, res) => {
+export const getNoteByIdHandler: RequestHandler = async (req, res) => {
   try {
     const note = await prisma.note.findUnique({ where: { id: Number(req.params.id) } });
 

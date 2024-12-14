@@ -149,12 +149,14 @@
         <span>* Pobranie użytkownika o danym id</span><br>
         <span>* Edycja danych użytkownika</span><br>
         <span>* Aktywacja/dezaktywacja użytkownika</span>
+        <span>* Zmiana hasła użytkownika</span>
       </td>
       <td>
         <span>Zrobione</span><br>
         <span>Zrobione</span><br>
         <span>Zrobione</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span><br>
+        <span>Zrobione</span><br>
       </td>
     </tr>
     <tr>

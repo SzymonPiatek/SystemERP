@@ -2,22 +2,20 @@ import { RequestHandler } from 'express';
 import { returnError } from '../../../utils/error';
 import prisma from '../../../prismaClient';
 import { excludePassword } from '../services/returnSafeUserData';
-import { User } from '../../../types/types';
+import { addTextCondition } from '../../../utils/queryConditions';
+import paginateData from '../../../utils/pagination';
 
 export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
     const { email, firstName, lastName, isActive, companyId, search } = req.query;
 
     const queryConditions: Record<string, any> = {};
-    if (email !== undefined) {
-      queryConditions.email = { contains: email, mode: 'insensitive' };
-    }
-    if (firstName !== undefined) {
-      queryConditions.firstName = { contains: firstName, mode: 'insensitive' };
-    }
-    if (lastName !== undefined) {
-      queryConditions.lastName = { contains: lastName, mode: 'insensitive' };
-    }
+
+    addTextCondition(queryConditions, 'email', email as string | string[] | undefined);
+    addTextCondition(queryConditions, 'firstName', firstName as string | string[] | undefined);
+    addTextCondition(queryConditions, 'lastName', lastName as string | string[] | undefined);
+    addTextCondition(queryConditions, 'email', email as string | string[] | undefined);
+
     if (isActive !== undefined) {
       queryConditions.isActive = isActive === 'true';
     }
@@ -25,23 +23,34 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
       queryConditions.companyId = Number(companyId);
     }
 
-    if (search !== undefined) {
-      const searchText = search as string;
-
-      queryConditions.OR = [
-        { email: { contains: searchText, mode: 'insensitive' } },
-        { firstName: { contains: searchText, mode: 'insensitive' } },
-        { lastName: { contains: searchText, mode: 'insensitive' } },
-      ];
+    if (search) {
+      const searchWords = search.toString().trim().split(/\s+/);
+      queryConditions.OR = searchWords.flatMap((word) => [
+        { email: { contains: word, mode: 'insensitive' } },
+        { firstName: { contains: word, mode: 'insensitive' } },
+        { lastName: { contains: word, mode: 'insensitive' } },
+      ]);
     }
 
-    const users = await prisma.user.findMany({
+    const limit = parseInt(req.query.limit as string, 10) || 10;
+    const page = parseInt(req.query.page as string, 10) || 1;
+
+    const total = await prisma.user.count({
       where: queryConditions,
     });
-    const countUsers = users.length;
-    const usersWithoutPasswords = users.map((user: User) => excludePassword(user));
+    const users = await prisma.user.findMany({
+      where: queryConditions,
+      skip: (page - 1) * limit,
+      take: limit,
+    });
 
-    res.status(200).json({ success: true, count: countUsers, users: usersWithoutPasswords });
+    const paginatedResponse = paginateData(users, limit, page, total);
+
+    res.status(200).json({
+      success: true,
+      ...paginatedResponse,
+      total,
+    });
   } catch (error) {
     returnError(res, error);
   }
