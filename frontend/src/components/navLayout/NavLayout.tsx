@@ -30,7 +30,7 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
         flex="1"
       >
         <Box>
-          <Box p="4" h="4rem" display="flex" placeItems="center">
+          <Box h="4rem" display="flex" placeItems="center">
             <Logo />
           </Box>
           <Stack as="nav" px={4} pb={8}>
