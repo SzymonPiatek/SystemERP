@@ -6,6 +6,7 @@ import { deleteNoteHandler } from '../handlers/deleteHandlers';
 import { apiLimiter, authLimiter } from '../../../middlewares/limiterMiddleware';
 import { validateIdParam } from '../../../middlewares/idMiddleware';
 import checkEmptyBody from '../../../middlewares/bodyMiddleware';
+import { editNoteHandler } from '../handlers/patchHandlers';
 
 const router = Router();
 
@@ -13,6 +14,8 @@ router.get('/', apiLimiter, authenticateToken, getAllNotesHandler);
 router.get('/:id', apiLimiter, authenticateToken, validateIdParam, getNoteByIdHandler);
 
 router.post('/', authLimiter, authenticateToken, checkEmptyBody, postNoteHandler);
+
+router.patch('/:id', authLimiter, authenticateToken, validateIdParam, checkEmptyBody, editNoteHandler);
 
 router.delete('/:id', authLimiter, authenticateToken, validateIdParam, deleteNoteHandler);
 

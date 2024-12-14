@@ -43,6 +43,7 @@ export const postNoteHandler: RequestHandler = async (req, res) => {
       message: 'Note created',
       note: newNote,
     });
+    return;
   } catch (error) {
     returnError(res, error);
   }
