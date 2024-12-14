@@ -2,7 +2,6 @@ import { RequestHandler } from 'express';
 import { returnError } from '../../../utils/error';
 import prisma from '../../../prismaClient';
 import { excludePassword } from '../services/returnSafeUserData';
-import { User } from '../../../types/types';
 import { addTextCondition } from '../../../utils/queryConditions';
 import paginateData from '../../../utils/pagination';
 
