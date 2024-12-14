@@ -46,9 +46,9 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
             <NavLink to="/notes">
               <TextWithIcon title="Notes" Icon={MdNotes}></TextWithIcon>
             </NavLink>
-            <NavLink to="/orders">
-              <TextWithIcon title="Orders" Icon={MdChecklist}></TextWithIcon>
-            </NavLink>
+            {/*<NavLink to="/orders">*/}
+            {/*  <TextWithIcon title="Orders" Icon={MdChecklist}></TextWithIcon>*/}
+            {/*</NavLink>*/}
           </Stack>
         </Box>
         <Box p={4}>
