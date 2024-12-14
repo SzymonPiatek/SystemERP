@@ -36,7 +36,6 @@ const createUser = async (userData: UserDataProps) => {
         },
       },
       create: {
-        id: userData.id,
         email: userData.email,
         password: userData.password,
         firstName: userData.firstName,
