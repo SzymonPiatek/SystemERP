@@ -1,6 +1,8 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ToastProvider from './components/toaster/ToastProvider';
+import { ChakraProvider } from '@chakra-ui/react';
+import { defaultSystem } from '@chakra-ui/react';
 
 import { HomePage } from './pages/HomePage';
 import { Error } from './pages/Error';
@@ -85,12 +87,14 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-        <ToastProvider />
-      </AuthProvider>
-    </QueryClientProvider>
+    <ChakraProvider value={defaultSystem}>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+          <ToastProvider />
+        </AuthProvider>
+      </QueryClientProvider>
+    </ChakraProvider>
   );
 }
 

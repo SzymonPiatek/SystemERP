@@ -10,3 +10,9 @@ type NoteResponse = {
 };
 
 export const getNotes = async () => axiosFetch<NoteResponse | AxiosError>({ url: API.notes.all });
+
+export const deleteNote = async (noteId: number) =>
+  axiosFetch<NoteResponse | AxiosError>({
+    url: API.notes.note(noteId),
+    method: 'delete',
+  });

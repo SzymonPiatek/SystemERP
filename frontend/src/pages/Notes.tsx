@@ -25,9 +25,9 @@ export const Notes: FC<{}> = () => {
   }, []);
 
   return (
-    <Flex wrap="wrap" justify="center">
+    <Flex wrap="wrap" justify="flex-start" gap="4">
       {notes.map((note) => (
-        <SingleNote key={note.id} title={note.title} desc={note.description} />
+        <SingleNote key={note.id} title={note.title} desc={note.description} id={note.id} />
       ))}
     </Flex>
   );
