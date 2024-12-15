@@ -9,9 +9,10 @@ export const eventsData = (() => {
 
   while (eventCount < 50) {
     if (isWeekday(currentDate)) {
-      const eventsInDay = getRandomInt(1, 4);
+      const remainingEvents = 50 - eventCount;
+      const eventsInDay = Math.min(getRandomInt(1, 4), remainingEvents);
 
-      for (let j = 0; j < eventsInDay && eventCount < 50; j++) {
+      for (let j = 0; j < eventsInDay; j++) {
         const startHour = getRandomInt(7, 16);
         const duration = getRandomInt(1, Math.min(8, 17 - startHour));
 

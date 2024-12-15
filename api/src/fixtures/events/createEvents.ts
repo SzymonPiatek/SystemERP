@@ -9,7 +9,10 @@ export const createEvents = async () => {
         ...event,
         id: undefined,
       },
-      create: event,
+      create: {
+        ...event,
+        id: undefined,
+      },
     }),
   );
 
