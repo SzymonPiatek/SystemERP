@@ -5,7 +5,10 @@ export const createCompanies = async () => {
   const upsertPromises = companiesData.map((company) =>
     prisma.company.upsert({
       where: { name: company.name },
-      update: {},
+      update: {
+        ...company,
+        id: undefined,
+      },
       create: company,
     }),
   );

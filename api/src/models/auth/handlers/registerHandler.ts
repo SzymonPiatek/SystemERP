@@ -79,6 +79,7 @@ export const registerHandler: RequestHandler = async (req, res): Promise<void> =
       message: 'User created',
       user: newUser,
     });
+    return;
   } catch (error) {
     returnError(res, error);
   }

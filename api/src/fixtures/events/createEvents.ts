@@ -5,8 +5,14 @@ export const createEvents = async () => {
   const upsertPromises = eventsData.map((event) =>
     prisma.event.upsert({
       where: { id: event.id },
-      update: event,
-      create: event,
+      update: {
+        ...event,
+        id: undefined,
+      },
+      create: {
+        ...event,
+        id: undefined,
+      },
     }),
   );
 

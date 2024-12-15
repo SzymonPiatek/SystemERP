@@ -19,7 +19,7 @@ const eventSchema = Joi.object({
   isAllDay: Joi.boolean(),
 });
 
-export const postEventHandler: RequestHandler = async (req, res) => {
+export const createEventHandler: RequestHandler = async (req, res) => {
   try {
     const { error, value } = eventSchema.validate(req.body);
     if (error) {

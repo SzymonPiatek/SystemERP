@@ -1,6 +1,5 @@
 import { Box, Stack, Flex, VStack } from '@chakra-ui/react';
 import { FC, PropsWithChildren, useContext } from 'react';
-
 import { Logo } from '../logo/Logo.tsx';
 import { TopBarLayout } from '../topBarLayout/TopBarLayout.tsx';
 import { NavLink } from './NavLink.tsx';
@@ -46,9 +45,9 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
             <NavLink to="/notes">
               <TextWithIcon title="Notes" Icon={MdNotes}></TextWithIcon>
             </NavLink>
-            {/*<NavLink to="/orders">*/}
-            {/*  <TextWithIcon title="Orders" Icon={MdChecklist}></TextWithIcon>*/}
-            {/*</NavLink>*/}
+            <NavLink to="/orders">
+              <TextWithIcon title="Orders" Icon={MdChecklist}></TextWithIcon>
+            </NavLink>
           </Stack>
         </Box>
         <Box p={4}>
@@ -57,11 +56,8 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
       </Stack>
 
       <VStack w="full" ml={[null, '15%', '13%']} gap="0">
-        <TopBarLayout
-          FirstName={user!.firstName}
-          LastName={user!.lastName}
-          Role={user!.profile!.role!.name}
-        />
+        {user && <TopBarLayout user={user} />}
+
         <Box flex={1} w="full">
           {children}
         </Box>

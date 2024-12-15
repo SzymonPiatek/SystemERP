@@ -5,8 +5,14 @@ export const createNotes = async () => {
   const upsertPromises = notesData.map((note) =>
     prisma.note.upsert({
       where: { id: note.id },
-      update: note,
-      create: note,
+      update: {
+        ...note,
+        id: undefined,
+      },
+      create: {
+        ...note,
+        id: undefined,
+      },
     }),
   );
 

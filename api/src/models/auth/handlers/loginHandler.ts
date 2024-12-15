@@ -20,7 +20,6 @@ export const loginHandler: RequestHandler = async (req, res): Promise<void> => {
     }
 
     const { email, password } = value;
-    const invalidMessage = 'Invalid email or password';
 
     const user = await prisma.user.findUnique({
       where: { email },
@@ -34,13 +33,13 @@ export const loginHandler: RequestHandler = async (req, res): Promise<void> => {
     });
 
     if (!user || !user.isActive) {
-      res.status(401).json({ success: false, message: invalidMessage });
+      res.status(401).json({ success: false, message: 'Invalid email or password' });
       return;
     }
 
     const isPasswordMatch = await comparePassword(password, user.password);
     if (!isPasswordMatch) {
-      res.status(401).json({ success: false, message: invalidMessage });
+      res.status(401).json({ success: false, message: 'Invalid email or password' });
       return;
     }
 

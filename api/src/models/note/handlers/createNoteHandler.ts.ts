@@ -10,7 +10,7 @@ const notesSchema = Joi.object({
   ownerId: Joi.number().required(),
 });
 
-export const postNoteHandler: RequestHandler = async (req, res) => {
+export const createNoteHandler: RequestHandler = async (req, res) => {
   try {
     const { error, value } = notesSchema.validate(req.body);
     if (error) {
@@ -43,6 +43,7 @@ export const postNoteHandler: RequestHandler = async (req, res) => {
       message: 'Note created',
       note: newNote,
     });
+    return;
   } catch (error) {
     returnError(res, error);
   }

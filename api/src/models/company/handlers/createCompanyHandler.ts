@@ -18,7 +18,7 @@ const companySchema = Joi.object({
   regon: Joi.string().required(),
 });
 
-export const postCompanyHandler: RequestHandler = async (req, res): Promise<void> => {
+export const createCompanyHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
     const { error, value } = companySchema.validate(req.body);
     if (error) {
@@ -27,6 +27,15 @@ export const postCompanyHandler: RequestHandler = async (req, res): Promise<void
     }
 
     const { name, country, voivodeship, district, commune, city, zipCode, street, houseNumber, apartmentNumber, nip, regon } = value;
+
+    const isNameExist = await prisma.company.findFirst({
+      where: { name: name },
+    });
+
+    if (isNameExist) {
+      res.status(400).json({ success: false, message: 'Name already exists' });
+      return;
+    }
 
     const newCompany = await prisma.company.create({
       data: {
