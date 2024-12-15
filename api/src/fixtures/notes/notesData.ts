@@ -9,17 +9,22 @@ export const notesData = (() => {
 
   while (noteCount < 50) {
     if (isWeekday(currentDate)) {
-      const hasDate = getRandomInt(0, 1) === 1;
+      const remainingNotes = 50 - noteCount;
+      const notesInDay = Math.max(getRandomInt(1, 4), remainingNotes);
 
-      notes.push({
-        id: noteCount + 1,
-        title: `Note ${noteCount + 1}`,
-        description: 'Lorem ipsum odor amet, consectetuer adipiscing elit.',
-        ownerId: 1,
-        date: hasDate ? getISODateTimeWithOffset(dayOffset, 0, 0) : null,
-      });
+      for (let j = 0; j < notesInDay; j++) {
+        const hasDate = getRandomInt(0, 1) === 1;
 
-      noteCount++;
+        notes.push({
+          id: noteCount + 1,
+          title: `Note ${noteCount + 1}`,
+          description: 'Lorem ipsum odor amet, consectetuer adipiscing elit.',
+          ownerId: 1,
+          date: hasDate ? getISODateTimeWithOffset(dayOffset, 0, 0) : null,
+        });
+
+        noteCount++;
+      }
     }
 
     currentDate.setDate(currentDate.getDate() + 1);

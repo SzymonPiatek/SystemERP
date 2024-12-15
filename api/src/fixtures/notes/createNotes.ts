@@ -9,7 +9,10 @@ export const createNotes = async () => {
         ...note,
         id: undefined,
       },
-      create: note,
+      create: {
+        ...note,
+        id: undefined,
+      },
     }),
   );
 
