@@ -1,24 +1,25 @@
 import { Box, Button, Input, Text } from '@chakra-ui/react';
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { useAddNote } from '../../hooks/useAddNote';
+import { AuthContext } from '../../contexts/AuthContext';
 
 type NoteFormProps = {
   onClose: () => void;
   fetchData: () => void;
-  ownerId: number;
 };
 
-export const NewNoteForm: FC<NoteFormProps> = ({ onClose, fetchData, ownerId }) => {
+export const NewNoteForm: FC<NoteFormProps> = ({ onClose, fetchData }) => {
   const [updatedTitle, setUpdatedTitle] = useState('');
   const [updatedDescription, setUpdatedDescription] = useState('');
 
   const { mutate: addNote } = useAddNote(fetchData);
+  const { user } = useContext(AuthContext);
 
   const handleAdd = async () => {
     const payload = {
       title: updatedTitle,
       description: updatedDescription,
-      ownerId: ownerId,
+      ownerId: user?.id,
     };
 
     addNote({ data: payload });
