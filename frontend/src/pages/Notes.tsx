@@ -3,9 +3,10 @@ import { FC, useEffect, useState } from 'react';
 import { SingleNote } from '../components/notes/SingleNote';
 import { AxiosError } from 'axios';
 import { Note } from '../utils/types';
-import { deleteNote, getNotes } from '../actions/noteActions';
+import { getNotes } from '../actions/noteActions';
 import { useSearchParams } from 'react-router-dom';
 import CustomButton from '../components/button/CustomButton.tsx';
+import { useDeleteNote } from '../hooks/useDeleteNote.tsx';
 
 export const Notes: FC<{}> = () => {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -17,6 +18,25 @@ export const Notes: FC<{}> = () => {
     limit: 10,
   });
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const fetchData = async () => {
+    try {
+      const response = await getNotes(queryParams);
+      if (!(response instanceof AxiosError)) {
+        setNotes(response.data);
+        setPreviousPage(response.previous);
+        setNextPage(response.next);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [queryParams]);
+
+  const { mutate: deleteNote } = useDeleteNote(fetchData);
 
   useEffect(() => {
     const page = parseInt(searchParams.get('page') || '1', 10);
@@ -37,30 +57,8 @@ export const Notes: FC<{}> = () => {
     setSearchParams(params);
   }, [queryParams, setSearchParams]);
 
-  const fetchData = async () => {
-    try {
-      const response = await getNotes(queryParams);
-      if (!(response instanceof AxiosError)) {
-        setNotes(response.data);
-        setPreviousPage(response.previous);
-        setNextPage(response.next);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [queryParams]);
-
-  const handleDeleteNote = async (noteId: number) => {
-    try {
-      await deleteNote(noteId);
-      fetchData();
-    } catch (error) {
-      console.error(error);
-    }
+  const handleDeleteNote = (id: number) => {
+    deleteNote(id);
   };
 
   const handlePrevious = () => {
@@ -85,6 +83,7 @@ export const Notes: FC<{}> = () => {
             desc={note.description}
             id={note.id}
             deleteNote={handleDeleteNote}
+            fetchData={fetchData}
           />
         ))}
       </Flex>

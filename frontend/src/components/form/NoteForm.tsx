@@ -1,17 +1,20 @@
 import { Box, Button, Input, Text } from '@chakra-ui/react';
 import { FC, useState } from 'react';
-import { editNote } from '../../actions/noteActions';
+import { useEditNote } from '../../hooks/useEditNote';
 
 type NoteFormProps = {
   title: string;
   description: string;
   id: number;
   onClose: () => void;
+  fetchData: () => void;
 };
 
-export const NoteForm: FC<NoteFormProps> = ({ title, description, id, onClose }) => {
+export const NoteForm: FC<NoteFormProps> = ({ title, description, id, onClose, fetchData }) => {
   const [updatedTitle, setUpdatedTitle] = useState(title);
   const [updatedDescription, setUpdatedDescription] = useState(description);
+
+  const { mutate: editNote } = useEditNote(fetchData);
 
   const handleSave = async () => {
     const payload = {
@@ -19,12 +22,8 @@ export const NoteForm: FC<NoteFormProps> = ({ title, description, id, onClose })
       description: updatedDescription,
     };
 
-    try {
-      await editNote(id, payload);
-      onClose();
-    } catch (error) {
-      console.error('Error updating note:', error);
-    }
+    editNote({ noteId: id, data: payload });
+    onClose();
   };
 
   return (

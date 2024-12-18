@@ -1,4 +1,4 @@
-import { Box, HStack, Icon, IconButton } from '@chakra-ui/react';
+import { Box, HStack, IconButton } from '@chakra-ui/react';
 import { FC, useState } from 'react';
 import { BoxWithTitle } from '../ui/BoxWithTitle';
 import { Button } from '../ui/button';
@@ -12,10 +12,10 @@ export type SingleNoteProps = {
   desc: string;
   id: number;
   deleteNote: (noteId: number) => void;
+  fetchData: () => void;
 };
 
-export const SingleNote: FC<SingleNoteProps> = (props) => {
-  const { title, desc, id, deleteNote } = props;
+export const SingleNote: FC<SingleNoteProps> = ({ title, desc, id, deleteNote, fetchData }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -57,7 +57,13 @@ export const SingleNote: FC<SingleNoteProps> = (props) => {
               <MdClose />
             </IconButton>
 
-            <NoteForm title={title} description={desc} id={id} onClose={() => setIsOpen(false)} />
+            <NoteForm
+              title={title}
+              description={desc}
+              id={id}
+              onClose={() => setIsOpen(false)}
+              fetchData={() => fetchData()}
+            />
           </Box>
         </Box>
       ) : null}
