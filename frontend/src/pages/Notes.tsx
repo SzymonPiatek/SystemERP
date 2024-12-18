@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, IconButton } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import { SingleNote } from '../components/notes/SingleNote';
 import { AxiosError } from 'axios';
@@ -8,10 +8,15 @@ import { useSearchParams } from 'react-router-dom';
 import CustomButton from '../components/button/CustomButton.tsx';
 import { useDeleteNote } from '../hooks/useDeleteNote.tsx';
 
+import { IoMdAddCircle } from 'react-icons/io';
+import { Modal } from '../components/Modal.tsx';
+import { NewNoteForm } from '../components/form/NewNoteForm.tsx';
+
 export const Notes: FC<{}> = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [previousPage, setPreviousPage] = useState<number | null>(null);
   const [nextPage, setNextPage] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [queryParams, setQueryParams] = useState({
     page: 1,
@@ -73,6 +78,10 @@ export const Notes: FC<{}> = () => {
     }
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <Flex wrap="wrap" justify="flex-start" gap="4">
@@ -87,10 +96,31 @@ export const Notes: FC<{}> = () => {
           />
         ))}
       </Flex>
-      <Box display="flex" gap="2rem" justifyContent="end">
-        <CustomButton type="button" children="prev" onClick={handlePrevious} />
-        <CustomButton type="button" children="next" onClick={handleNext} />
-      </Box>
+      <Flex pt="4" justify="space-between">
+        <Box>
+          <IconButton aria-label="Add Note" onClick={() => setIsModalOpen(true)}>
+            <IoMdAddCircle />
+          </IconButton>
+        </Box>
+        <Box display="flex" gap="2rem" justifyContent="end">
+          <CustomButton type="button" onClick={handlePrevious}>
+            Prev
+          </CustomButton>
+          <CustomButton type="button" onClick={handleNext}>
+            Next
+          </CustomButton>
+        </Box>
+      </Flex>
+
+      <Modal modalState={isModalOpen} onClose={handleCloseModal}>
+        <NewNoteForm
+          fetchData={fetchData}
+          onClose={() => {
+            setIsModalOpen(false);
+          }}
+          ownerId={1}
+        />
+      </Modal>
     </>
   );
 };

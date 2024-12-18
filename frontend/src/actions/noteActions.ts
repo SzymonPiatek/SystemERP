@@ -27,3 +27,9 @@ export const editNote = async (noteId: number, data: EditNotePayload) =>
     method: 'patch',
     data,
   });
+export const addNote = async (data: EditNotePayload) =>
+  axiosFetch<NoteResponse | AxiosError>({
+    url: API.notes.all,
+    method: 'post',
+    data,
+  });
