@@ -4,13 +4,18 @@ import { BoxWithTitle } from '../ui/BoxWithTitle';
 import { Button } from '../ui/button';
 
 import { MdEdit, MdDelete, MdClose } from 'react-icons/md';
-import { deleteNote } from '../../actions/noteActions';
+
 import { NoteForm } from '../form/NoteForm';
 
-export type SingleNoteProps = { title: string; desc: string; id: number };
+export type SingleNoteProps = {
+  title: string;
+  desc: string;
+  id: number;
+  deleteNote: (noteId: number) => void;
+};
 
 export const SingleNote: FC<SingleNoteProps> = (props) => {
-  const { title, desc, id } = props;
+  const { title, desc, id, deleteNote } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   return (

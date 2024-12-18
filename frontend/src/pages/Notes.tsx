@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import { SingleNote } from '../components/notes/SingleNote';
 import { AxiosError } from 'axios';
 import { Note } from '../utils/types';
-import { getNotes } from '../actions/noteActions';
+import { deleteNote, getNotes } from '../actions/noteActions';
 import { useSearchParams } from 'react-router-dom';
 import CustomButton from '../components/button/CustomButton.tsx';
 
@@ -17,7 +17,6 @@ export const Notes: FC<{}> = () => {
     limit: 10,
   });
   const [searchParams, setSearchParams] = useSearchParams();
-
   useEffect(() => {
     const page = parseInt(searchParams.get('page') || '1', 10);
     const limit = parseInt(searchParams.get('limit') || '10', 10);
@@ -49,6 +48,14 @@ export const Notes: FC<{}> = () => {
       console.error(error);
     }
   };
+  const handleDeleteNote = async (noteId: number) => {
+    try {
+      await deleteNote(noteId);
+      fetchData();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -70,7 +77,13 @@ export const Notes: FC<{}> = () => {
     <>
       <Flex wrap="wrap" justify="flex-start" gap="4">
         {notes.map((note) => (
-          <SingleNote key={note.id} title={note.title} desc={note.description} id={note.id} />
+          <SingleNote
+            key={note.id}
+            title={note.title}
+            desc={note.description}
+            id={note.id}
+            deleteNote={handleDeleteNote}
+          />
         ))}
       </Flex>
       <Box display="flex" gap="2rem" justifyContent="end">
