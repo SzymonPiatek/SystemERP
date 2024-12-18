@@ -1,6 +1,6 @@
 /**
  * @swagger
- * /users/{id}/status:
+ * /users/{id}/change_active:
  *   patch:
  *     summary: Toggle the active status of a user
  *     tags: [Users]

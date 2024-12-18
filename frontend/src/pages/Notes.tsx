@@ -17,6 +17,7 @@ export const Notes: FC<{}> = () => {
     limit: 10,
   });
   const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
     const page = parseInt(searchParams.get('page') || '1', 10);
     const limit = parseInt(searchParams.get('limit') || '10', 10);
@@ -48,6 +49,11 @@ export const Notes: FC<{}> = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [queryParams]);
+
   const handleDeleteNote = async (noteId: number) => {
     try {
       await deleteNote(noteId);
@@ -56,10 +62,6 @@ export const Notes: FC<{}> = () => {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, [queryParams]);
 
   const handlePrevious = () => {
     if (previousPage) {

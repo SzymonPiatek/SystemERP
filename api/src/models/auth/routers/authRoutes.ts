@@ -3,12 +3,20 @@ import { registerHandler } from '../handlers/registerHandler';
 import { loginHandler } from '../handlers/loginHandler';
 import { refreshTokensHandler } from '../handlers/refreshTokenHandler';
 import { logoutHandler } from '../handlers/logoutHandler';
+import checkEmptyBody from '../../../middlewares/bodyMiddleware';
 
 const router = Router();
 
-router.post('/register', registerHandler);
-router.post('/login', loginHandler);
+// REGISTER NEW USER
+router.post('/register', checkEmptyBody, registerHandler);
+
+// LOGIN USER
+router.post('/login', checkEmptyBody, loginHandler);
+
+// LOGOUT USER
 router.post('/logout', logoutHandler);
+
+// REFRESH TOKENS
 router.post('/token/refresh', refreshTokensHandler);
 
 export default router;
