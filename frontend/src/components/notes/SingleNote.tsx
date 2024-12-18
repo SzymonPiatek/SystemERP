@@ -1,16 +1,18 @@
-import { Box, HStack } from '@chakra-ui/react';
+import { Box, HStack, Icon, IconButton } from '@chakra-ui/react';
 import { FC, useState } from 'react';
 import { BoxWithTitle } from '../ui/BoxWithTitle';
 import { Button } from '../ui/button';
 
-import { MdEdit, MdDelete } from 'react-icons/md';
+import { MdEdit, MdDelete, MdClose } from 'react-icons/md';
 import { deleteNote } from '../../actions/noteActions';
+import { NoteForm } from '../form/NoteForm';
 
 export type SingleNoteProps = { title: string; desc: string; id: number };
 
 export const SingleNote: FC<SingleNoteProps> = (props) => {
   const { title, desc, id } = props;
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       {isOpen ? (
@@ -26,22 +28,34 @@ export const SingleNote: FC<SingleNoteProps> = (props) => {
           alignItems="center"
           justifyContent="center"
         >
-          {/* Inner box with full opacity */}
-          <Box bg="white" rounded="2xl" shadow="lg" maxW="40vw" p="6" zIndex="1010" opacity="1">
-            <Box>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est, esse, eligendi corrupti
-              cupiditate accusantium nostrum ut exercitationem vero iure illo fugit molestiae.
-              Aliquam repellendus obcaecati eveniet fuga alias laboriosam excepturi?
-            </Box>
+          <Box
+            position="relative"
+            bg="white"
+            rounded="2xl"
+            shadow="lg"
+            maxW="40vw"
+            p="6"
+            zIndex="1010"
+            opacity="1"
+          >
+            <IconButton
+              aria-label="Close modal"
+              size="sm"
+              position="absolute"
+              top="2"
+              right="2"
+              onClick={() => setIsOpen(false)}
+              color="red.500"
+              variant="ghost"
+              _hover={{ color: 'red.700', bg: 'gray.300' }}
+            >
+              <MdClose />
+            </IconButton>
 
-            <Button onClick={() => setIsOpen(false)} mt="4">
-              Close
-            </Button>
+            <NoteForm title={title} description={desc} id={id} />
           </Box>
         </Box>
-      ) : (
-        <></>
-      )}
+      ) : null}
 
       <Box bg="white" rounded="2xl" p="4" maxW="33%">
         <BoxWithTitle Title={title} Text={desc} />
