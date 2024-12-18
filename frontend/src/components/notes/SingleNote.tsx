@@ -52,7 +52,7 @@ export const SingleNote: FC<SingleNoteProps> = (props) => {
               <MdClose />
             </IconButton>
 
-            <NoteForm title={title} description={desc} id={id} />
+            <NoteForm title={title} description={desc} id={id} onClose={() => setIsOpen(false)} />
           </Box>
         </Box>
       ) : null}

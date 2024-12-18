@@ -6,9 +6,10 @@ type NoteFormProps = {
   title: string;
   description: string;
   id: number;
+  onClose: () => void;
 };
 
-export const NoteForm: FC<NoteFormProps> = ({ title, description, id }) => {
+export const NoteForm: FC<NoteFormProps> = ({ title, description, id, onClose }) => {
   const [updatedTitle, setUpdatedTitle] = useState(title);
   const [updatedDescription, setUpdatedDescription] = useState(description);
 
@@ -20,7 +21,7 @@ export const NoteForm: FC<NoteFormProps> = ({ title, description, id }) => {
 
     try {
       await editNote(id, payload);
-      console.log('Note updated successfully!');
+      onClose();
     } catch (error) {
       console.error('Error updating note:', error);
     }
