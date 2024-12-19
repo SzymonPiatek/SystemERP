@@ -1,13 +1,21 @@
-import { FC, ReactNode } from 'react';
-import { Box, Flex } from '@chakra-ui/react';
+import { FC, ReactNode, useState } from 'react';
+import { Box, Flex, Button } from '@chakra-ui/react';
 
 type BoxProps = {
-  Title?: String;
-  Text?: String;
+  Title: string;
+  Text: string;
   Action?: ReactNode;
 };
 
 export const BoxWithTitle: FC<BoxProps> = (props) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const truncatedText = props.Text?.length > 300 ? `${props.Text.slice(0, 300)}...` : props.Text;
+
+  const handleToggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <Flex pb="4" justify="space-between">
       <Box>
@@ -15,8 +23,11 @@ export const BoxWithTitle: FC<BoxProps> = (props) => {
           {props.Title}
         </Box>
         <Box as="span" color="gray.600" fontSize="sm">
-          {props.Text}
+          {isExpanded ? props.Text : truncatedText}
         </Box>
+        {props.Text && props.Text.length > 200 && (
+          <Button onClick={handleToggleExpand}>{isExpanded ? 'Show Less' : 'Show More'}</Button>
+        )}
       </Box>
 
       <Box>{props.Action}</Box>

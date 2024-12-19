@@ -5,6 +5,8 @@ import { returnError } from '../../../utils/error';
 
 export const getAllNotesHandler: RequestHandler = async (req, res) => {
   try {
+    console.log(req.userId);
+    
     const userId = Number(req.userId);
 
     const limit = parseInt(req.query.limit as string, 10) || 10;
