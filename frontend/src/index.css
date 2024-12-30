@@ -160,3 +160,7 @@ body {
   margin: 5px 0 !important;
   box-sizing: border-box !important;
 }
+
+.react-datepicker__time-container {
+  width: full !important;
+}

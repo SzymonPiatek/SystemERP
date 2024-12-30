@@ -1,10 +1,10 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
 import BigCalendar from '../components/calendar/BigCalendar.tsx';
 import { AxiosError } from 'axios';
 import { Event } from '../utils/types';
-import { useState, useEffect } from 'react';
 import { getEvents } from '../actions/eventActions';
+import { ScheduleForm } from '../components/form/ScheduleForm.tsx';
 
 export const Schedule: FC<{}> = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -36,6 +36,7 @@ export const Schedule: FC<{}> = () => {
     <Flex w="full" h="full">
       <Box bg="white" rounded="2xl" p="4" pt="4" pb="4" w="full" h="fit">
         <BigCalendar events={formattedEvents} set="WORK_WEEK" />
+        <ScheduleForm />
       </Box>
     </Flex>
   );
