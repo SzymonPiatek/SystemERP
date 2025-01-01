@@ -63,7 +63,6 @@ export const ScheduleForm: FC<{}> = () => {
           queryClient.invalidateQueries(['events']);
           setOpen(false);
           setUpdatedTitle('');
-          toast.success('Event successfully added!');
         },
       },
     );
