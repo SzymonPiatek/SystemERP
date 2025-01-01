@@ -14,6 +14,7 @@ import {
 } from '../ui/dialog';
 import DatePicker from 'react-datepicker';
 import { MdClose } from 'react-icons/md';
+import { deleteEvent, editNote } from '../../actions/eventActions';
 
 const localizer = momentLocalizer(moment);
 
@@ -32,6 +33,7 @@ const BigCalendar: FC<BigCalendarProps> = ({ events, set, classes }) => {
   const [description, setDescription] = useState('');
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
+  const [id, setId] = useState<number | null>(null);
 
   const handleOnChangeView = (selectedView: View) => {
     setView(selectedView);
@@ -44,18 +46,37 @@ const BigCalendar: FC<BigCalendarProps> = ({ events, set, classes }) => {
     setStartDate(event.start);
     setEndDate(event.end);
     setDialogOpen(true);
+    setId(event.id);
   };
 
-  const handleSave = () => {
-    console.log('Saved event:', { title, description, startDate, endDate });
-    setDialogOpen(false);
-    setSelectedEvent(null);
+  const handleSave = async () => {
+    if (!id) {
+      return;
+    }
+
+    const payload = {
+      title,
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+    };
+
+    try {
+      await editNote(id, payload);
+      setDialogOpen(false);
+      setSelectedEvent(null);
+    } catch (error) {}
   };
 
-  const handleDelete = () => {
-    console.log('Deleted event:', selectedEvent);
-    setDialogOpen(false);
-    setSelectedEvent(null);
+  const handleDelete = async () => {
+    if (!id) {
+      return;
+    }
+
+    try {
+      await deleteEvent(id);
+      setDialogOpen(false);
+      setSelectedEvent(null);
+    } catch (error) {}
   };
 
   return (
@@ -114,8 +135,12 @@ const BigCalendar: FC<BigCalendarProps> = ({ events, set, classes }) => {
               </Stack>
             </DialogBody>
             <DialogFooter>
-              <Button onClick={handleSave}>Save</Button>
-              <Button onClick={handleDelete}>Delete</Button>
+              <Button variant="outline" onClick={handleSave}>
+                Save
+              </Button>
+              <Button variant="outline" onClick={handleDelete}>
+                Delete
+              </Button>
             </DialogFooter>
 
             <DialogCloseTrigger>

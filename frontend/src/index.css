@@ -89,17 +89,6 @@ body {
   transition: all 0.3s ease;
 }
 
-.rbc-event:hover {
-  z-index: 998;
-  width: 110% !important;
-  padding: 10px !important;
-  white-space: normal !important;
-  overflow: visible !important;
-  position: relative;
-  margin: 2px;
-  box-sizing: border-box;
-}
-
 .rbc-event-content {
   color: black;
   text-align: left;
@@ -149,16 +138,6 @@ body {
   margin: 5px 0 !important;
   text-align: center !important;
   font-size: 14px !important;
-}
-.daily .rbc-event:hover {
-  z-index: auto !important;
-  width: 100% !important;
-  padding: 10px !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  position: relative !important;
-  margin: 5px 0 !important;
-  box-sizing: border-box !important;
 }
 
 .react-datepicker__time-container {

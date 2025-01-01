@@ -26,12 +26,13 @@ export const Schedule: FC<{}> = () => {
   }, []);
 
   const formattedEvents = events.map((event: any) => ({
+    id: event.id,
     title: event.title,
     allDay: event.isAllDay,
     start: new Date(event.startDate),
     end: new Date(event.endDate),
   }));
-
+  console.log(formattedEvents);
   return (
     <Flex w="full" h="full">
       <Box bg="white" rounded="2xl" p="4" pt="4" pb="4" w="full" h="fit">
