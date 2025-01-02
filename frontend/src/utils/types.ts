@@ -8,6 +8,16 @@ export type User = {
   profile?: Profile;
 };
 
+export type Employee = {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  isActive: boolean;
+  company: Company[];
+  companyId: number;
+  profile: Profile[];
+};
 export type Company = {
   id: number;
   name: string;

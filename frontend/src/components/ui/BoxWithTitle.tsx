@@ -35,7 +35,7 @@ export const BoxWithTitle: FC<BoxProps> = (props) => {
           {isExpanded ? props.Text : truncatedText}
         </Box>
         {props.Text && props.Text.length > 200 && (
-          <Button mt="2" onClick={handleToggleExpand}>
+          <Button mt="2" onClick={handleToggleExpand} variant="plain">
             {isExpanded ? 'Show Less' : 'Show More'}
           </Button>
         )}
