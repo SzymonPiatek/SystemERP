@@ -1,4 +1,4 @@
-import { Box, HStack, IconButton } from '@chakra-ui/react';
+import { Box, HStack, IconButton, Card } from '@chakra-ui/react';
 import { FC, useState } from 'react';
 import { BoxWithTitle } from '../ui/BoxWithTitle';
 import { Button } from '../ui/button';
@@ -68,29 +68,33 @@ export const SingleNote: FC<SingleNoteProps> = ({ title, desc, id, deleteNote, f
         </Box>
       ) : null}
 
-      <Box bg="white" rounded="2xl" p="4" maxW="33%">
-        <BoxWithTitle Title={title} Text={desc} />
-        <HStack gap="0" m="4" justifyContent="end" alignItems="center">
-          <Box>
-            <Button
-              onClick={() => setIsOpen(true)}
-              _hover={{
-                color: 'green.700',
-              }}
-            >
-              <MdEdit />
-            </Button>
-            <Button
-              _hover={{
-                color: 'green.700',
-              }}
-              onClick={() => deleteNote(id)}
-            >
-              <MdDelete />
-            </Button>
-          </Box>
-        </HStack>
-      </Box>
+      <Card.Root rounded="2xl" p="4" maxW="33%">
+        <Card.Body>
+          <BoxWithTitle Title={title} Text={desc} />
+          <HStack gap="0" m="4" justifyContent="end" alignItems="center">
+            <Box>
+              <Button
+                onClick={() => setIsOpen(true)}
+                _hover={{
+                  color: 'green.700',
+                }}
+                variant="outline"
+              >
+                <MdEdit />
+              </Button>
+              <Button
+                _hover={{
+                  color: 'green.700',
+                }}
+                onClick={() => deleteNote(id)}
+                variant="outline"
+              >
+                <MdDelete />
+              </Button>
+            </Box>
+          </HStack>
+        </Card.Body>
+      </Card.Root>
     </>
   );
 };

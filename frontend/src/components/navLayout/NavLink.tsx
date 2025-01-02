@@ -24,8 +24,10 @@ export const NavLink: FC<NavLinkProps> = (props) => {
         return (
           <Button
             {...baseProps}
-            color={isActive ? 'green.700' : 'gray.500'}
-            bg={isActive ? 'green.50' : 'white'}
+            color={isActive ? 'green.700' : 'gray.400'}
+            bg={
+              isActive ? { base: 'green.50', _dark: 'gray.800' } : { base: 'white', _dark: 'black' }
+            }
             _hover={{
               color: 'gray.700',
             }}

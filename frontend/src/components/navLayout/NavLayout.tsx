@@ -18,7 +18,7 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
     <Flex background="gray.100" p={0} minH="100vh">
       <Stack
         as="aside"
-        background="white"
+        bg={{ base: 'white', _dark: 'black' }}
         minWidth={[null, '15%', '13%']}
         maxWidth={[null, '15%', '13%']}
         minH="100vh"

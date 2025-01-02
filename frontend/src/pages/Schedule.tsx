@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Card, Flex } from '@chakra-ui/react';
 import { FC, useState, useEffect } from 'react';
 import BigCalendar from '../components/calendar/BigCalendar.tsx';
 import { AxiosError } from 'axios';
@@ -35,10 +35,12 @@ export const Schedule: FC<{}> = () => {
   console.log(formattedEvents);
   return (
     <Flex w="full" h="full">
-      <Box bg="white" rounded="2xl" p="4" pt="4" pb="4" w="full" h="fit">
-        <BigCalendar events={formattedEvents} set="WORK_WEEK" />
-        <ScheduleForm />
-      </Box>
+      <Card.Root rounded="2xl" p="4" pt="4" pb="4" w="full" h="fit">
+        <Card.Body>
+          <BigCalendar events={formattedEvents} set="WORK_WEEK" />
+          <ScheduleForm />
+        </Card.Body>
+      </Card.Root>
     </Flex>
   );
 };

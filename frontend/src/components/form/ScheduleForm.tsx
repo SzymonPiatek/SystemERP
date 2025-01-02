@@ -71,7 +71,9 @@ export const ScheduleForm: FC<{}> = () => {
   return (
     <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger>
-        <Button>Add Event</Button>
+        <Button variant="outline" m="2">
+          Add Event
+        </Button>
       </DialogTrigger>
 
       <DialogContent>

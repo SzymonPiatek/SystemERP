@@ -10,7 +10,6 @@ export const Dashboard: FC<{}> = () => {
         <GridItem colSpan={{ base: 3, lg: 2 }}>
           <DailyCalendar />
         </GridItem>
-
         <GridItem colSpan={{ base: 3, lg: 1 }}>
           <EventCalendar />
         </GridItem>

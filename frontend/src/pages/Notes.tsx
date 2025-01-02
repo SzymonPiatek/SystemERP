@@ -98,7 +98,7 @@ export const Notes: FC<{}> = () => {
       </Flex>
       <Flex pt="4" justify="space-between">
         <Box>
-          <IconButton aria-label="Add Note" onClick={() => setIsModalOpen(true)}>
+          <IconButton aria-label="Add Note" onClick={() => setIsModalOpen(true)} variant="outline">
             <IoMdAddCircle />
           </IconButton>
         </Box>
