@@ -94,6 +94,7 @@ const BigCalendar: FC<BigCalendarProps> = ({ events, set, classes }) => {
         max={new Date(2025, 1, 0, 20, 0, 0)}
         onSelectEvent={handleEventClick}
         className={classes}
+        dayLayoutAlgorithm="no-overlap"
       />
 
       {selectedEvent && (

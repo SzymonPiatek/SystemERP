@@ -1,14 +1,22 @@
-import { Card, Flex, Table } from '@chakra-ui/react';
+import { Card, Flex, IconButton, Table, HStack } from '@chakra-ui/react';
+import { Status } from '../components/ui/status';
 import { FC, useEffect, useState } from 'react';
 import { getUsers } from '../actions/employeesActions';
 import { AxiosError } from 'axios';
 import { Employee } from '../utils/types';
+import { MdEdit } from 'react-icons/md';
+import {
+  PaginationItems,
+  PaginationNextTrigger,
+  PaginationPrevTrigger,
+  PaginationRoot,
+} from '..//components/ui/pagination';
 export const Employees: FC<{}> = () => {
   const [queryParams, setQueryParams] = useState({
     page: 1,
     limit: 10,
   });
-  const [employees, setEmployees] = useState<Employeer[]>([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [previousPage, setPreviousPage] = useState<number | null>(null);
   const [nextPage, setNextPage] = useState<number | null>(null);
   const fetchData = async () => {
@@ -24,7 +32,6 @@ export const Employees: FC<{}> = () => {
       console.error(error);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, [queryParams]);
@@ -41,6 +48,7 @@ export const Employees: FC<{}> = () => {
                 <Table.ColumnHeader>Last Name</Table.ColumnHeader>
                 <Table.ColumnHeader>Email</Table.ColumnHeader>
                 <Table.ColumnHeader>Status</Table.ColumnHeader>
+                <Table.ColumnHeader></Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -50,11 +58,33 @@ export const Employees: FC<{}> = () => {
                   <Table.Cell>{item.firstName}</Table.Cell>
                   <Table.Cell>{item.lastName}</Table.Cell>
                   <Table.Cell>{item.email}</Table.Cell>
-                  <Table.Cell>{item.isActive ? 'active' : 'inactive'}</Table.Cell>
+                  <Table.Cell>
+                    {item.isActive ? (
+                      <>
+                        active <Status value="success" />
+                      </>
+                    ) : (
+                      <>
+                        inactive <Status value="error" />
+                      </>
+                    )}
+                  </Table.Cell>
+                  <Table.Cell>
+                    <IconButton variant="outline">
+                      <MdEdit />
+                    </IconButton>
+                  </Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
           </Table.Root>
+          <PaginationRoot count={1} pageSize={2} defaultPage={1} variant="outline">
+            <HStack justify="center" mt="2">
+              <PaginationPrevTrigger />
+              <PaginationItems />
+              <PaginationNextTrigger />
+            </HStack>
+          </PaginationRoot>
         </Card.Body>
       </Card.Root>
     </Flex>
