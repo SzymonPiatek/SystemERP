@@ -68,6 +68,8 @@ export const ScheduleForm: FC<{}> = () => {
     );
   };
 
+  const isButtonDisabled = !updatedTitle || !startDate || !endDate;
+
   return (
     <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger>
@@ -84,7 +86,7 @@ export const ScheduleForm: FC<{}> = () => {
         <DialogBody>
           <Card.Root>
             <Card.Body gap="2">
-              <Field invalid label="Title" errorText="This field is required">
+              <Field label="Title" required>
                 <Input
                   value={updatedTitle}
                   onChange={(e) => setUpdatedTitle(e.target.value)}
@@ -123,7 +125,9 @@ export const ScheduleForm: FC<{}> = () => {
             <Button variant="outline">Cancel</Button>
           </DialogActionTrigger>
 
-          <Button onClick={handleCreateEvent}>Create</Button>
+          <Button onClick={handleCreateEvent} disabled={isButtonDisabled}>
+            Create
+          </Button>
         </DialogFooter>
 
         <DialogCloseTrigger>

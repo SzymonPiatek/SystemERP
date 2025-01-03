@@ -1,4 +1,4 @@
-import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
+import { Box, Flex, HStack, IconButton, Text } from '@chakra-ui/react';
 import { FC, useContext } from 'react';
 import { Avatar } from '../ui/avatar';
 import { MdOutlineAnnouncement, MdOutlineLogout } from 'react-icons/md';
@@ -33,15 +33,15 @@ export const TopBarLayout: FC<TopBarProps> = ({ user }) => {
 
       {/* ICONS AND USER */}
       <Flex align="center" gap="6" justifySelf="end">
-        <Box>
-          <ColorModeButton />
+        <HStack gap="1">
+          <ColorModeButton variant="outline" size="xs" />
           <IconButton size="xs" onClick={logout} variant="outline">
             <MdOutlineLogout />
           </IconButton>
           <IconButton size="xs" variant="outline">
             <MdOutlineAnnouncement />
           </IconButton>
-        </Box>
+        </HStack>
         <Flex direction="column">
           <Link to="/profile">
             <Text textStyle="sm">
