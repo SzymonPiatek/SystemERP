@@ -1,6 +1,12 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Card } from '@chakra-ui/react';
 import { FC } from 'react';
 
 export const ProfilePage: FC<{}> = () => {
-  return <Box>Profile</Box>;
+  return (
+    <Card.Root>
+      <Card.Body>
+        <Card.Title>Profile</Card.Title>
+      </Card.Body>
+    </Card.Root>
+  );
 };

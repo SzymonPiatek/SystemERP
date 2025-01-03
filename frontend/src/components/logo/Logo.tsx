@@ -1,15 +1,20 @@
 import { FC } from 'react';
 import { Box, Image } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-
+import { useColorMode } from '../ui/color-mode';
 export type LogoProps = {};
 
 export const Logo: FC<LogoProps> = (props) => {
+  const { colorMode } = useColorMode();
   return (
     <Link to="/">
       <Box {...props}>
         <Image
-          src="../../../public/fullLogo.png"
+          src={
+            colorMode === 'light'
+              ? '../../../public/fullLogo.png'
+              : '../../../public/fullLogoLight.png'
+          }
           alt="Full Logo"
           display={{ base: 'none', xl: 'block' }}
           style={{ padding: '0.5rem' }}
