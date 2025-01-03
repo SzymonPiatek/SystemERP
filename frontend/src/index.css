@@ -116,18 +116,6 @@ body {
 .daily.rbc-calendar .rbc-toolbar .rbc-btn-group:nth-child(3) {
   display: none;
 }
-.daily .rbc-events-container {
-  display: block !important;
-  overflow: hidden !important;
-}
-.daily .rbc-event {
-  width: 100% !important;
-  max-width: 100% !important;
-  padding: 10px !important;
-  margin: 5px 0 !important;
-  text-align: center !important;
-  font-size: 14px !important;
-}
 
 .react-datepicker__time-container {
   width: full !important;
