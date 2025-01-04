@@ -15,7 +15,7 @@ export const Error: FC = () => {
     return (
       <Center height="100vh" flexDirection="column" px={8}>
         <Box textAlign="center">
-          <Image src="../../../public/404.svg" alt="Dan Abramov"></Image>
+          <Image src="../../../public/404.svg" alt="404"></Image>
           <Heading
             mt={4}
             fontSize={{ base: '3xl', sm: '5xl' }}

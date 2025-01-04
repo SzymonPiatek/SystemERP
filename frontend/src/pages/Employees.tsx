@@ -27,7 +27,6 @@ export const Employees: FC<{}> = () => {
         setPreviousPage(response.previous);
         setNextPage(response.next);
       }
-      console.log(employees);
     } catch (error) {
       console.error(error);
     }

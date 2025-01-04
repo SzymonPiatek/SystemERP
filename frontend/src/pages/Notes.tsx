@@ -45,7 +45,7 @@ export const Notes: FC<{}> = () => {
 
   useEffect(() => {
     const page = parseInt(searchParams.get('page') || '1', 10);
-    const limit = parseInt(searchParams.get('limit') || '20', 10);
+    const limit = parseInt(searchParams.get('limit') || '10', 10);
 
     setQueryParams({
       page,

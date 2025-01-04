@@ -14,9 +14,9 @@ export type Employee = {
   firstName: string;
   lastName: string;
   isActive: boolean;
-  company: Company[];
+  company: Company;
   companyId: number;
-  profile: Profile[];
+  profile: Profile;
 };
 export type Company = {
   id: number;

@@ -32,7 +32,7 @@ export const Schedule: FC<{}> = () => {
     start: new Date(event.startDate),
     end: new Date(event.endDate),
   }));
-  console.log(formattedEvents);
+
   return (
     <Flex w="full" h="full">
       <Card.Root rounded="2xl" p="4" pt="4" pb="4" w="full" h="fit">

@@ -1,4 +1,4 @@
-import { Card, Grid, GridItem, Text } from '@chakra-ui/react';
+import { Card, Grid, GridItem, Text, Box, Icon } from '@chakra-ui/react';
 import { FC, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext.tsx';
 import { Avatar } from '../components/ui/avatar.tsx';
@@ -7,6 +7,7 @@ import {
   FileUploadRoot,
   FileUploadTrigger,
 } from '../components/ui/file-upload.tsx';
+import { MdCameraAlt } from 'react-icons/md';
 
 export const ProfilePage: FC<{}> = () => {
   const { user } = useContext(AuthContext);
@@ -24,7 +25,41 @@ export const ProfilePage: FC<{}> = () => {
           <GridItem colSpan={1} display="flex">
             <FileUploadRoot justifyContent="center" alignItems="center">
               <FileUploadTrigger>
-                <Avatar w="150px" h="150px" name={user?.firstName} />
+                <Box
+                  position="relative"
+                  w="150px"
+                  h="150px"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  _hover={{
+                    '& .avatar': {
+                      opacity: 0.3,
+                    },
+                    '& .icon': {
+                      opacity: 1,
+                    },
+                    cursor: 'pointer',
+                  }}
+                >
+                  <Avatar
+                    className="avatar"
+                    name={user?.firstName}
+                    w="full"
+                    h="full"
+                    transition="opacity 0.3s ease-in-out"
+                  />
+                  <Box
+                    className="icon"
+                    position="absolute"
+                    color="white"
+                    opacity={0}
+                    fontSize="3xl"
+                    transition="opacity 0.3s ease-in-out"
+                  >
+                    <MdCameraAlt />
+                  </Box>
+                </Box>
               </FileUploadTrigger>
               <FileUploadList />
             </FileUploadRoot>
