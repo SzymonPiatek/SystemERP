@@ -1,7 +1,6 @@
 import axiosFetch from '../utils/axiosFetch';
 import API from '../utils/apiRoutes';
-import { FilterParams, Employee, TableData } from '../utils/types';
-import { AxiosError } from 'axios';
+import { Employee, TableData, QueryParamsProps } from '../utils/types';
 
-export const getUsers = async (params?: FilterParams) =>
-  axiosFetch<TableData<Employee> | AxiosError>({ url: API.users.all, params });
+export const getUsers = async (params?: QueryParamsProps) =>
+  axiosFetch<TableData<Employee>>({ url: API.users.all, params });

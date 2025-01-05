@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export type User = {
   id: number;
   email: string;
@@ -107,3 +109,7 @@ export interface ErrorResponse {
   message?: string;
   errors?: string[];
 }
+
+export type QueryParamsProps = Record<string, string | number | null>;
+
+export type SetQueryParams = Dispatch<SetStateAction<QueryParamsProps>>;

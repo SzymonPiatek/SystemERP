@@ -1,9 +1,7 @@
 import { Card, Flex, IconButton, Table, HStack } from '@chakra-ui/react';
 import { Status } from '../components/ui/status';
 import { FC, useEffect, useState } from 'react';
-import { getUsers } from '../actions/employeesActions';
-import { AxiosError } from 'axios';
-import { Employee } from '../utils/types';
+import { QueryParamsProps } from '../utils/types';
 import { MdEdit } from 'react-icons/md';
 import {
   PaginationItems,
@@ -11,29 +9,52 @@ import {
   PaginationPrevTrigger,
   PaginationRoot,
 } from '..//components/ui/pagination';
+import { useSearchParams } from 'react-router-dom';
+import { useUsers } from '../hooks/users/useUsers.tsx';
+
 export const Employees: FC<{}> = () => {
-  const [queryParams, setQueryParams] = useState({
-    page: 1,
-    limit: 10,
+  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [queryParams, setQueryParams] = useState<QueryParamsProps>({
+    search: searchParams.get('search') || '',
+    page: parseInt(searchParams.get('page') || '1', 10),
+    limit: parseInt(searchParams.get('limit') || '1', 10),
   });
-  const [employees, setEmployees] = useState<Employee[]>([]);
-  const [previousPage, setPreviousPage] = useState<number | null>(null);
-  const [nextPage, setNextPage] = useState<number | null>(null);
-  const fetchData = async () => {
-    try {
-      const response = await getUsers(queryParams);
-      if (!(response instanceof AxiosError)) {
-        setEmployees(response.data);
-        setPreviousPage(response.previous);
-        setNextPage(response.next);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
+  const { data, isLoading, isError } = useUsers(queryParams);
+
+  const employees = data?.data ?? [];
+  const total = data?.total ?? null;
+  const currentPage = data?.page ?? null;
+  const totalPages = data?.totalPages ?? null;
+  const previousPage = data?.previous ?? null;
+  const nextPage = data?.next ?? null;
+
   useEffect(() => {
-    fetchData();
-  }, [queryParams]);
+    const params: Record<string, string> = {};
+
+    for (const key in queryParams) {
+      if (queryParams[key]) {
+        params[key] = queryParams[key].toString();
+      }
+    }
+
+    if (JSON.stringify(params) !== JSON.stringify(Object.fromEntries(searchParams))) {
+      setSearchParams(params, { replace: true });
+    }
+  }, [queryParams, searchParams, setSearchParams]);
+
+  // const handlePrevious = () => {
+  //   if (previousPage) {
+  //     setQueryParams((prev) => ({ ...prev, page: Number(previousPage) }));
+  //   }
+  // };
+  //
+  // const handleNext = () => {
+  //   if (nextPage) {
+  //     setQueryParams((prev) => ({ ...prev, page: Number(nextPage) }));
+  //   }
+  // };
 
   return (
     <Flex>
@@ -77,7 +98,14 @@ export const Employees: FC<{}> = () => {
               ))}
             </Table.Body>
           </Table.Root>
-          <PaginationRoot count={1} pageSize={2} defaultPage={1} variant="outline">
+          <PaginationRoot
+            page={currentPage}
+            count={totalPages}
+            pageSize={queryParams.limit}
+            defaultPage={queryParams.page}
+            // variant="outline"
+            onPageChange={(e) => setPage(e.page)}
+          >
             <HStack justify="center" mt="2">
               <PaginationPrevTrigger />
               <PaginationItems />
