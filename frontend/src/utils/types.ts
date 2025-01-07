@@ -16,9 +16,7 @@ export type Employee = {
   firstName: string;
   lastName: string;
   isActive: boolean;
-  company: Company;
   companyId: number;
-  profile: Profile;
 };
 export type Company = {
   id: number;

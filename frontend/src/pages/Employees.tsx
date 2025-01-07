@@ -1,25 +1,37 @@
-import { Card, Flex, IconButton, Table, Spinner, Text } from '@chakra-ui/react';
+import { Box, Card, Flex, IconButton, Table, Spinner, Text } from '@chakra-ui/react';
 import { Status } from '../components/ui/status';
 import { FC, useEffect, useState } from 'react';
 import { QueryParamsProps } from '../utils/types';
-import { MdEdit } from 'react-icons/md';
+import { MdOutlineDelete } from 'react-icons/md';
 import { useSearchParams } from 'react-router-dom';
-import { useUsers } from '../hooks/users/useUsers.tsx';
+import { useEditUser, useUsers } from '../hooks/users/useUsers.tsx';
 import { Pagination } from '../components/pagination/Pagination.tsx';
+import { deleteUser } from '../actions/usersActions.ts';
+import { UsersForm } from '../components/form/UsersForm.tsx';
 
 export const Employees: FC<{}> = () => {
+  const [pageLimit, setPageLimit] = useState(5);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [queryParams, setQueryParams] = useState<QueryParamsProps>({
     search: searchParams.get('search') || '',
     page: parseInt(searchParams.get('page') || '1', 10),
-    limit: parseInt(searchParams.get('limit') || '2', 10),
+    limit: parseInt(searchParams.get('limit') || `${pageLimit}`, 10),
   });
 
   const { data, isLoading, isError } = useUsers(queryParams);
-
   const employees = data?.data ?? [];
   const currentPage = data?.page ?? 1;
   const totalItems = data?.total;
+
+  const { mutate: editUser } = useEditUser(); // Use the mutate function from useEditUser
+
+  useEffect(() => {
+    setQueryParams((prev) => ({
+      ...prev,
+      limit: pageLimit,
+    }));
+  }, [pageLimit]);
 
   useEffect(() => {
     const params: Record<string, string> = {};
@@ -37,6 +49,10 @@ export const Employees: FC<{}> = () => {
 
   const handlePageChange = (newPage: number) => {
     setQueryParams((prev) => ({ ...prev, page: newPage }));
+  };
+
+  const handleDelete = (id: number) => {
+    deleteUser(id);
   };
 
   return (
@@ -60,17 +76,23 @@ export const Employees: FC<{}> = () => {
               <Table.Header>
                 <Table.Row>
                   <Table.ColumnHeader>Id</Table.ColumnHeader>
+                  <Table.ColumnHeader>Role</Table.ColumnHeader>
                   <Table.ColumnHeader>First Name</Table.ColumnHeader>
                   <Table.ColumnHeader>Last Name</Table.ColumnHeader>
                   <Table.ColumnHeader>Email</Table.ColumnHeader>
                   <Table.ColumnHeader>Status</Table.ColumnHeader>
-                  <Table.ColumnHeader></Table.ColumnHeader>
+                  <Table.ColumnHeader>
+                    <Box display="flex" justifyContent="end" mr="4">
+                      Actions
+                    </Box>
+                  </Table.ColumnHeader>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
                 {employees.map((item) => (
                   <Table.Row key={item.id}>
                     <Table.Cell>{item.id}</Table.Cell>
+                    <Table.Cell>{item.profile?.role?.name}</Table.Cell>
                     <Table.Cell>{item.firstName}</Table.Cell>
                     <Table.Cell>{item.lastName}</Table.Cell>
                     <Table.Cell>{item.email}</Table.Cell>
@@ -86,9 +108,12 @@ export const Employees: FC<{}> = () => {
                       )}
                     </Table.Cell>
                     <Table.Cell>
-                      <IconButton variant="outline">
-                        <MdEdit />
-                      </IconButton>
+                      <Box display="flex" justifyContent="flex-end">
+                        <UsersForm user={item} onEdit={editUser} /> {/* Pass onEdit to UsersForm */}
+                        <IconButton variant="outline" onClick={() => handleDelete(item.id)}>
+                          <MdOutlineDelete />
+                        </IconButton>
+                      </Box>
                     </Table.Cell>
                   </Table.Row>
                 ))}
@@ -101,6 +126,7 @@ export const Employees: FC<{}> = () => {
               pageSize={Number(queryParams.limit) || 2}
               handlePageChange={handlePageChange}
               totalItems={totalItems || 1}
+              setPageLimitToParent={setPageLimit}
             />
           )}
         </Card.Body>

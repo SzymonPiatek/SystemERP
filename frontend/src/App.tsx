@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ToastProvider from './components/toaster/ToastProvider';
 import { Provider } from './components/ui/provider';
+import { Toaster } from './components/ui/toaster';
 
 import { HomePage } from './pages/HomePage';
 import { Error } from './pages/Error';
@@ -95,6 +96,7 @@ function App() {
         <AuthProvider>
           <RouterProvider router={router} />
           <ToastProvider />
+          <Toaster />
         </AuthProvider>
       </QueryClientProvider>
     </Provider>
