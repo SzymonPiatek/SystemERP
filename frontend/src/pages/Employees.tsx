@@ -8,6 +8,7 @@ import { useEditUser, useUsers } from '../hooks/users/useUsers.tsx';
 import { Pagination } from '../components/pagination/Pagination.tsx';
 import { deleteUser } from '../actions/usersActions.ts';
 import { UsersForm } from '../components/form/UsersForm.tsx';
+import { NewUserForm } from '../components/form/newUserForm.tsx';
 
 export const Employees: FC<{}> = () => {
   const [pageLimit, setPageLimit] = useState(5);
@@ -24,7 +25,7 @@ export const Employees: FC<{}> = () => {
   const currentPage = data?.page ?? 1;
   const totalItems = data?.total;
 
-  const { mutate: editUser } = useEditUser(); // Use the mutate function from useEditUser
+  const { mutate: editUser } = useEditUser();
 
   useEffect(() => {
     setQueryParams((prev) => ({
@@ -55,6 +56,7 @@ export const Employees: FC<{}> = () => {
     deleteUser(id);
   };
 
+  console.log(data?.data);
   return (
     <Flex direction="column" align="center" justify="center">
       <Card.Root p="4" rounded="2xl" w="full">
@@ -92,7 +94,7 @@ export const Employees: FC<{}> = () => {
                 {employees.map((item) => (
                   <Table.Row key={item.id}>
                     <Table.Cell>{item.id}</Table.Cell>
-                    <Table.Cell>{item.profile?.role?.name}</Table.Cell>
+                    <Table.Cell>{item.roleName}</Table.Cell>
                     <Table.Cell>{item.firstName}</Table.Cell>
                     <Table.Cell>{item.lastName}</Table.Cell>
                     <Table.Cell>{item.email}</Table.Cell>
@@ -109,7 +111,7 @@ export const Employees: FC<{}> = () => {
                     </Table.Cell>
                     <Table.Cell>
                       <Box display="flex" justifyContent="flex-end">
-                        <UsersForm user={item} onEdit={editUser} /> {/* Pass onEdit to UsersForm */}
+                        <UsersForm user={item} onEdit={editUser} />
                         <IconButton variant="outline" onClick={() => handleDelete(item.id)}>
                           <MdOutlineDelete />
                         </IconButton>
@@ -127,6 +129,7 @@ export const Employees: FC<{}> = () => {
               handlePageChange={handlePageChange}
               totalItems={totalItems || 1}
               setPageLimitToParent={setPageLimit}
+              children={<NewUserForm />}
             />
           )}
         </Card.Body>

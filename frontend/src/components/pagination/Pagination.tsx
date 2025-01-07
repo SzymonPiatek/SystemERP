@@ -5,7 +5,7 @@ import {
   PaginationPrevTrigger,
   PaginationRoot,
 } from '../../components/ui/pagination';
-import { FC, useState } from 'react';
+import { FC, useState, ReactElement } from 'react';
 
 interface PaginationComponentProps {
   currentPage: number;
@@ -13,6 +13,7 @@ interface PaginationComponentProps {
   pageSize: number;
   handlePageChange: (page: number) => void;
   setPageLimitToParent: (limit: number) => void;
+  children?: ReactElement;
 }
 
 export const Pagination: FC<PaginationComponentProps> = ({
@@ -21,6 +22,7 @@ export const Pagination: FC<PaginationComponentProps> = ({
   pageSize,
   handlePageChange,
   setPageLimitToParent,
+  children,
 }) => {
   const [pageLimit, setPageLimit] = useState(pageSize);
   const pageSizeOptions = [5, 10, 15];
@@ -55,6 +57,9 @@ export const Pagination: FC<PaginationComponentProps> = ({
             <PaginationNextTrigger />
           </HStack>
         </PaginationRoot>
+      </Box>
+      <Box display="flex" justifyContent="flex-end">
+        {children}
       </Box>
     </Grid>
   );

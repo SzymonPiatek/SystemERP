@@ -21,7 +21,10 @@ export const editUser = async (
     data,
     params,
   });
-export const addUser = async (data: Employee, params?: QueryParamsProps) =>
+export const addUser = async (
+  data: Omit<Employee, 'id' | 'isActive' | 'companyId'>,
+  params?: QueryParamsProps,
+) =>
   axiosFetch<TableData<Employee>>({
     url: API.users.all,
     method: 'post',

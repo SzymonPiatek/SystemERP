@@ -12,46 +12,53 @@ import {
   DialogActionTrigger,
 } from '../../components/ui/dialog';
 import 'react-datepicker/dist/react-datepicker.css';
-import { MdClose, MdEdit } from 'react-icons/md';
+import { MdClose, MdAddCircleOutline } from 'react-icons/md';
 import { Field } from '../ui/field';
-import { Employee } from '../../utils/types';
+import { useAddUser } from '../../hooks/users/useUsers';
 
-type UserFormProps = {
-  user: Employee;
-  onEdit: (props: any) => void;
-};
+type NewUserFormProps = {};
 
-export const UsersForm: FC<UserFormProps> = ({ user, onEdit }) => {
-  const { firstName, lastName, email } = user;
+export const NewUserForm: FC<NewUserFormProps> = () => {
   const [open, setOpen] = useState(false);
-  const [updatedUser, setUpdatedUser] = useState<{
+  const [newUser, setNewUser] = useState<{
     firstName: string;
     lastName: string;
     email: string;
   }>({
-    firstName,
-    lastName,
-    email,
+    firstName: '',
+    lastName: '',
+    email: '',
   });
 
   const handleOpenChange = (e: { open: boolean }) => {
     setOpen(e.open);
   };
+  const { mutate: editUser } = useAddUser();
 
   const handleInputChange =
-    (field: keyof typeof updatedUser) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setUpdatedUser((prevUser) => ({
+    (field: keyof typeof newUser) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setNewUser((prevUser) => ({
         ...prevUser,
         [field]: e.target.value,
       }));
     };
 
   const handleSave = async () => {
+    if (!newUser.firstName || !newUser.lastName || !newUser.email) {
+      console.error('Please fill in all fields');
+      return;
+    }
+
     try {
-      await onEdit({ updatedUser, id: user.id });
+      await editUser({ newUser });
+      setNewUser({
+        firstName: '',
+        lastName: '',
+        email: '',
+      });
       setOpen(false);
     } catch (error) {
-      console.error('Error updating user:', error);
+      console.error('Error creating user:', error);
     }
   };
 
@@ -59,13 +66,13 @@ export const UsersForm: FC<UserFormProps> = ({ user, onEdit }) => {
     <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger>
         <IconButton variant="outline">
-          <MdEdit />
+          <MdAddCircleOutline /> Add User
         </IconButton>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit User</DialogTitle>
+          <DialogTitle>Create New User</DialogTitle>
         </DialogHeader>
 
         <DialogBody>
@@ -73,7 +80,7 @@ export const UsersForm: FC<UserFormProps> = ({ user, onEdit }) => {
             <Card.Body gap="2">
               <Field label="First Name" required>
                 <Input
-                  value={updatedUser.firstName}
+                  value={newUser.firstName}
                   onChange={handleInputChange('firstName')}
                   placeholder="Enter first name"
                 />
@@ -81,7 +88,7 @@ export const UsersForm: FC<UserFormProps> = ({ user, onEdit }) => {
 
               <Field label="Last Name" required>
                 <Input
-                  value={updatedUser.lastName}
+                  value={newUser.lastName}
                   onChange={handleInputChange('lastName')}
                   placeholder="Enter last name"
                 />
@@ -89,7 +96,7 @@ export const UsersForm: FC<UserFormProps> = ({ user, onEdit }) => {
 
               <Field label="Email" required>
                 <Input
-                  value={updatedUser.email}
+                  value={newUser.email}
                   onChange={handleInputChange('email')}
                   placeholder="Enter email"
                 />

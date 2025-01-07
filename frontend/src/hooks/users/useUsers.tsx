@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 import type { Employee, QueryParamsProps, TableData, User } from '../../utils/types.ts';
 import { getUsers, addUser, editUser, deleteUser } from '../../actions/usersActions.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toaster } from '../../components/ui/toaster.tsx';
 
 export const useUsers = (params: QueryParamsProps) => {
   return useQuery<TableData<User>, AxiosError>({
@@ -19,21 +20,34 @@ export const useUsers = (params: QueryParamsProps) => {
     },
   });
 };
-export const useAddUser = (params: Employee) => {
-  return useQuery<TableData<User>, AxiosError>({
-    queryKey: ['allUsers', params],
-    queryFn: () => addUser(params),
-    select: (response) => {
-      return {
-        ...response,
-        data: response.data.map((user) => ({
-          ...user,
-          roleName: user.profile?.role?.name ?? 'No role',
-        })),
-      };
+export const useAddUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    TableData<User>,
+    AxiosError,
+    { newUser: Omit<Employee, 'id' | 'isActive' | 'companyId'> }
+  >({
+    mutationKey: ['allUsers'],
+    mutationFn: ({ newUser }) => addUser(newUser),
+    onSuccess: () => {
+      toaster.create({
+        title: 'Success',
+        description: 'User successfully added.',
+        type: 'success',
+      });
+      queryClient.invalidateQueries({ queryKey: ['allUsers'] });
+    },
+    onError: (error) => {
+      toaster.create({
+        title: 'Error',
+        description: `An error has occurred. ${error}`,
+        type: 'error',
+      });
     },
   });
 };
+
 export const useDeleteUser = (params: Employee) => {
   return useQuery<TableData<User>, AxiosError>({
     queryKey: ['allUsers', params],
@@ -60,11 +74,19 @@ export const useEditUser = () => {
     mutationKey: ['allUsers'],
     mutationFn: ({ updatedUser, id }) => editUser(updatedUser, id),
     onSuccess: () => {
-      console.log('User updated successfully');
+      toaster.create({
+        title: 'Success',
+        description: 'User successfully updated.',
+        type: 'success',
+      });
       queryClient.invalidateQueries({ queryKey: ['allUsers'] });
     },
     onError: (error) => {
-      console.error('Error updating user:', error);
+      toaster.create({
+        title: 'Error',
+        description: `An error has occurred. ${error}`,
+        type: 'error',
+      });
     },
   });
 };
