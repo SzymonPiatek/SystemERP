@@ -12,7 +12,7 @@ export const useUsers = (params: QueryParamsProps) => {
         ...response,
         data: response.data.map((user) => ({
           ...user,
-          roleName: user.profile?.role?.name ?? 'Brak roli',
+          roleName: user.profile?.role?.name ?? 'No role',
         })),
       };
     },
