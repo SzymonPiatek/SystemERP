@@ -16,7 +16,7 @@ export const TopBarLayout: FC<TopBarProps> = ({ user }) => {
 
   return (
     <Flex
-      justify="space-between"
+      justify="end"
       p="4"
       align="center"
       bg={{ base: 'white', _dark: 'black' }}
@@ -29,8 +29,6 @@ export const TopBarLayout: FC<TopBarProps> = ({ user }) => {
       zIndex="999"
       appearance="dark"
     >
-      <Flex></Flex>
-
       {/* ICONS AND USER */}
       <Flex align="center" gap="6" justifySelf="end">
         <HStack gap="1">

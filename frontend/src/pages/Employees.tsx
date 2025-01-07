@@ -56,7 +56,6 @@ export const Employees: FC<{}> = () => {
     deleteUser(id);
   };
 
-  console.log(data?.data);
   return (
     <Flex direction="column" align="center" justify="center">
       <Card.Root p="4" rounded="2xl" w="full">
@@ -74,7 +73,7 @@ export const Employees: FC<{}> = () => {
           )}
 
           {!isLoading && !isError && employees.length > 0 && (
-            <Table.Root size="sm" striped>
+            <Table.Root size="sm" striped mb="4">
               <Table.Header>
                 <Table.Row>
                   <Table.ColumnHeader>Id</Table.ColumnHeader>

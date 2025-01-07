@@ -1,4 +1,4 @@
-import { Box, IconButton } from '@chakra-ui/react';
+import { Box, IconButton, Card } from '@chakra-ui/react';
 import { FC, ReactNode } from 'react';
 import { MdClose } from 'react-icons/md';
 
@@ -24,9 +24,8 @@ export const Modal: FC<ModalProps> = ({ modalState, onClose, children }) => {
       alignItems="center"
       justifyContent="center"
     >
-      <Box
+      <Card.Root
         position="relative"
-        bg="white"
         rounded="2xl"
         shadow="lg"
         maxW="40vw"
@@ -34,21 +33,23 @@ export const Modal: FC<ModalProps> = ({ modalState, onClose, children }) => {
         zIndex="1010"
         opacity="1"
       >
-        <IconButton
-          aria-label="Close modal"
-          size="sm"
-          position="absolute"
-          top="2"
-          right="2"
-          onClick={onClose}
-          color="red.500"
-          variant="ghost"
-          _hover={{ color: 'red.700', bg: 'gray.300' }}
-        >
-          <MdClose />
-        </IconButton>
-        {children}
-      </Box>
+        <Card.Body>
+          <IconButton
+            aria-label="Close modal"
+            size="sm"
+            position="absolute"
+            top="2"
+            right="2"
+            onClick={onClose}
+            color="red.500"
+            variant="ghost"
+            _hover={{ color: 'red.700', bg: 'gray.300' }}
+          >
+            <MdClose />
+          </IconButton>
+          {children}
+        </Card.Body>
+      </Card.Root>
     </Box>
   );
 };

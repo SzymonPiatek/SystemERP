@@ -33,7 +33,7 @@ export const Pagination: FC<PaginationComponentProps> = ({
   };
 
   return (
-    <Grid templateColumns="1fr 1fr 1fr" alignItems="center" mt="4">
+    <Grid templateColumns="1fr 1fr 1fr" alignItems="center">
       <HStack justify="flex-start">
         {pageSizeOptions.map((size) => (
           <Button key={size} variant="outline" onClick={() => handlePageLimitChange(size)}>
@@ -58,7 +58,7 @@ export const Pagination: FC<PaginationComponentProps> = ({
           </HStack>
         </PaginationRoot>
       </Box>
-      <Box display="flex" justifyContent="flex-end">
+      <Box display="flex" justifyContent="end">
         {children}
       </Box>
     </Grid>

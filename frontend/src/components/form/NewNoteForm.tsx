@@ -1,56 +1,111 @@
-import { Box, Button, Input, Text } from '@chakra-ui/react';
-import { FC, useContext, useState } from 'react';
-import { useAddNote } from '../../hooks/useAddNote';
+import { Button, Card, IconButton, Input } from '@chakra-ui/react';
+import { FC, useState, useContext } from 'react';
+import { MdAddCircleOutline, MdClose } from 'react-icons/md';
+import {
+  DialogRoot,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+  DialogTitle,
+  DialogActionTrigger,
+  DialogCloseTrigger,
+} from '../../components/ui/dialog';
+import { useAddNote } from '../../hooks/notes/useNote';
+import { Field } from '../ui/field';
 import { AuthContext } from '../../contexts/AuthContext';
 
-type NoteFormProps = {
-  onClose: () => void;
-  fetchData: () => void;
-};
+type NewNoteFormProps = {};
 
-export const NewNoteForm: FC<NoteFormProps> = ({ onClose, fetchData }) => {
-  const [updatedTitle, setUpdatedTitle] = useState('');
-  const [updatedDescription, setUpdatedDescription] = useState('');
-
-  const { mutate: addNote } = useAddNote(fetchData);
+export const NewNoteForm: FC<NewNoteFormProps> = () => {
   const { user } = useContext(AuthContext);
+  const [open, setOpen] = useState(false);
+  const [newNote, setNewNote] = useState<{
+    title: string;
+    description: string;
+  }>({
+    title: '',
+    description: '',
+  });
 
-  const handleAdd = async () => {
-    const payload = {
-      title: updatedTitle,
-      description: updatedDescription,
-      ownerId: user?.id,
+  const { mutate: addNote } = useAddNote();
+
+  const handleOpenChange = (e: { open: boolean }) => {
+    setOpen(e.open);
+  };
+
+  const handleInputChange =
+    (field: keyof typeof newNote) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setNewNote((prevNote) => ({
+        ...prevNote,
+        [field]: e.target.value,
+      }));
     };
 
-    addNote({ data: payload });
-    onClose();
+  const handleSave = async () => {
+    console.log(user);
+    try {
+      const payload = {
+        ownerId: user?.id || null,
+        title: newNote.title,
+        description: newNote.description,
+      };
+      await addNote({ newNote: payload });
+    } catch (error) {
+      console.error('Error adding note:', error);
+    }
   };
 
   return (
-    <Box minW="30vw">
-      <Box mb={4}>
-        <Text fontSize="sm" fontWeight="bold" mb={2}>
-          Title
-        </Text>
-        <Input
-          value={updatedTitle}
-          onChange={(e) => setUpdatedTitle(e.target.value)}
-          placeholder="Enter title"
-        />
-      </Box>
-      <Box mb={4}>
-        <Text fontSize="sm" fontWeight="bold" mb={2}>
-          Description
-        </Text>
-        <Input
-          value={updatedDescription}
-          onChange={(e) => setUpdatedDescription(e.target.value)}
-          placeholder="Enter description"
-        />
-      </Box>
-      <Button colorScheme="blue" onClick={handleAdd}>
-        Add
-      </Button>
-    </Box>
+    <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange}>
+      <DialogTrigger>
+        <IconButton variant="outline" onClick={() => setOpen(true)} p="2">
+          <MdAddCircleOutline /> Add Note
+        </IconButton>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Add New Note</DialogTitle>
+        </DialogHeader>
+
+        <DialogBody>
+          <Card.Root>
+            <Card.Body gap="2">
+              <Field label="Title" required>
+                <Input
+                  value={newNote.title}
+                  onChange={handleInputChange('title')}
+                  placeholder="Enter title"
+                />
+              </Field>
+
+              <Field label="Description" required>
+                <Input
+                  value={newNote.description}
+                  onChange={handleInputChange('description')}
+                  placeholder="Enter description"
+                />
+              </Field>
+            </Card.Body>
+          </Card.Root>
+        </DialogBody>
+
+        <DialogFooter>
+          <DialogActionTrigger>
+            <Button variant="outline">Cancel</Button>
+          </DialogActionTrigger>
+
+          <Button onClick={handleSave}>Save</Button>
+        </DialogFooter>
+
+        <DialogCloseTrigger>
+          <IconButton variant="outline">
+            <MdClose />
+          </IconButton>
+        </DialogCloseTrigger>
+      </DialogContent>
+    </DialogRoot>
   );
 };

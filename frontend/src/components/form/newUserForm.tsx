@@ -65,7 +65,7 @@ export const NewUserForm: FC<NewUserFormProps> = () => {
   return (
     <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger>
-        <IconButton variant="outline">
+        <IconButton variant="outline" p="2">
           <MdAddCircleOutline /> Add User
         </IconButton>
       </DialogTrigger>

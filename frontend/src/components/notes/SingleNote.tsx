@@ -1,9 +1,9 @@
-import { Box, HStack, IconButton, Card } from '@chakra-ui/react';
-import { FC, useState } from 'react';
+import { Box, HStack, Card } from '@chakra-ui/react';
+import { FC } from 'react';
 import { BoxWithTitle } from '../ui/BoxWithTitle';
 import { Button } from '../ui/button';
 
-import { MdEdit, MdDelete, MdClose } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
 
 import { NoteForm } from '../form/NoteForm';
 
@@ -12,89 +12,28 @@ export type SingleNoteProps = {
   desc: string;
   id: number;
   deleteNote: (noteId: number) => void;
-  fetchData: () => void;
 };
 
-export const SingleNote: FC<SingleNoteProps> = ({ title, desc, id, deleteNote, fetchData }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+export const SingleNote: FC<SingleNoteProps> = ({ title, desc, id, deleteNote }) => {
   return (
-    <>
-      {isOpen ? (
-        <Box
-          position="fixed"
-          w="100vw"
-          h="100vh"
-          zIndex="1005"
-          top="0"
-          left="0"
-          bg="rgba(0, 0, 0, 0.8)"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Box
-            position="relative"
-            bg="white"
-            rounded="2xl"
-            shadow="lg"
-            maxW="40vw"
-            p="6"
-            zIndex="1010"
-            opacity="1"
-          >
-            <IconButton
-              aria-label="Close modal"
-              size="sm"
-              position="absolute"
-              top="2"
-              right="2"
-              onClick={() => setIsOpen(false)}
-              color="red.500"
-              variant="ghost"
-              _hover={{ color: 'red.700', bg: 'gray.300' }}
+    <Card.Root rounded="2xl" p="4" maxW="25vw" minW="15vw">
+      <Card.Body>
+        <BoxWithTitle Title={title} Text={desc} />
+        <HStack gap="0" m="4" justifyContent="end" alignItems="center">
+          <Box>
+            <NoteForm title={title} description={desc} id={id} />
+            <Button
+              _hover={{
+                color: 'green.700',
+              }}
+              onClick={() => deleteNote(id)}
+              variant="outline"
             >
-              <MdClose />
-            </IconButton>
-
-            <NoteForm
-              title={title}
-              description={desc}
-              id={id}
-              onClose={() => setIsOpen(false)}
-              fetchData={() => fetchData()}
-            />
+              <MdDelete />
+            </Button>
           </Box>
-        </Box>
-      ) : null}
-
-      <Card.Root rounded="2xl" p="4" maxW="33%">
-        <Card.Body>
-          <BoxWithTitle Title={title} Text={desc} />
-          <HStack gap="0" m="4" justifyContent="end" alignItems="center">
-            <Box>
-              <Button
-                onClick={() => setIsOpen(true)}
-                _hover={{
-                  color: 'green.700',
-                }}
-                variant="outline"
-              >
-                <MdEdit />
-              </Button>
-              <Button
-                _hover={{
-                  color: 'green.700',
-                }}
-                onClick={() => deleteNote(id)}
-                variant="outline"
-              >
-                <MdDelete />
-              </Button>
-            </Box>
-          </HStack>
-        </Card.Body>
-      </Card.Root>
-    </>
+        </HStack>
+      </Card.Body>
+    </Card.Root>
   );
 };
