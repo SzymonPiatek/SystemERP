@@ -1,16 +1,15 @@
 import { Box, Card, Flex, IconButton, Table, Spinner, Text } from '@chakra-ui/react';
-import { Status } from '../components/ui/status';
+import { Status } from '../components/ui/status.tsx';
 import { FC, useEffect, useState } from 'react';
-import { QueryParamsProps } from '../utils/types';
-import { MdOutlineDelete } from 'react-icons/md';
+import { QueryParamsProps } from '../utils/types.ts';
+import { MdOutlineOfflineBolt } from 'react-icons/md';
 import { useSearchParams } from 'react-router-dom';
-import { useEditUser, useUsers } from '../hooks/users/useUsers.tsx';
+import { useDeleteUser, useEditUser, useUsers } from '../hooks/users/useUsers.tsx';
 import { Pagination } from '../components/pagination/Pagination.tsx';
-import { deleteUser } from '../actions/usersActions.ts';
 import { UsersForm } from '../components/form/UsersForm.tsx';
 import { NewUserForm } from '../components/form/newUserForm.tsx';
 
-export const Employees: FC<{}> = () => {
+export const Users: FC<{}> = () => {
   const [pageLimit, setPageLimit] = useState(5);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -26,6 +25,7 @@ export const Employees: FC<{}> = () => {
   const totalItems = data?.total;
 
   const { mutate: editUser } = useEditUser();
+  const { mutate: deleteUser } = useDeleteUser();
 
   useEffect(() => {
     setQueryParams((prev) => ({
@@ -53,9 +53,8 @@ export const Employees: FC<{}> = () => {
   };
 
   const handleDelete = (id: number) => {
-    deleteUser(id);
+    deleteUser({ userId: id });
   };
-
   return (
     <Flex direction="column" align="center" justify="center">
       <Card.Root p="4" rounded="2xl" w="full">
@@ -112,7 +111,7 @@ export const Employees: FC<{}> = () => {
                       <Box display="flex" justifyContent="flex-end">
                         <UsersForm user={item} onEdit={editUser} />
                         <IconButton variant="outline" onClick={() => handleDelete(item.id)}>
-                          <MdOutlineDelete />
+                          <MdOutlineOfflineBolt />
                         </IconButton>
                       </Box>
                     </Table.Cell>

@@ -8,6 +8,7 @@ export type User = {
   isActive: boolean;
   companyId: number;
   profile?: Profile;
+  roleName?: string;
 };
 
 export type Employee = {

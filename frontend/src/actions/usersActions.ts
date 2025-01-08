@@ -7,8 +7,8 @@ export const getUsers = async (params?: QueryParamsProps) =>
 
 export const deleteUser = async (userId: number) =>
   axiosFetch<TableData<Employee>>({
-    url: API.users.user(userId),
-    method: 'delete',
+    url: API.users.user(userId) + '/change_active',
+    method: 'patch',
   });
 export const editUser = async (
   data: Omit<Employee, 'id' | 'isActive' | 'companyId'>,

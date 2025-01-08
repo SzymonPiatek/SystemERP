@@ -4,8 +4,7 @@ import { SingleNote } from '../components/notes/SingleNote';
 import { useSearchParams } from 'react-router-dom';
 import { QueryParamsProps } from '../utils/types';
 import { NewNoteForm } from '../components/form/NewNoteForm.tsx';
-import { useNotes } from '../hooks/notes/useNote.tsx';
-import { deleteNote } from '../actions/noteActions.ts';
+import { useDeleteNote, useNotes } from '../hooks/notes/useNote.tsx';
 import { Pagination } from '../components/pagination/Pagination.tsx';
 
 export const Notes: FC<{}> = () => {
@@ -21,6 +20,8 @@ export const Notes: FC<{}> = () => {
   const notes = data?.data ?? [];
   const currentPage = data?.page ?? 1;
   const totalItems = data?.total;
+
+  const { mutate: deleteNote } = useDeleteNote();
 
   useEffect(() => {
     setQueryParams((prev) => ({
@@ -48,29 +49,36 @@ export const Notes: FC<{}> = () => {
   };
 
   const handleDelete = (id: number) => {
-    deleteNote(id);
+    deleteNote({ noteId: id });
   };
-
   return (
     <Flex direction="column" maxH="calc(100vh - 7rem)">
       <Box flex="1" overflowY="auto" padding="4">
-        <Flex wrap="wrap" gap="4">
-          {notes.length > 0 ? (
-            notes.map((note) => (
-              <SingleNote
-                key={note.id}
-                title={note.title}
-                desc={note.description}
-                id={note.id}
-                deleteNote={handleDelete}
-              />
-            ))
-          ) : (
-            <Box textAlign="center" width="100%" mt="8">
-              No notes to display.
-            </Box>
-          )}
-        </Flex>
+        {isLoading && <Box textAlign="center">Loading...</Box>}
+        {isError && (
+          <Box textAlign="center" color="red.500">
+            An error occurred while fetching notes.
+          </Box>
+        )}
+        {!isLoading && !isError && (
+          <Flex wrap="wrap" gap="4">
+            {notes.length > 0 ? (
+              notes.map((note) => (
+                <SingleNote
+                  key={note.id}
+                  title={note.title}
+                  desc={note.description}
+                  id={note.id}
+                  deleteNote={handleDelete}
+                />
+              ))
+            ) : (
+              <Box textAlign="center" width="100%" mt="8">
+                No notes to display.
+              </Box>
+            )}
+          </Flex>
+        )}
       </Box>
       <Box pt="2">
         <Card.Root>

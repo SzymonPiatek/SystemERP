@@ -48,18 +48,26 @@ export const useAddUser = () => {
   });
 };
 
-export const useDeleteUser = (params: Employee) => {
-  return useQuery<TableData<User>, AxiosError>({
-    queryKey: ['allUsers', params],
-    queryFn: () => deleteUser(params.id),
-    select: (response) => {
-      return {
-        ...response,
-        data: response.data.map((user) => ({
-          ...user,
-          roleName: user.profile?.role?.name ?? 'No role',
-        })),
-      };
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<TableData<Employee>, AxiosError, { userId: number }>({
+    mutationKey: ['allUsers'],
+    mutationFn: ({ userId }) => deleteUser(userId),
+    onSuccess: () => {
+      toaster.create({
+        title: 'Success',
+        description: 'User successfully deactivated/activated.',
+        type: 'success',
+      });
+      queryClient.invalidateQueries({ queryKey: ['allUsers'] });
+    },
+    onError: (error) => {
+      toaster.create({
+        title: 'Error',
+        description: `An error has occurred. ${error}`,
+        type: 'error',
+      });
     },
   });
 };

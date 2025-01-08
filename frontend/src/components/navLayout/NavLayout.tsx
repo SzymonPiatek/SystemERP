@@ -37,8 +37,8 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
             <NavLink to="/schedule">
               <TextWithIcon title="Schedule" Icon={MdCalendarMonth}></TextWithIcon>
             </NavLink>
-            <NavLink to="/employees">
-              <TextWithIcon title="Employees" Icon={MdPeopleAlt}></TextWithIcon>
+            <NavLink to="/users">
+              <TextWithIcon title="Users" Icon={MdPeopleAlt}></TextWithIcon>
             </NavLink>
             <NavLink to="/notes">
               <TextWithIcon title="Notes" Icon={MdNotes}></TextWithIcon>

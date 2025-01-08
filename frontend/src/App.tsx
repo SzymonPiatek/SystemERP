@@ -9,7 +9,7 @@ import { Error } from './pages/Error';
 import { Dashboard } from './pages/Dashboard';
 import { Schedule } from './pages/Schedule';
 import { Notes } from './pages/Notes';
-import { Employees } from './pages/Employees';
+import { Users } from './pages/Users';
 import { ProfilePage } from './pages/ProfilePage';
 import { LoginPage } from './pages/auth/LoginPage';
 import PostmanPage from './pages/postman/PostmanPage';
@@ -38,8 +38,8 @@ const router = createBrowserRouter(
               errorElement: <Error />,
             },
             {
-              path: '/employees',
-              element: <Employees />,
+              path: '/users',
+              element: <Users />,
               errorElement: <Error />,
             },
             {

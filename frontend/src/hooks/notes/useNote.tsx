@@ -52,15 +52,26 @@ export const useAddNote = () => {
   });
 };
 
-export const useDeleteNote = (note: Note) => {
-  return useQuery<TableData<Note>, AxiosError>({
-    queryKey: ['allNotes', note.id],
-    queryFn: async () => {
-      try {
-        return await deleteNote(note.id);
-      } catch (error) {
-        throw error;
-      }
+export const useDeleteNote = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<TableData<Note>, AxiosError, { noteId: number }>({
+    mutationKey: ['allNotes'],
+    mutationFn: ({ noteId }) => deleteNote(noteId),
+    onSuccess: () => {
+      toaster.create({
+        title: 'Success',
+        description: 'Note successfully deleted.',
+        type: 'success',
+      });
+      queryClient.invalidateQueries({ queryKey: ['allNotes'] });
+    },
+    onError: (error) => {
+      toaster.create({
+        title: 'Error',
+        description: `An error has occurred. ${error}`,
+        type: 'error',
+      });
     },
   });
 };
