@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import type { Note, QueryParamsProps, TableData } from '../../utils/types.ts';
-import { getNotes, addNote, editNote, deleteNote } from '../../actions/noteActions.ts';
+import { getNotes, addNote, editNote, deleteNote, NotePayload } from '../../actions/noteActions.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toaster } from '../../components/ui/toaster.tsx';
 
@@ -21,11 +21,7 @@ export const useNotes = (params: QueryParamsProps) => {
 export const useAddNote = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<
-    TableData<Note>,
-    AxiosError,
-    { newNote: Omit<Note, 'date' | 'isActive' | 'createdAt' | 'updatedAt' | 'id'> }
-  >({
+  return useMutation<TableData<Note>, AxiosError, { newNote: NotePayload }>({
     mutationKey: ['allNotes'],
     mutationFn: async ({ newNote }) => {
       try {
@@ -79,7 +75,11 @@ export const useDeleteNote = () => {
 export const useEditNote = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<TableData<Note>, AxiosError, { updatedNote: Note; id: number }>({
+  return useMutation<
+    TableData<Note>,
+    AxiosError,
+    { updatedNote: Omit<NotePayload, 'ownerId'>; id: number }
+  >({
     mutationKey: ['allNotes'],
     mutationFn: async ({ updatedNote, id }) => {
       try {

@@ -12,7 +12,7 @@ import {
   DialogActionTrigger,
   DialogCloseTrigger,
 } from '../../components/ui/dialog';
-import { useEditNote } from '../../hooks/notes/useNote';
+import { useEditNote } from '../../hooks/notes/useNotes';
 import { Field } from '../ui/field';
 
 type NoteFormProps = {
@@ -52,6 +52,7 @@ export const NoteForm: FC<NoteFormProps> = ({ title, description, id }) => {
         id,
       };
       await editNote(payload);
+      setOpen(false);
     } catch (error) {
       console.error('Error updating note:', error);
     }

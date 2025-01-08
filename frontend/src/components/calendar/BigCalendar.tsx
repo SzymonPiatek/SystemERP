@@ -1,4 +1,4 @@
-import { useState, FC } from 'react';
+import { useState, FC, useEffect } from 'react';
 import { Calendar, momentLocalizer, View, Views } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -14,26 +14,63 @@ import {
 } from '../ui/dialog';
 import DatePicker from 'react-datepicker';
 import { MdClose } from 'react-icons/md';
-import { deleteEvent, editNote } from '../../actions/eventActions';
+import { useDeleteEvent, useEditEvent, useEvents } from '../../hooks/events/useEvents';
 
 const localizer = momentLocalizer(moment);
 
 interface BigCalendarProps {
-  events: any[];
   set: string;
   classes?: string;
 }
 
-const BigCalendar: FC<BigCalendarProps> = ({ events, set, classes }) => {
+const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
   const initialView = Views[set as keyof typeof Views] || Views.WORK_WEEK;
   const [view, setView] = useState<View>(initialView);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogState, setDialogState] = useState({ open: false });
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
   const [id, setId] = useState<number | null>(null);
+
+  const { data: events, isLoading, isError, error } = useEvents();
+  const { mutate: deleteEvent } = useDeleteEvent();
+  const { mutate: editEvent } = useEditEvent();
+
+  useEffect(() => {
+    if (!dialogState.open) {
+      setSelectedEvent(null);
+      setTitle('');
+      setDescription('');
+      setStartDate(new Date());
+      setEndDate(new Date());
+      setId(null);
+    }
+  }, [dialogState.open]);
+
+  useEffect(() => {
+    if (isError) {
+      console.error('Error fetching events:', error);
+    }
+  }, [isError, error]);
+
+  if (isLoading) {
+    return <p>Loading events...</p>;
+  }
+
+  if (isError) {
+    return <p>Error loading events</p>;
+  }
+
+  const formattedEvents =
+    events?.map((event: any) => ({
+      id: event.id,
+      title: event.title,
+      allDay: event.isAllDay,
+      start: new Date(event.startDate),
+      end: new Date(event.endDate),
+    })) || [];
 
   const handleOnChangeView = (selectedView: View) => {
     setView(selectedView);
@@ -45,11 +82,11 @@ const BigCalendar: FC<BigCalendarProps> = ({ events, set, classes }) => {
     setDescription(event.description);
     setStartDate(event.start);
     setEndDate(event.end);
-    setDialogOpen(true);
+    setDialogState({ open: true });
     setId(event.id);
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
     if (!id) {
       return;
     }
@@ -60,30 +97,24 @@ const BigCalendar: FC<BigCalendarProps> = ({ events, set, classes }) => {
       endDate: endDate.toISOString(),
     };
 
-    try {
-      await editNote(id, payload);
-      setDialogOpen(false);
-      setSelectedEvent(null);
-    } catch (error) {}
+    editEvent({ updatedEvent: payload, id });
+    setDialogState({ open: false });
   };
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     if (!id) {
       return;
     }
 
-    try {
-      await deleteEvent(id);
-      setDialogOpen(false);
-      setSelectedEvent(null);
-    } catch (error) {}
+    deleteEvent({ eventId: id });
+    setDialogState({ open: false });
   };
 
   return (
     <Box>
       <Calendar
         localizer={localizer}
-        events={events}
+        events={formattedEvents}
         startAccessor="start"
         endAccessor="end"
         views={['work_week', 'week', 'day']}
@@ -98,7 +129,7 @@ const BigCalendar: FC<BigCalendarProps> = ({ events, set, classes }) => {
       />
 
       {selectedEvent && (
-        <DialogRoot open={dialogOpen}>
+        <DialogRoot {...dialogState} onOpenChange={setDialogState}>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Edit Event</DialogTitle>
@@ -145,7 +176,7 @@ const BigCalendar: FC<BigCalendarProps> = ({ events, set, classes }) => {
             </DialogFooter>
 
             <DialogCloseTrigger>
-              <IconButton variant="outline" onClick={() => setDialogOpen(false)}>
+              <IconButton variant="outline" onClick={() => setDialogState({ open: false })}>
                 <MdClose />
               </IconButton>
             </DialogCloseTrigger>

@@ -1,5 +1,5 @@
 import { Button, Card, IconButton, Input } from '@chakra-ui/react';
-import { FC, useState, useContext } from 'react';
+import { FC, useState, useContext, useEffect } from 'react';
 import { MdAddCircleOutline, MdClose } from 'react-icons/md';
 import {
   DialogRoot,
@@ -12,7 +12,7 @@ import {
   DialogActionTrigger,
   DialogCloseTrigger,
 } from '../../components/ui/dialog';
-import { useAddNote } from '../../hooks/notes/useNote';
+import { useAddNote } from '../../hooks/notes/useNotes';
 import { Field } from '../ui/field';
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -44,18 +44,28 @@ export const NewNoteForm: FC<NewNoteFormProps> = () => {
     };
 
   const handleSave = async () => {
-    console.log(user);
+    if (!user?.id) {
+      return;
+    }
+
     try {
       const payload = {
-        ownerId: user?.id || null,
+        ownerId: user?.id,
         title: newNote.title,
         description: newNote.description,
       };
       await addNote({ newNote: payload });
+      setOpen(false);
     } catch (error) {
       console.error('Error adding note:', error);
     }
   };
+
+  useEffect(() => {
+    if (!open) {
+      setNewNote({ title: '', description: '' });
+    }
+  }, [open]);
 
   return (
     <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange}>

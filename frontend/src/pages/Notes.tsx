@@ -4,7 +4,7 @@ import { SingleNote } from '../components/notes/SingleNote';
 import { useSearchParams } from 'react-router-dom';
 import { QueryParamsProps } from '../utils/types';
 import { NewNoteForm } from '../components/form/NewNoteForm.tsx';
-import { useDeleteNote, useNotes } from '../hooks/notes/useNote.tsx';
+import { useDeleteNote, useNotes } from '../hooks/notes/useNotes.tsx';
 import { Pagination } from '../components/pagination/Pagination.tsx';
 
 export const Notes: FC<{}> = () => {

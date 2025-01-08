@@ -17,8 +17,7 @@ import DatePicker from 'react-datepicker';
 import { AuthContext } from '../../contexts/AuthContext';
 
 import { MdClose } from 'react-icons/md';
-import { useAddEvent } from '../../hooks/useAddEvent';
-import { useQueryClient } from '@tanstack/react-query';
+import { useAddEvent } from '../../hooks/events/useEvents';
 import toast from 'react-hot-toast';
 import { Field } from '../ui/field';
 
@@ -28,8 +27,8 @@ export const ScheduleForm: FC<{}> = () => {
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
   const { user } = useContext(AuthContext);
+
   const { mutate: addEvent } = useAddEvent();
-  const queryClient = useQueryClient();
 
   const handleOpenChange = (e: { open: boolean }) => {
     setOpen(e.open);
@@ -56,16 +55,8 @@ export const ScheduleForm: FC<{}> = () => {
       ownerId: user.id,
     };
 
-    addEvent(
-      { data: payload },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries(['events']);
-          setOpen(false);
-          setUpdatedTitle('');
-        },
-      },
-    );
+    addEvent({ data: payload });
+    setOpen(false);
   };
 
   const isButtonDisabled = !updatedTitle || !startDate || !endDate;
@@ -139,3 +130,5 @@ export const ScheduleForm: FC<{}> = () => {
     </DialogRoot>
   );
 };
+
+export default ScheduleForm;

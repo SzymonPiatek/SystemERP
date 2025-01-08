@@ -1,9 +1,8 @@
 import axiosFetch from '../utils/axiosFetch';
 import API from '../utils/apiRoutes';
-import { Event } from '../utils/types';
-import { AxiosError } from 'axios';
+import { Event, QueryParamsProps } from '../utils/types';
 
-type AddEventPayload = {
+export type AddEventPayload = {
   title: string;
   startDate: string;
   endDate: string;
@@ -15,29 +14,29 @@ type EventResponse = {
   message: string;
   events: Event[];
 };
-type EditEventPayload = {
+export type EditEventPayload = {
   title: string;
   startDate: string;
   endDate: string;
 };
-export const getEvents = async () => {
-  return axiosFetch<{ events: Event[] }>({ url: API.events.all });
+export const getEvents = async (params?: QueryParamsProps) => {
+  return axiosFetch<{ events: Event[] }>({ url: API.events.all, params });
 };
 
 export const addEvent = async (data: AddEventPayload) =>
-  axiosFetch<EventResponse | AxiosError>({
+  axiosFetch<EventResponse>({
     url: API.events.all,
     method: 'post',
     data,
   });
 
 export const deleteEvent = async (eventId: number) =>
-  axiosFetch<EventResponse | AxiosError>({
+  axiosFetch<EventResponse>({
     url: API.events.event(eventId),
     method: 'delete',
   });
-export const editNote = async (eventId: number, data: EditEventPayload) =>
-  axiosFetch<EventResponse | AxiosError>({
+export const editEvent = async (eventId: number, data: EditEventPayload) =>
+  axiosFetch<EventResponse>({
     url: API.events.event(eventId),
     method: 'patch',
     data,

@@ -2,6 +2,12 @@ import axiosFetch from '../utils/axiosFetch';
 import API from '../utils/apiRoutes';
 import { Note, TableData, QueryParamsProps } from '../utils/types';
 
+export type NotePayload = {
+  ownerId: number;
+  title: string;
+  description: string;
+};
+
 export const getNotes = async (params?: QueryParamsProps) =>
   axiosFetch<TableData<Note>>({ url: API.notes.all, params });
 export const deleteNote = async (noteId: number) =>
@@ -9,17 +15,18 @@ export const deleteNote = async (noteId: number) =>
     url: API.notes.note(noteId),
     method: 'delete',
   });
-export const editNote = async (data: Note, noteId: number, params?: QueryParamsProps) =>
+export const editNote = async (
+  data: Omit<NotePayload, 'ownerId'>,
+  noteId: number,
+  params?: QueryParamsProps,
+) =>
   axiosFetch<TableData<Note>>({
     url: API.notes.note(noteId),
     method: 'patch',
     data,
     params,
   });
-export const addNote = async (
-  data: Omit<Note, 'date' | 'isActive' | 'createdAt' | 'updatedAt' | 'id'>,
-  params?: QueryParamsProps,
-) =>
+export const addNote = async (data: NotePayload, params?: QueryParamsProps) =>
   axiosFetch<TableData<Note>>({
     url: API.notes.all,
     method: 'post',
