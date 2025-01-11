@@ -2,20 +2,20 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ToastProvider from './components/toaster/ToastProvider';
 import { Provider } from './components/ui/provider';
+import { Toaster } from './components/ui/toaster';
 
 import { HomePage } from './pages/HomePage';
 import { Error } from './pages/Error';
 import { Dashboard } from './pages/Dashboard';
 import { Schedule } from './pages/Schedule';
 import { Notes } from './pages/Notes';
-import { Employees } from './pages/Employees';
+import { Users } from './pages/Users';
 import { ProfilePage } from './pages/ProfilePage';
 import { LoginPage } from './pages/auth/LoginPage';
 import PostmanPage from './pages/postman/PostmanPage';
 import Orders from './pages/Orders';
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './routes/PrivateRoute';
-import { system } from './theme';
 
 const router = createBrowserRouter(
   [
@@ -38,8 +38,8 @@ const router = createBrowserRouter(
               errorElement: <Error />,
             },
             {
-              path: '/employees',
-              element: <Employees />,
+              path: '/users',
+              element: <Users />,
               errorElement: <Error />,
             },
             {
@@ -71,6 +71,10 @@ const router = createBrowserRouter(
       element: <LoginPage />,
       errorElement: <Error />,
     },
+    {
+      path: '*',
+      element: <Error />,
+    },
   ],
   {
     future: {
@@ -92,6 +96,7 @@ function App() {
         <AuthProvider>
           <RouterProvider router={router} />
           <ToastProvider />
+          <Toaster />
         </AuthProvider>
       </QueryClientProvider>
     </Provider>

@@ -15,18 +15,16 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
   const { user } = useContext(AuthContext);
 
   return (
-    <Flex background="gray.100" p={0} minH="100vh">
+    <Flex flex="1">
       <Stack
         as="aside"
-        background="white"
-        minWidth={[null, '15%', '13%']}
-        maxWidth={[null, '15%', '13%']}
+        bg={{ base: 'white', _dark: 'black' }}
+        width={['15%', '13%']}
         minH="100vh"
         position="fixed"
         left="0"
         top="0"
         justifyContent="space-between"
-        flex="1"
       >
         <Box>
           <Box h="4rem" display="flex" placeItems="center">
@@ -39,8 +37,8 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
             <NavLink to="/schedule">
               <TextWithIcon title="Schedule" Icon={MdCalendarMonth}></TextWithIcon>
             </NavLink>
-            <NavLink to="/employees">
-              <TextWithIcon title="Employees" Icon={MdPeopleAlt}></TextWithIcon>
+            <NavLink to="/users">
+              <TextWithIcon title="Users" Icon={MdPeopleAlt}></TextWithIcon>
             </NavLink>
             <NavLink to="/notes">
               <TextWithIcon title="Notes" Icon={MdNotes}></TextWithIcon>
@@ -55,10 +53,10 @@ export const NavLayout: FC<NavLayoutProps> = (props) => {
         </Box>
       </Stack>
 
-      <VStack w="full" ml={[null, '15%', '13%']} gap="0">
+      <VStack ml={['15%', '13%']} width="full" height="100vh" overflow="hidden">
         {user && <TopBarLayout user={user} />}
 
-        <Box flex={1} w="full">
+        <Box flex="1" width="100%" overflowY="auto">
           {children}
         </Box>
       </VStack>

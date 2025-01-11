@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Card } from '@chakra-ui/react';
 import { FC } from 'react';
 import BigCalendar from '../../components/calendar/BigCalendar.tsx';
 import { AxiosError } from 'axios';
@@ -27,6 +27,7 @@ export const DailyCalendar: FC<{}> = () => {
   }, []);
 
   const formattedEvents = events.map((event: any) => ({
+    id: event.id,
     title: event.title,
     allDay: event.isAllDay,
     start: new Date(event.startDate),
@@ -34,11 +35,13 @@ export const DailyCalendar: FC<{}> = () => {
   }));
 
   return (
-    <Flex wrap="wrap">
-      <Box bg="white" rounded="2xl" p="4" w="full">
-        <BoxWithTitle Title="Daily Schedule" />
-        <BigCalendar events={formattedEvents} set="DAY" classes="daily" />
-      </Box>
+    <Flex wrap="wrap" w="100%">
+      <Card.Root rounded="2xl" p="4" w="100%">
+        <Card.Body>
+          <BoxWithTitle Title="Daily Schedule" />
+          <BigCalendar events={formattedEvents} set="DAY" classes="daily" />
+        </Card.Body>
+      </Card.Root>
     </Flex>
   );
 };

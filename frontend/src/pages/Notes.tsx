@@ -1,125 +1,99 @@
-import { Box, Flex, IconButton } from '@chakra-ui/react';
+import { Box, Flex, Card } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
 import { SingleNote } from '../components/notes/SingleNote';
-import { AxiosError } from 'axios';
-import { Note } from '../utils/types';
-import { getNotes } from '../actions/noteActions';
 import { useSearchParams } from 'react-router-dom';
-import CustomButton from '../components/button/CustomButton.tsx';
-import { useDeleteNote } from '../hooks/useDeleteNote.tsx';
-
-import { IoMdAddCircle } from 'react-icons/io';
-import { Modal } from '../components/Modal.tsx';
+import { QueryParamsProps } from '../utils/types';
 import { NewNoteForm } from '../components/form/NewNoteForm.tsx';
+import { useDeleteNote, useNotes } from '../hooks/notes/useNotes.tsx';
+import { Pagination } from '../components/pagination/Pagination.tsx';
 
 export const Notes: FC<{}> = () => {
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [previousPage, setPreviousPage] = useState<number | null>(null);
-  const [nextPage, setNextPage] = useState<number | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [queryParams, setQueryParams] = useState({
-    page: 1,
-    limit: 10,
-  });
+  const [pageLimit, setPageLimit] = useState(5);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [queryParams, setQueryParams] = useState<QueryParamsProps>({
+    search: searchParams.get('search') || '',
+    page: parseInt(searchParams.get('page') || '1', 10),
+    limit: parseInt(searchParams.get('limit') || `${pageLimit}`, 10),
+  });
 
-  const fetchData = async () => {
-    try {
-      const response = await getNotes(queryParams);
-      if (!(response instanceof AxiosError)) {
-        setNotes(response.data);
-        setPreviousPage(response.previous);
-        setNextPage(response.next);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { data, isLoading, isError } = useNotes(queryParams);
+  const notes = data?.data ?? [];
+  const currentPage = data?.page ?? 1;
+  const totalItems = data?.total;
 
-  useEffect(() => {
-    fetchData();
-  }, [queryParams]);
-
-  const { mutate: deleteNote } = useDeleteNote(fetchData);
+  const { mutate: deleteNote } = useDeleteNote();
 
   useEffect(() => {
-    const page = parseInt(searchParams.get('page') || '1', 10);
-    const limit = parseInt(searchParams.get('limit') || '20', 10);
-
-    setQueryParams({
-      page,
-      limit,
-    });
-  }, [searchParams]);
+    setQueryParams((prev) => ({
+      ...prev,
+      limit: pageLimit,
+    }));
+  }, [pageLimit]);
 
   useEffect(() => {
     const params: Record<string, string> = {};
 
-    params.page = queryParams.page.toString();
-    params.limit = queryParams.limit.toString();
-
-    setSearchParams(params);
-  }, [queryParams, setSearchParams]);
-
-  const handleDeleteNote = (id: number) => {
-    deleteNote(id);
-  };
-
-  const handlePrevious = () => {
-    if (previousPage) {
-      setQueryParams((prev) => ({ ...prev, page: previousPage }));
+    for (const key in queryParams) {
+      if (queryParams[key]) {
+        params[key] = queryParams[key].toString();
+      }
     }
-  };
 
-  const handleNext = () => {
-    if (nextPage) {
-      setQueryParams((prev) => ({ ...prev, page: nextPage }));
+    if (JSON.stringify(params) !== JSON.stringify(Object.fromEntries(searchParams))) {
+      setSearchParams(params, { replace: true });
     }
+  }, [queryParams, searchParams, setSearchParams]);
+
+  const handlePageChange = (newPage: number) => {
+    setQueryParams((prev) => ({ ...prev, page: newPage }));
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleDelete = (id: number) => {
+    deleteNote({ noteId: id });
   };
-
   return (
-    <>
-      <Flex wrap="wrap" justify="flex-start" gap="4">
-        {notes.map((note) => (
-          <SingleNote
-            key={note.id}
-            title={note.title}
-            desc={note.description}
-            id={note.id}
-            deleteNote={handleDeleteNote}
-            fetchData={fetchData}
-          />
-        ))}
-      </Flex>
-      <Flex pt="4" justify="space-between">
-        <Box>
-          <IconButton aria-label="Add Note" onClick={() => setIsModalOpen(true)}>
-            <IoMdAddCircle />
-          </IconButton>
-        </Box>
-        <Box display="flex" gap="2rem" justifyContent="end">
-          <CustomButton type="button" onClick={handlePrevious}>
-            Prev
-          </CustomButton>
-          <CustomButton type="button" onClick={handleNext}>
-            Next
-          </CustomButton>
-        </Box>
-      </Flex>
-
-      <Modal modalState={isModalOpen} onClose={handleCloseModal}>
-        <NewNoteForm
-          fetchData={fetchData}
-          onClose={() => {
-            setIsModalOpen(false);
-          }}
-        />
-      </Modal>
-    </>
+    <Flex direction="column" maxH="calc(100vh - 7rem)">
+      <Box flex="1" overflowY="auto" padding="4">
+        {isLoading && <Box textAlign="center">Loading...</Box>}
+        {isError && (
+          <Box textAlign="center" color="red.500">
+            An error occurred while fetching notes.
+          </Box>
+        )}
+        {!isLoading && !isError && (
+          <Flex wrap="wrap" gap="4">
+            {notes.length > 0 ? (
+              notes.map((note) => (
+                <SingleNote
+                  key={note.id}
+                  title={note.title}
+                  desc={note.description}
+                  id={note.id}
+                  deleteNote={handleDelete}
+                />
+              ))
+            ) : (
+              <Box textAlign="center" width="100%" mt="8">
+                No notes to display.
+              </Box>
+            )}
+          </Flex>
+        )}
+      </Box>
+      <Box pt="2">
+        <Card.Root>
+          <Card.Body>
+            <Pagination
+              currentPage={currentPage}
+              pageSize={Number(queryParams.limit) || 2}
+              handlePageChange={handlePageChange}
+              totalItems={totalItems || 1}
+              setPageLimitToParent={setPageLimit}
+              children={<NewNoteForm />}
+            />
+          </Card.Body>
+        </Card.Root>
+      </Box>
+    </Flex>
   );
 };

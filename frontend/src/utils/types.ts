@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export type User = {
   id: number;
   email: string;
@@ -6,8 +8,17 @@ export type User = {
   isActive: boolean;
   companyId: number;
   profile?: Profile;
+  roleName?: string;
 };
 
+export type Employee = {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  isActive: boolean;
+  companyId: number;
+};
 export type Company = {
   id: number;
   name: string;
@@ -70,6 +81,29 @@ export type Note = {
   updatedAt: Date;
 };
 
+export type NotesResponse = {
+  success: boolean;
+  message: string;
+  notes: Note[];
+};
+
+export type NotePayload = {
+  ownerId: number;
+  title: string;
+  description: string;
+};
+
+export type EditNotePayload = {
+  title: string;
+  description: string;
+};
+
+export type NoteResponse = {
+  success: boolean;
+  message: string;
+  note: Note;
+};
+
 export type TableData<T> = {
   data: T[];
   limit: number;
@@ -79,8 +113,6 @@ export type TableData<T> = {
   total: number;
   totalPages: number;
 };
-
-export type FilterParams = Record<string, string | number>;
 
 export type LoginDataProps = {
   email: string;
@@ -97,3 +129,7 @@ export interface ErrorResponse {
   message?: string;
   errors?: string[];
 }
+
+export type QueryParamsProps = Record<string, string | number | null>;
+
+export type SetQueryParams = Dispatch<SetStateAction<QueryParamsProps>>;

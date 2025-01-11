@@ -1,4 +1,4 @@
-import { Box, Text, Flex } from '@chakra-ui/react';
+import { Box, Card, Text, Flex } from '@chakra-ui/react';
 import { useState, FC } from 'react';
 import Calendar from 'react-calendar';
 
@@ -35,23 +35,28 @@ export const EventCalendar: FC<{}> = () => {
   const [value, onChange] = useState<Value>(new Date());
 
   return (
-    <Box p="4" bg="white" rounded="2xl">
-      <BoxWithTitle Title="Calendar" />
-      <Calendar onChange={onChange} value={value} />
-      <Box>
-        <BoxWithTitle Text="notes" />
-      </Box>
-      <Flex direction="column">
-        {events.map((event) => (
-          <Box key={event.id}>
-            <Box>
-              <Text>{event.title}</Text>
-              <Text>{event.time}</Text>
+    <Card.Root p="4" rounded="2xl">
+      <Card.Body>
+        <BoxWithTitle Title="Calendar" />
+        <Box color="black">
+          <Calendar onChange={onChange} value={value} />
+        </Box>
+
+        <Box>
+          <BoxWithTitle Text="notes" />
+        </Box>
+        <Flex direction="column">
+          {events.map((event) => (
+            <Box key={event.id}>
+              <Box>
+                <Text>{event.title}</Text>
+                <Text>{event.time}</Text>
+              </Box>
+              <Text>{event.description}</Text>
             </Box>
-            <Text>{event.description}</Text>
-          </Box>
-        ))}
-      </Flex>
-    </Box>
+          ))}
+        </Flex>
+      </Card.Body>
+    </Card.Root>
   );
 };

@@ -1,34 +1,30 @@
 import axiosFetch from '../utils/axiosFetch';
 import API from '../utils/apiRoutes';
-import { FilterParams, Note, TableData } from '../utils/types';
-import { AxiosError } from 'axios';
+import {
+  EditNotePayload,
+  Note,
+  NoteResponse,
+  NotesResponse,
+  QueryParamsProps,
+  TableData,
+} from '../utils/types';
 
-type NoteResponse = {
-  success: boolean;
-  message: string;
-  notes: Note[];
-};
+export const getNotes = async (params?: QueryParamsProps) =>
+  axiosFetch<TableData<Note>>({ url: API.notes.all, params });
 
-type EditNotePayload = {
-  title: string;
-  description: string;
-};
-
-export const getNotes = async (params?: FilterParams) =>
-  axiosFetch<TableData<Note> | AxiosError>({ url: API.notes.all, params });
 export const deleteNote = async (noteId: number) =>
-  axiosFetch<NoteResponse | AxiosError>({
+  axiosFetch<NotesResponse>({
     url: API.notes.note(noteId),
     method: 'delete',
   });
 export const editNote = async (noteId: number, data: EditNotePayload) =>
-  axiosFetch<NoteResponse | AxiosError>({
+  axiosFetch<NoteResponse>({
     url: API.notes.note(noteId),
     method: 'patch',
     data,
   });
 export const addNote = async (data: EditNotePayload) =>
-  axiosFetch<NoteResponse | AxiosError>({
+  axiosFetch<NoteResponse>({
     url: API.notes.all,
     method: 'post',
     data,
