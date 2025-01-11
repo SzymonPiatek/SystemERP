@@ -13,9 +13,6 @@ export const Dashboard: FC<{}> = () => {
             <GridItem>
               <UserCard />
             </GridItem>
-            <GridItem>
-              <UserCard />
-            </GridItem>
           </Grid>
         </GridItem>
         <GridItem></GridItem>

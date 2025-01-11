@@ -14,21 +14,11 @@ export const UserCard: FC<{}> = () => {
           </GridItem>
           <GridItem rowSpan={1} colSpan={2} alignContent="center">
             <Text textStyle="xl">
-              {' '}
               {user?.firstName} {user?.lastName}
             </Text>
             <Text textStyle="xs">{user?.profile?.role?.name}</Text>
           </GridItem>
           <Grid templateRows="repeat(1, 1fr)" templateColumns="repeat(2, 1fr)" gapX={2}>
-            <GridItem rowSpan={1} colSpan={1}>
-              <Text>{user?.email}</Text>
-            </GridItem>
-            <GridItem rowSpan={1} colSpan={1}>
-              <Text>{user?.email}</Text>
-            </GridItem>
-            <GridItem rowSpan={1} colSpan={1}>
-              <Text>{user?.email}</Text>
-            </GridItem>
             <GridItem rowSpan={1} colSpan={1}>
               <Text>{user?.email}</Text>
             </GridItem>
