@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogActionTrigger,
   DialogCloseTrigger,
-} from '../../components/ui/dialog';
+} from '../ui/dialog.tsx';
 import { useEditNote } from '../../hooks/notes/useNotes';
 import { Field } from '../ui/field';
 

@@ -81,6 +81,29 @@ export type Note = {
   updatedAt: Date;
 };
 
+export type NotesResponse = {
+  success: boolean;
+  message: string;
+  notes: Note[];
+};
+
+export type NotePayload = {
+  ownerId: number;
+  title: string;
+  description: string;
+};
+
+export type EditNotePayload = {
+  title: string;
+  description: string;
+};
+
+export type NoteResponse = {
+  success: boolean;
+  message: string;
+  note: Note;
+};
+
 export type TableData<T> = {
   data: T[];
   limit: number;
@@ -90,8 +113,6 @@ export type TableData<T> = {
   total: number;
   totalPages: number;
 };
-
-export type FilterParams = Record<string, string | number>;
 
 export type LoginDataProps = {
   email: string;

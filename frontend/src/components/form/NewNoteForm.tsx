@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogActionTrigger,
   DialogCloseTrigger,
-} from '../../components/ui/dialog';
+} from '../ui/dialog.tsx';
 import { useAddNote } from '../../hooks/notes/useNotes';
 import { Field } from '../ui/field';
 import { AuthContext } from '../../contexts/AuthContext';
