@@ -23,6 +23,9 @@
  *               title:
  *                 type: string
  *                 example: "Updated Event Title"
+ *               description:
+ *                 type: string
+ *                 example: "Event desc"
  *               startDate:
  *                 type: string
  *                 format: date-time
@@ -57,6 +60,9 @@
  *                     title:
  *                       type: string
  *                       example: "Updated Event Title"
+ *                     description:
+ *                       type: string
+ *                       example: "Event desc"
  *                     startDate:
  *                       type: string
  *                       format: date-time

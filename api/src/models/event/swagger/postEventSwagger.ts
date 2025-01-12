@@ -26,6 +26,10 @@
  *                 format: date-time
  *                 description: The start date and time of the event.
  *                 example: "2024-12-15T10:00:00Z"
+ *               description:
+ *                 type: string
+ *                 description: Description of the event
+ *                 example: "Event description"
  *               endDate:
  *                 type: string
  *                 format: date-time
@@ -62,6 +66,9 @@
  *                     title:
  *                       type: string
  *                       example: "Team Meeting"
+ *                     description:
+ *                       type: string
+ *                       example: "Event desc"
  *                     startDate:
  *                       type: string
  *                       format: date-time
