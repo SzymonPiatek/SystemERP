@@ -17,7 +17,6 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
     addTextCondition(queryConditions, 'email', email as string | string[] | undefined);
     addTextCondition(queryConditions, 'firstName', firstName as string | string[] | undefined);
     addTextCondition(queryConditions, 'lastName', lastName as string | string[] | undefined);
-    addTextCondition(queryConditions, 'email', email as string | string[] | undefined);
 
     if (isActive !== undefined) {
       queryConditions.isActive = isActive === 'true';
@@ -77,6 +76,13 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
         where: queryConditions,
         skip: (page - 1) * limit,
         take: limit,
+        include: {
+          profile: {
+            include: {
+              role: true,
+            },
+          },
+        },
       });
 
       const safeUsers = users.map((user: User) => {
