@@ -92,6 +92,7 @@ model Profile {
 model Event {
   id        Int      @id @default(autoincrement())
   title     String
+  description String
   isAllDay  Boolean  @default(false)
   startDate DateTime
   endDate   DateTime
