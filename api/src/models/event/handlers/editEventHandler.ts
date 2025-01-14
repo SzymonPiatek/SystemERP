@@ -5,6 +5,7 @@ import prisma from '../../../prismaClient';
 
 const eventSchema = Joi.object({
   title: Joi.string().optional(),
+  description: Joi.string().optional(),
   startDate: Joi.date().optional(),
   endDate: Joi.date().optional(),
   isAllDay: Joi.boolean().optional(),
@@ -27,16 +28,18 @@ export const editEventHandler: RequestHandler = async (req, res): Promise<void> 
       return;
     }
 
-    const { title, startDate, endDate, isAllDay } = value;
+    const { title, description, startDate, endDate, isAllDay } = value;
 
     const updatedData: {
       title?: string;
+      description?: string;
       startDate?: string;
       endDate?: string;
       isAllDay?: boolean;
     } = {};
 
     if (title) updatedData.title = title;
+    if (description) updatedData.description = description;
     if (startDate) updatedData.startDate = startDate;
     if (endDate) updatedData.endDate = endDate;
     if (isAllDay) updatedData.isAllDay = isAllDay;

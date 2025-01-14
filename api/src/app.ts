@@ -9,7 +9,7 @@ import apiRouter from './routes';
 
 const app = express();
 
-app.set('trues proxy', 1);
+app.set('trust proxy', 1);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

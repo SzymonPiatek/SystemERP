@@ -5,6 +5,7 @@ import prisma from '../../../prismaClient';
 
 const eventSchema = Joi.object({
   title: Joi.string().required(),
+  description: Joi.string().optional(),
   startDate: Joi.date().required(),
   endDate: Joi.date()
     .required()
@@ -27,7 +28,7 @@ export const createEventHandler: RequestHandler = async (req, res) => {
       return;
     }
 
-    const { title, isAllDay, startDate, endDate, ownerId } = value;
+    const { title, description, isAllDay, startDate, endDate, ownerId } = value;
 
     const userExists = await prisma.user.findUnique({
       where: { id: ownerId },
@@ -41,6 +42,7 @@ export const createEventHandler: RequestHandler = async (req, res) => {
     const newEvent = await prisma.event.create({
       data: {
         title,
+        description,
         isAllDay,
         startDate,
         endDate,
