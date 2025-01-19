@@ -1,22 +1,15 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useState } from 'react';
 import ClientFormWrapper from '../../components/form/formWrapper/ClientFormWrapper.tsx';
 import { Box, Heading } from '@chakra-ui/react';
 import { useLoginUser } from '../../hooks/useLoginUser.tsx';
 import CustomInput from '../../components/input/CustomInput.tsx';
 import CustomButton from '../../components/button/CustomButton.tsx';
-import { AuthContext } from '../../contexts/AuthContext.tsx';
-import { Navigate } from 'react-router-dom';
 
 export const LoginPage: FC = () => {
-  const [email, setEmail] = useState<string>('admin@test.pl');
-  const [password, setPassword] = useState<string>('Testowe123!');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const { isAuthenticated } = useContext(AuthContext);
   const { mutate } = useLoginUser();
-
-  if (isAuthenticated) {
-    return <Navigate to="/" replace />;
-  }
 
   const handleLogin = async () => {
     mutate({ email, password });
