@@ -16,6 +16,7 @@ import PostmanPage from './pages/postman/PostmanPage';
 import Orders from './pages/Orders';
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './routes/PrivateRoute';
+import PublicRoute from './routes/PublicRoute.tsx';
 
 const router = createBrowserRouter(
   [
@@ -67,9 +68,18 @@ const router = createBrowserRouter(
       ],
     },
     {
-      path: '/login',
-      element: <LoginPage />,
-      errorElement: <Error />,
+      element: <PublicRoute />,
+      children: [
+        {
+          path: '/login',
+          children: [
+            {
+              index: true,
+              element: <LoginPage />,
+            },
+          ],
+        },
+      ],
     },
     {
       path: '*',
