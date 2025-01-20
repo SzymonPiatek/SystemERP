@@ -12,7 +12,6 @@ import { Notes } from './pages/Notes';
 import { Users } from './pages/Users';
 import { ProfilePage } from './pages/ProfilePage';
 import { LoginPage } from './pages/auth/LoginPage';
-import PostmanPage from './pages/postman/PostmanPage';
 import Orders from './pages/Orders';
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './routes/PrivateRoute';
@@ -59,11 +58,6 @@ const router = createBrowserRouter(
               errorElement: <Error />,
             },
           ],
-        },
-        {
-          path: '/postman',
-          element: <PostmanPage />,
-          errorElement: <Error />,
         },
       ],
     },
