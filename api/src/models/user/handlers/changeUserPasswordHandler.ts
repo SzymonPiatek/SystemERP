@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
-import prisma from '../../../prismaClient';
-import { comparePassword, hashPassword } from '../../../modules/authModule';
-import { returnError } from '../../../utils/error';
+import prisma from '@src/prismaClient';
+import { comparePassword, hashPassword } from '@src/modules/authModule';
+import { returnError } from '@src/utils/error';
 
 export const changeUserPasswordHandler: RequestHandler = async (req, res): Promise<void> => {
   try {

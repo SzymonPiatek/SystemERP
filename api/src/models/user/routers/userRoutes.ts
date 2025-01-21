@@ -6,7 +6,6 @@ import { getAllUsersHandler } from '../handlers/getAllUsersHandler';
 import { getUserByIdHandler } from '../handlers/getUserByIdHandler';
 import checkEmptyBody from '@src/middlewares/bodyMiddleware';
 import { validateIdParam } from '@src/middlewares/idMiddleware';
-import { checkTheSameUser } from '@src/middlewares/theSameUserMiddleware';
 import { editUserDataHandler } from '../handlers/editUserDataHandler';
 import { changeUserIsActiveHandler } from '../handlers/changeUserIsActiveHandler';
 import { changeUserPasswordHandler } from '../handlers/changeUserPasswordHandler';
@@ -26,14 +25,6 @@ router.patch('/:id', authLimiter, authenticateToken, checkEmptyBody, validateIdP
 router.patch('/:id/change_active', authLimiter, authenticateToken, validateIdParam, changeUserIsActiveHandler);
 
 // CHANGE PASSWORD
-router.patch(
-  '/:id/change_password',
-  authLimiter,
-  authenticateToken,
-  checkTheSameUser,
-  checkEmptyBody,
-  validateIdParam,
-  changeUserPasswordHandler,
-);
+router.patch('/:id/change_password', authLimiter, authenticateToken, checkEmptyBody, validateIdParam, changeUserPasswordHandler);
 
 export default router;
