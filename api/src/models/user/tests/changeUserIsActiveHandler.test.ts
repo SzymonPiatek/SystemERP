@@ -2,23 +2,10 @@ import '@src/tests/mocks';
 import prisma from '@src/prismaClient';
 import request from 'supertest';
 import app from '@src/app';
+import { testUser } from '@src/tests/data';
 
 const baseUrl = (id: number) => {
   return `/api/v1/users/${id}/change_active`;
-};
-
-const testUser = {
-  id: 1,
-  firstName: 'Test',
-  lastName: 'Testowy',
-  email: 'test@test.com',
-  password: 'Testowe123!',
-  profile: {
-    role: {
-      name: 'ADMIN',
-    },
-  },
-  isActive: true,
 };
 
 describe('Change user isActive handler', () => {
@@ -72,5 +59,15 @@ describe('Change user isActive handler', () => {
     expect(response.body.success).toBe(true);
     expect(response.body.message).toBe('User deactivated successfully');
     expect(response.body.user).toEqual(expect.objectContaining({ isActive: false }));
+  });
+
+  it('should return 404 if user is not found', async () => {
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
+
+    const response = await request(app).patch(baseUrl(9999999)).set('Authorization', 'Bearer mocktoken');
+
+    expect(response.status).toBe(404);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe('User not found');
   });
 });

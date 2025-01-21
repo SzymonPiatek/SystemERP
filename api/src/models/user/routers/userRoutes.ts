@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { authenticateToken } from '../../../middlewares/authMiddleware';
-import { apiLimiter, authLimiter } from '../../../middlewares/limiterMiddleware';
-import { authorizeRole } from '../../../middlewares/roleMiddleware';
+import { authenticateToken } from '@src/middlewares/authMiddleware';
+import { apiLimiter, authLimiter } from '@src/middlewares/limiterMiddleware';
+import { authorizeRole } from '@src/middlewares/roleMiddleware';
 import { getAllUsersHandler } from '../handlers/getAllUsersHandler';
 import { getUserByIdHandler } from '../handlers/getUserByIdHandler';
-import checkEmptyBody from '../../../middlewares/bodyMiddleware';
-import { validateIdParam } from '../../../middlewares/idMiddleware';
-import { checkTheSameUser } from '../../../middlewares/theSameUserMiddleware';
+import checkEmptyBody from '@src/middlewares/bodyMiddleware';
+import { validateIdParam } from '@src/middlewares/idMiddleware';
+import { checkTheSameUser } from '@src/middlewares/theSameUserMiddleware';
 import { editUserDataHandler } from '../handlers/editUserDataHandler';
 import { changeUserIsActiveHandler } from '../handlers/changeUserIsActiveHandler';
 import { changeUserPasswordHandler } from '../handlers/changeUserPasswordHandler';

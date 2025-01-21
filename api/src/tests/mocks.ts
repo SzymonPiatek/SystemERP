@@ -1,4 +1,3 @@
-let mockImplementation: any = null;
 let mockUser: any = null;
 
 jest.mock('@src/prismaClient', () => ({
@@ -9,12 +8,43 @@ jest.mock('@src/prismaClient', () => ({
     count: jest.fn(),
     create: jest.fn(),
     update: jest.fn(),
+    delete: jest.fn(),
   },
   role: {
     findUnique: jest.fn(),
     findMany: jest.fn(),
+    findFirst: jest.fn(),
+    count: jest.fn(),
     create: jest.fn(),
     update: jest.fn(),
+    delete: jest.fn(),
+  },
+  note: {
+    findUnique: jest.fn(),
+    findMany: jest.fn(),
+    findFirst: jest.fn(),
+    count: jest.fn(),
+    create: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+  },
+  event: {
+    findUnique: jest.fn(),
+    findMany: jest.fn(),
+    findFirst: jest.fn(),
+    count: jest.fn(),
+    create: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+  },
+  company: {
+    findUnique: jest.fn(),
+    findMany: jest.fn(),
+    findFirst: jest.fn(),
+    count: jest.fn(),
+    create: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
   },
 }));
 
