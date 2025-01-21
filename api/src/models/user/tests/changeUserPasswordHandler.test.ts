@@ -20,7 +20,6 @@ describe(`Change user's password`, () => {
 
     const mockedUser = {
       ...testUser,
-      id: 1,
       isActive: true,
       password: hashedOldPassword,
     };
@@ -53,7 +52,6 @@ describe(`Change user's password`, () => {
 
     const mockedUser = {
       ...testUser,
-      id: 1,
       isActive: true,
       password: hashedOldPassword,
     };
@@ -86,7 +84,6 @@ describe(`Change user's password`, () => {
 
     const mockedUser = {
       ...testUser,
-      id: 1,
       isActive: true,
       password: hashedOldPassword,
     };

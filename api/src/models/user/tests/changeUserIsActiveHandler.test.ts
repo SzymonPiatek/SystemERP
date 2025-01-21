@@ -16,7 +16,6 @@ describe('Change user isActive handler', () => {
   it(`Should toggle the user's isActive status to true`, async () => {
     const mockedUser = {
       ...testUser,
-      id: 1,
       isActive: false,
     };
 
@@ -39,7 +38,6 @@ describe('Change user isActive handler', () => {
   it(`Should toggle the user's isActive status to false`, async () => {
     const mockedUser = {
       ...testUser,
-      id: 1,
       isActive: true,
     };
 
