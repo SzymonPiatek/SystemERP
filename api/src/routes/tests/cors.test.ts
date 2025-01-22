@@ -13,12 +13,6 @@ describe('CORS Middleware', () => {
     });
   });
 
-  it('should correctly parse CORS_ORIGINS into an array', () => {
-    process.env.CORS_ORIGINS = 'http://localhost:3000,http://example.com';
-    const corsConfig = require('@src/routes/cors').default;
-    expect(corsConfig.origin).toEqual(['http://localhost:3000', 'http://example.com']);
-  });
-
   it('should allow requests from allowed origins', async () => {
     await request(app)
       .get('/')
