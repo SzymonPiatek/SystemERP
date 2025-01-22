@@ -28,7 +28,7 @@ describe(`Get all users`, () => {
     (prisma.user.count as jest.Mock).mockResolvedValue(mockUsers.length);
     (prisma.user.findMany as jest.Mock).mockResolvedValue(mockUsers);
 
-    const response = await request(app).get(baseUrl).set('Authorization', 'Bearer mocktoken').query({ page: 1, limit: 2 });
+    const response = await request(app).get(baseUrl).set('Authorization', 'Bearer mocktoken').query({ page: 1, limit: 2, email: 'email' });
 
     expect(prisma.user.findUnique).toHaveBeenCalledWith({
       where: { id: mockAdmin.id },
@@ -147,5 +147,91 @@ describe(`Get all users`, () => {
     expect(response.status).toBe(403);
     expect(response.body.success).toBe(false);
     expect(response.body.message).toEqual('Access denied');
+  });
+
+  it('Should filter users based on isActive query parameter', async () => {
+    const mockAdmin = { ...adminUser, id: 1 };
+    const mockUsers = [
+      { ...testUser, id: 11, email: 'email1@test.pl', isActive: true, companyId: 1 },
+      { ...testUser, id: 12, email: 'email2@test.pl', isActive: true, companyId: 1 },
+    ];
+    const mockSafeUsers = mockUsers.map((user) => ({
+      ...excludePassword(user),
+      createdAt: user.createdAt.toISOString(),
+      updatedAt: user.updatedAt.toISOString(),
+    }));
+
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue(mockAdmin);
+    (prisma.user.count as jest.Mock).mockResolvedValue(mockUsers.length);
+    (prisma.user.findMany as jest.Mock).mockResolvedValue(mockUsers);
+
+    const response = await request(app)
+      .get(baseUrl)
+      .set('Authorization', 'Bearer mocktoken')
+      .query({ page: 1, limit: 2, isActive: 'true', companyId: 1 });
+
+    expect(prisma.user.findUnique).toHaveBeenCalledWith({
+      where: { id: mockAdmin.id },
+      include: { company: true, profile: { include: { role: true } } },
+    });
+
+    expect(prisma.user.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          isActive: true,
+          companyId: 1,
+        }),
+        skip: 0,
+        take: 2,
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+    expect(response.body.total).toBe(mockUsers.length);
+    expect(response.body.data).toEqual(mockSafeUsers);
+  });
+
+  it('Should filter users based on search', async () => {
+    const mockAdmin = { ...adminUser, id: 1 };
+    const mockUsers = [
+      { ...testUser, id: 11, email: 'email1@test.pl', firstName: 'John', lastName: 'Doe' },
+      { ...testUser, id: 12, email: 'email2@test.pl', firstName: 'Jane', lastName: 'Smith' },
+    ];
+    const mockSafeUsers = mockUsers.map((user) => ({
+      ...excludePassword(user),
+      createdAt: user.createdAt.toISOString(),
+      updatedAt: user.updatedAt.toISOString(),
+    }));
+
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue(mockAdmin);
+    (prisma.user.count as jest.Mock).mockResolvedValue(mockUsers.length);
+    (prisma.user.findMany as jest.Mock).mockResolvedValue(mockUsers);
+
+    const response = await request(app).get(baseUrl).set('Authorization', 'Bearer mocktoken').query({ page: 1, limit: 2, search: 'email' });
+
+    expect(prisma.user.findUnique).toHaveBeenCalledWith({
+      where: { id: mockAdmin.id },
+      include: { company: true, profile: { include: { role: true } } },
+    });
+
+    expect(prisma.user.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          OR: [
+            { email: { contains: 'email', mode: 'insensitive' } },
+            { firstName: { contains: 'email', mode: 'insensitive' } },
+            { lastName: { contains: 'email', mode: 'insensitive' } },
+          ],
+        }),
+        skip: 0,
+        take: 2,
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+    expect(response.body.total).toBe(mockUsers.length);
+    expect(response.body.data).toEqual(mockSafeUsers);
   });
 });
