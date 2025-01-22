@@ -1,11 +1,11 @@
 import cors from 'cors';
 
-const allowedOrigins = process.env.CORS_ORIGINS?.split(',') || [];
-
-const corsConfig = cors({
-  origin: allowedOrigins,
+export const getAllowedOrigins = () => {
+  const originalAllowedOrigins = process.env.CORS_ORIGINS?.split(',') || [];
+  return originalAllowedOrigins.map((origin) => origin.trim());
+};
+export const corsConfig = cors({
+  origin: getAllowedOrigins(),
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   credentials: true,
 });
-
-export default corsConfig;
