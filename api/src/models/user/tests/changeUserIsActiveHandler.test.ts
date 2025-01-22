@@ -9,7 +9,7 @@ const baseUrl = (id: number) => {
 };
 
 describe('Change user isActive handler', () => {
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 

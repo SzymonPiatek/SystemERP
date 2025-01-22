@@ -10,7 +10,7 @@ const baseUrl = (id: number) => {
 };
 
 describe(`Change user's password`, () => {
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 
