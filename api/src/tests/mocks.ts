@@ -1,4 +1,4 @@
-let mockUser: any = null;
+import { Request, Response } from 'express';
 
 jest.mock('@src/prismaClient', () => ({
   user: {
@@ -56,6 +56,7 @@ jest.mock('@src/modules/authModule', () => ({
 jest.mock('@src/models/auth/services/authService', () => ({
   generateAndSetTokens: jest.fn(),
   refreshAccessToken: jest.fn(),
+  verifyToken: jest.fn(),
 }));
 
 jest.mock('@src/middlewares/authMiddleware', () => ({
@@ -73,3 +74,21 @@ jest.mock('@src/config/logger', () => ({
   info: jest.fn(),
   error: jest.fn(),
 }));
+
+export const mockedRequest = () => {
+  const req: Partial<Request> = {
+    cookies: {},
+    userId: undefined,
+    headers: {},
+  };
+  return req as Request;
+};
+
+export const mockedResponse = () => {
+  const res: Partial<Response> = {};
+  res.status = jest.fn().mockReturnThis();
+  res.json = jest.fn();
+  return res as Response;
+};
+
+export const mockNext = jest.fn();
