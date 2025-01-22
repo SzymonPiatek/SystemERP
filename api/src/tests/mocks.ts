@@ -2,7 +2,7 @@ let mockUser: any = null;
 
 jest.mock('@src/prismaClient', () => ({
   user: {
-    findUnique: jest.fn(() => Promise.resolve(mockUser)),
+    findUnique: jest.fn(() => Promise.resolve(null)),
     findMany: jest.fn(),
     findFirst: jest.fn(),
     count: jest.fn(),

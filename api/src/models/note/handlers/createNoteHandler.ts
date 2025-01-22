@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
-import { returnError } from '../../../utils/error';
+import { returnError } from '@src/utils/error';
 import Joi from 'joi';
-import prisma from '../../../prismaClient';
+import prisma from '@src/prismaClient';
 
 const notesSchema = Joi.object({
   title: Joi.string().required(),
