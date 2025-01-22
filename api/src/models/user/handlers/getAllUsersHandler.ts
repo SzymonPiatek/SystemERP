@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express';
-import { addTextCondition } from '../../../utils/queryConditions';
-import type { User } from '../../../types/types';
-import prisma from '../../../prismaClient';
-import paginateData from '../../../utils/pagination';
-import { returnError } from '../../../utils/error';
+import { addTextCondition } from '@src/utils/queryConditions';
+import type { User } from '@src/types/types';
+import prisma from '@src/prismaClient';
+import paginateData from '@src/utils/pagination';
+import { returnError } from '@src/utils/error';
 import { excludePassword } from '../services/returnSafeUserData';
 
 export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void> => {
@@ -46,7 +46,7 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
     });
 
     if (!currentUser) {
-      res.status(404).json({
+      res.status(403).json({
         success: false,
         message: 'Access denied',
       });
@@ -57,8 +57,8 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
       if (currentUser.profile.role.name !== 'ADMIN') {
         const userCompanyId = currentUser.companyId;
 
-        if (userCompanyId === undefined) {
-          res.status(404).json({
+        if (userCompanyId === undefined || userCompanyId === null) {
+          res.status(403).json({
             success: false,
             message: 'Access denied',
           });
