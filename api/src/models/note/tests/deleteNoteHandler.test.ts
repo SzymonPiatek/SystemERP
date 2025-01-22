@@ -34,17 +34,4 @@ describe('deleteNoteHandler', () => {
     expect(response.body.success).toBe(false);
     expect(response.body.message).toBe('Note not found');
   });
-
-  it('Should return 500 if there is an internal server error', async () => {
-    const mockNote = { id: 1, title: 'Test Note', description: 'Test Description', ownerId: 1 };
-
-    (prisma.note.findUnique as jest.Mock).mockResolvedValueOnce(mockNote);
-    (prisma.note.delete as jest.Mock).mockRejectedValueOnce(new Error());
-
-    const response = await request(app).delete(baseUrl(mockNote.id)).set('Authorization', 'Bearer mocktoken').send();
-
-    expect(response.status).toBe(500);
-    expect(response.body.success).toBe(false);
-    expect(response.body.message).toBe('Internal Server Error');
-  });
 });

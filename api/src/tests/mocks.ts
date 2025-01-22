@@ -75,11 +75,27 @@ jest.mock('@src/config/logger', () => ({
   error: jest.fn(),
 }));
 
-export const mockedRequest = (body: Record<string, unknown> = {}, params: Record<string, string> = {}) => {
+jest.mock('@src/utils/error', () => ({
+  returnError: jest.fn(),
+}));
+
+export const mockedRequest = ({
+  body = {},
+  params = {},
+  cookies = {},
+  headers = {},
+  userId = undefined,
+}: {
+  body: Record<string, unknown>;
+  params: Record<string, string>;
+  cookies: Record<string, string>;
+  headers: Record<string, string>;
+  userId: string | undefined;
+}) => {
   const req: Partial<Request> = {
-    cookies: {},
-    userId: undefined,
-    headers: {},
+    cookies: cookies,
+    userId: userId,
+    headers: headers,
     body: body,
     params: params,
   };

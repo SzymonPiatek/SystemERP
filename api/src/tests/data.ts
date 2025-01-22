@@ -60,3 +60,11 @@ export const adminUser = {
   createdAt: new Date('2025-01-22T13:36:35.561Z'),
   updatedAt: new Date('2025-01-22T13:36:35.561Z'),
 };
+
+export const emptyRequest = {
+  body: {},
+  params: {},
+  userId: undefined,
+  cookies: {},
+  headers: {},
+};

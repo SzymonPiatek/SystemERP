@@ -1,6 +1,7 @@
 import '@src/tests/mocks';
 import { authenticateToken } from '@src/middlewares/authMiddleware';
 import { mockedRequest, mockedResponse, mockedNext } from '@src/tests/mocks';
+import { emptyRequest } from '@src/tests/data';
 
 describe('authMiddleware', () => {
   beforeEach(() => {
@@ -8,7 +9,7 @@ describe('authMiddleware', () => {
   });
 
   it('should respond with 401 if no token is found in cookies', () => {
-    const req = mockedRequest();
+    const req = mockedRequest(emptyRequest);
     const res = mockedResponse();
 
     authenticateToken(req, res, mockedNext);

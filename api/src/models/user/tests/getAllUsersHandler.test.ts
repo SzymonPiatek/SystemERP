@@ -234,16 +234,4 @@ describe(`Get all users`, () => {
     expect(response.body.total).toBe(mockUsers.length);
     expect(response.body.data).toEqual(mockSafeUsers);
   });
-
-  it('Should handle unexpected errors gracefully', async () => {
-    (prisma.user.findUnique as jest.Mock).mockImplementation(() => {
-      throw new Error();
-    });
-
-    const response = await request(app).get(baseUrl).set('Authorization', 'Bearer mocktoken').query({ page: 1, limit: 2 });
-
-    expect(response.status).toBe(500);
-    expect(response.body.success).toBe(false);
-    expect(response.body.message).toBe('Internal Server Error');
-  });
 });

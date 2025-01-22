@@ -1,5 +1,6 @@
 import checkEmptyBody from '@src/middlewares/bodyMiddleware';
 import { mockedRequest, mockedResponse, mockedNext } from '@src/tests/mocks';
+import { emptyRequest } from '@src/tests/data';
 
 describe('checkEmptyBody middleware', () => {
   beforeEach(() => {
@@ -7,7 +8,7 @@ describe('checkEmptyBody middleware', () => {
   });
 
   it('should respond with 400 if the request body is empty', () => {
-    const req = mockedRequest();
+    const req = mockedRequest(emptyRequest);
     const res = mockedResponse();
 
     checkEmptyBody(req, res, mockedNext);
@@ -21,7 +22,8 @@ describe('checkEmptyBody middleware', () => {
   });
 
   it('should call next if the request body is not empty', () => {
-    const req = mockedRequest({ key: 'value' });
+    const body = { key: 'value' };
+    const req = mockedRequest({ ...emptyRequest, body: body });
     const res = mockedResponse();
 
     checkEmptyBody(req, res, mockedNext);
