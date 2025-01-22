@@ -38,7 +38,9 @@ describe('addRangeCondition', () => {
       price: { lte: 20 },
     });
   });
+});
 
+describe('addTextCondition', () => {
   it('should add an "in" condition for a valid array of strings', () => {
     const queryConditions: Record<string, any> = {};
     addTextCondition(queryConditions, 'tags', ['tag1', 'tag2', 'tag3']);
