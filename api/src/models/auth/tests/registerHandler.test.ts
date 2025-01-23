@@ -32,6 +32,7 @@ describe(`POST /auth/register`, () => {
       password: 'Password123!',
       firstName: 'John',
       lastName: 'Doe',
+      roleId: 1,
     });
 
     expect(response.status).toBe(400);
@@ -47,5 +48,41 @@ describe(`POST /auth/register`, () => {
     expect(response.status).toBe(400);
     expect(response.body.success).toBe(false);
     expect(response.body.message).toBe('"password" is required');
+  });
+
+  it('should return 400 if companyId is invalid', async () => {
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
+
+    const response = await request(app).post(url).send({
+      email: 'test@example.com',
+      password: 'TestPass123!',
+      firstName: 'John',
+      lastName: 'Doe',
+      roleId: 1,
+      companyId: '123',
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe('Invalid companyId');
+  });
+
+  it('should return 400 if roleID is invalid', async () => {
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
+    (prisma.company.findUnique as jest.Mock).mockResolvedValue({ id: 1 });
+    (prisma.role.findUnique as jest.Mock).mockResolvedValue(null);
+
+    const response = await request(app).post(url).send({
+      email: 'test@example.com',
+      password: 'TestPass123!',
+      firstName: 'John',
+      lastName: 'Doe',
+      companyId: 1,
+      roleId: 9999,
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe('Invalid roleId');
   });
 });
