@@ -1,5 +1,5 @@
 import '@src/tests/mocks';
-import { authenticateToken } from '@src/middlewares/authMiddleware';
+import { authenticateToken } from '@src/middlewares/authenticateTokenMiddleware';
 import { mockedRequest, mockedResponse, mockedNext } from '@src/tests/mocks';
 import { emptyRequest } from '@src/tests/data';
 

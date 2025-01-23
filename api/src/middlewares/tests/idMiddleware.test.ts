@@ -1,4 +1,4 @@
-import { validateIdParam } from '@src/middlewares/idMiddleware';
+import { validateIdParam } from '@src/middlewares/validateIdParamMiddleware';
 import { mockedNext, mockedRequest, mockedResponse } from '@src/tests/mocks';
 import { emptyRequest } from '@src/tests/data';
 

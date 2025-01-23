@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { authenticateToken } from '../../../middlewares/authMiddleware';
+import { authenticateToken } from '../../../middlewares/authenticateTokenMiddleware';
 import { apiLimiter, authLimiter } from '../../../middlewares/limiterMiddleware';
-import checkEmptyBody from '../../../middlewares/bodyMiddleware';
-import { validateIdParam } from '../../../middlewares/idMiddleware';
-import { authorizeRole } from '../../../middlewares/roleMiddleware';
+import checkEmptyBody from '../../../middlewares/checkEmptyBodyMiddleware';
+import { validateIdParam } from '../../../middlewares/validateIdParamMiddleware';
+import { authorizeRole } from '../../../middlewares/authorizeRoleMiddleware';
 import { getAllCompaniesHandler } from '../handlers/getAllCompaniesHandler';
 import { getCompanyByIdHandler } from '../handlers/getCompanyByIdHandler';
 import { createCompanyHandler } from '../handlers/createCompanyHandler';

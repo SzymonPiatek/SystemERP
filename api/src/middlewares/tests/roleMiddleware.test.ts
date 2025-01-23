@@ -1,5 +1,5 @@
 import '@src/tests/mocks';
-import { authorizeRole } from '@src/middlewares/roleMiddleware';
+import { authorizeRole } from '@src/middlewares/authorizeRoleMiddleware';
 import prisma from '@src/prismaClient';
 import { mockedNext, mockedRequest, mockedResponse } from '@src/tests/mocks';
 import { emptyRequest } from '@src/tests/data';

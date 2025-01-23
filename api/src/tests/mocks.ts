@@ -59,7 +59,7 @@ jest.mock('@src/models/auth/services/authService', () => ({
   verifyToken: jest.fn(),
 }));
 
-jest.mock('@src/middlewares/authMiddleware', () => ({
+jest.mock('@src/middlewares/authenticateTokenMiddleware', () => ({
   authenticateToken: jest.fn((req, res, next) => {
     if (!req.headers.authorization) {
       res.status(401).json({ message: 'Access token not found in cookies' });

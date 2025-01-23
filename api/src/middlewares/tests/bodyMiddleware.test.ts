@@ -1,4 +1,4 @@
-import checkEmptyBody from '@src/middlewares/bodyMiddleware';
+import checkEmptyBody from '@src/middlewares/checkEmptyBodyMiddleware';
 import { mockedRequest, mockedResponse, mockedNext } from '@src/tests/mocks';
 import { emptyRequest } from '@src/tests/data';
 

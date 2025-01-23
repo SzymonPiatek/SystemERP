@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { authenticateToken } from '@src/middlewares/authMiddleware';
+import { authenticateToken } from '@src/middlewares/authenticateTokenMiddleware';
 import { apiLimiter, authLimiter } from '@src/middlewares/limiterMiddleware';
-import { authorizeRole } from '@src/middlewares/roleMiddleware';
+import { authorizeRole } from '@src/middlewares/authorizeRoleMiddleware';
 import { getAllUsersHandler } from '../handlers/getAllUsersHandler';
 import { getUserByIdHandler } from '../handlers/getUserByIdHandler';
-import checkEmptyBody from '@src/middlewares/bodyMiddleware';
-import { validateIdParam } from '@src/middlewares/idMiddleware';
+import checkEmptyBody from '@src/middlewares/checkEmptyBodyMiddleware';
+import { validateIdParam } from '@src/middlewares/validateIdParamMiddleware';
 import { editUserDataHandler } from '../handlers/editUserDataHandler';
 import { changeUserIsActiveHandler } from '../handlers/changeUserIsActiveHandler';
 import { changeUserPasswordHandler } from '../handlers/changeUserPasswordHandler';

@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { authenticateToken } from '@src/middlewares/authMiddleware';
+import { authenticateToken } from '@src/middlewares/authenticateTokenMiddleware';
 import { apiLimiter, authLimiter } from '@src/middlewares/limiterMiddleware';
-import { validateIdParam } from '@src/middlewares/idMiddleware';
-import checkEmptyBody from '@src/middlewares/bodyMiddleware';
+import { validateIdParam } from '@src/middlewares/validateIdParamMiddleware';
+import checkEmptyBody from '@src/middlewares/checkEmptyBodyMiddleware';
 import { getAllNotesHandler } from '../handlers/getAllNotesHandler';
 import { getNoteByIdHandler } from '../handlers/getNoteByIdHandler';
 import { createNoteHandler } from '../handlers/createNoteHandler';

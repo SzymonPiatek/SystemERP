@@ -3,7 +3,7 @@ import { registerHandler } from '../handlers/registerHandler';
 import { loginHandler } from '../handlers/loginHandler';
 import { refreshTokensHandler } from '../handlers/refreshTokenHandler';
 import { logoutHandler } from '../handlers/logoutHandler';
-import checkEmptyBody from '../../../middlewares/bodyMiddleware';
+import checkEmptyBody from '../../../middlewares/checkEmptyBodyMiddleware';
 
 const router = Router();
 
