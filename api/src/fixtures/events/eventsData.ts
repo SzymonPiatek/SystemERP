@@ -19,7 +19,7 @@ export const eventsData = (() => {
         events.push({
           id: eventCount + 1,
           title: `Exciting Event ${eventCount + 1}`,
-          description: "test",
+          description: 'test',
           isAllDay: false,
           startDate: getISODateTimeWithOffset(dayOffset, startHour, 0),
           endDate: getISODateTimeWithOffset(dayOffset, startHour + duration, 0),
