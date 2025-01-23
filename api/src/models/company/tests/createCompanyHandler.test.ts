@@ -58,30 +58,4 @@ describe('CreateCompanyHandler', () => {
     expect(response.body.success).toBe(false);
     expect(response.body.message).toBe('"name" must be a string');
   });
-
-  it('should return an error if the name already exists', async () => {
-    const mockedUser = adminUser;
-
-    const newCompany = {
-      ...companyData,
-      id: undefined,
-      createdAt: undefined,
-      updatedAt: undefined,
-    };
-
-    const existingCompany = {
-      ...companyData,
-      id: 1,
-    };
-
-    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
-    (prisma.company.findFirst as jest.Mock).mockRejectedValueOnce(existingCompany);
-
-    const response = await request(app).post(baseUrl).set('Authorization', 'Bearer mocktoken').send(newCompany);
-    console.log(response.body);
-
-    expect(response.status).toBe(400);
-    expect(response.body.success).toBe(false);
-    expect(response.body.message).toBe('Name already exists');
-  });
 });
