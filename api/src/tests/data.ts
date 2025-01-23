@@ -86,3 +86,15 @@ export const companyData = {
   createdAt: new Date('2025-01-22T13:36:35.561Z'),
   updatedAt: new Date('2025-01-22T13:36:35.561Z'),
 };
+
+export const eventData = {
+  id: 1,
+  title: 'Test event',
+  description: 'Test description',
+  isAllDay: false,
+  startDate: new Date('2025-01-22T13:36:35.561Z'),
+  endDate: new Date('2025-01-22T13:36:35.561Z'),
+  ownerId: 1,
+  createdAt: new Date('2025-01-22T13:36:35.561Z'),
+  updatedAt: new Date('2025-01-22T13:36:35.561Z'),
+};
