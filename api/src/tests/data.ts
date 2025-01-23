@@ -68,3 +68,19 @@ export const emptyRequest = {
   cookies: {},
   headers: {},
 };
+
+export const companyData = {
+  id: 1,
+  name: 'Microsoft',
+  country: 'Polska',
+  voivodeship: 'Mazowieckie',
+  district: 'warszawski',
+  commune: 'Warszawa',
+  city: 'Warszawa',
+  zipCode: '01-234',
+  street: 'warszawska',
+  houseNumber: '12',
+  apartmentNumber: '1',
+  nip: '1234567890',
+  regon: '1234567890',
+};

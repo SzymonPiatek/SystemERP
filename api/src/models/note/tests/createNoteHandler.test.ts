@@ -38,13 +38,21 @@ describe('createNoteHandler', () => {
       ownerId: adminUser.id,
     };
 
+    const mockedNote = {
+      ...noteData,
+      id: 1,
+      date: noteData.date.toDateString(),
+    };
+
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
+    (prisma.note.create as jest.Mock).mockResolvedValueOnce(mockedNote);
 
     const response = await request(app).post(baseUrl).set('Authorization', 'Bearer mocktoken').send(noteData);
 
     expect(response.status).toBe(201);
     expect(response.body.success).toBe(true);
     expect(response.body.message).toBe('Note created');
+    expect(response.body.note).toEqual(mockedNote);
   });
 
   it(`Should return validation error`, async () => {
