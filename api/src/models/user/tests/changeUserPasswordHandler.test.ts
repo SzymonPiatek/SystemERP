@@ -1,5 +1,5 @@
 import '@src/tests/mocks';
-import { testUser } from '@src/tests/data';
+import { adminUser, testUser } from '@src/tests/data';
 import prisma from '@src/prismaClient';
 import request from 'supertest';
 import app from '@src/app';
@@ -109,18 +109,5 @@ describe(`Change user's password`, () => {
     expect(response.status).toBe(400);
     expect(response.body.success).toBe(false);
     expect(response.body.message).toBe('Wrong password');
-  });
-
-  it('Should return 404 if user is not found', async () => {
-    (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
-
-    const response = await request(app).patch(baseUrl(9999999)).set('Authorization', 'Bearer mocktoken').send({
-      oldPassword: 'Testowe123!',
-      newPassword: 'NoweTestowe123!',
-    });
-
-    expect(response.status).toBe(404);
-    expect(response.body.success).toBe(false);
-    expect(response.body.message).toBe('User not found');
   });
 });

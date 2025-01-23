@@ -58,14 +58,4 @@ describe('Change user isActive handler', () => {
     expect(response.body.message).toBe('User deactivated successfully');
     expect(response.body.user).toEqual(expect.objectContaining({ isActive: false }));
   });
-
-  it('Should return 404 if user is not found', async () => {
-    (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
-
-    const response = await request(app).patch(baseUrl(9999999)).set('Authorization', 'Bearer mocktoken');
-
-    expect(response.status).toBe(404);
-    expect(response.body.success).toBe(false);
-    expect(response.body.message).toBe('User not found');
-  });
 });

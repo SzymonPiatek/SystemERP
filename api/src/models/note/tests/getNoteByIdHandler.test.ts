@@ -32,7 +32,6 @@ describe('getNoteByIdHandler', () => {
 
   it('Should return note', async () => {
     const mockedUser = adminUser;
-
     const mockedNote = {
       id: 1,
       title: 'Note 1',
@@ -54,6 +53,7 @@ describe('getNoteByIdHandler', () => {
   it('Should return 404 - note not found', async () => {
     const mockedUser = adminUser;
 
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.note.findUnique as jest.Mock).mockResolvedValue(null);
 

@@ -14,17 +14,14 @@ describe(`Get company by id`, () => {
   });
 
   it('Should return 200 if company found', async () => {
-    const mockedUser = {
-      ...adminUser,
-    };
-
+    const mockedUser = adminUser;
     const mockedCompany = companyData;
 
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.company.findUnique as jest.Mock).mockResolvedValueOnce(mockedCompany);
 
     const response = await request(app).get(baseUrl(mockedCompany.id)).set('Authorization', `Bearer mocktoken`);
-    console.log(response.body);
 
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
@@ -32,10 +29,12 @@ describe(`Get company by id`, () => {
   });
 
   it('Should return 404 if company is not found', async () => {
-    (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
+    const mockedUser = adminUser;
+
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue(mockedUser);
+    (prisma.company.findUnique as jest.Mock).mockResolvedValue(null);
 
     const response = await request(app).get(baseUrl(9999999)).set('Authorization', 'Bearer mocktoken');
-    console.log(response.body);
 
     expect(response.status).toBe(404);
     expect(response.body.success).toBe(false);

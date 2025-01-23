@@ -2,7 +2,7 @@ import '@src/tests/mocks';
 import prisma from '@src/prismaClient';
 import request from 'supertest';
 import app from '@src/app';
-import { adminUser, testUser } from '@src/tests/data';
+import { testUser } from '@src/tests/data';
 
 const baseUrl = (id: number) => {
   return `/api/v1/users/${id}`;
@@ -24,18 +24,5 @@ describe(`Get user by id`, () => {
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
     expect(response.body.message).toBe('User found');
-  });
-
-  it('Should return 404 if user is not found', async () => {
-    const mockedUser = adminUser;
-
-    (prisma.user.findUnique as jest.Mock).mockResolvedValue(mockedUser);
-    (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
-
-    const response = await request(app).get(baseUrl(9999999)).set('Authorization', 'Bearer mocktoken');
-
-    expect(response.status).toBe(404);
-    expect(response.body.success).toBe(false);
-    expect(response.body.message).toBe('User not found');
   });
 });

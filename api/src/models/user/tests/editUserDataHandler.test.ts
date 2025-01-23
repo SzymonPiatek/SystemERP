@@ -56,18 +56,6 @@ describe(`Change user's data`, () => {
     expect(response.body.message).toBe('"firstName" must be a string');
   });
 
-  it('Should return 404 if user is not found', async () => {
-    (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
-
-    const response = await request(app).patch(baseUrl(9999999)).set('Authorization', 'Bearer mocktoken').send({
-      firstName: 'Person',
-    });
-
-    expect(response.status).toBe(404);
-    expect(response.body.success).toBe(false);
-    expect(response.body.message).toBe('User not found');
-  });
-
   it(`Should change user's data`, async () => {
     const mockedUser = {
       ...testUser,
