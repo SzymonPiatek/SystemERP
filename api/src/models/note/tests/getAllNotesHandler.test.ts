@@ -26,6 +26,7 @@ describe('getAllNotesHandler', () => {
       { ...mockedNote, id: 3 },
     ];
 
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.note.findMany as jest.Mock).mockResolvedValueOnce(mockedNotes);
     (prisma.note.count as jest.Mock).mockResolvedValueOnce(mockedNotes.length);
 

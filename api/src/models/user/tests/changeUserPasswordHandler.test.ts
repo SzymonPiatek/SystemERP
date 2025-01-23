@@ -30,6 +30,7 @@ describe(`Change user's password`, () => {
     };
 
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (comparePassword as jest.Mock).mockResolvedValueOnce(true).mockResolvedValueOnce(true);
     (hashPassword as jest.Mock).mockResolvedValueOnce(hashedOldPassword);
     (prisma.user.update as jest.Mock).mockResolvedValueOnce(updatedUser);
@@ -62,6 +63,7 @@ describe(`Change user's password`, () => {
     };
 
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (comparePassword as jest.Mock).mockResolvedValueOnce(true).mockResolvedValueOnce(false);
     (hashPassword as jest.Mock).mockResolvedValueOnce(hashedNewPassword);
     (prisma.user.update as jest.Mock).mockResolvedValueOnce(updatedUser);
@@ -93,6 +95,7 @@ describe(`Change user's password`, () => {
       password: hashedNewPassword,
     };
 
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (comparePassword as jest.Mock).mockResolvedValueOnce(false).mockResolvedValueOnce(false);
     (hashPassword as jest.Mock).mockResolvedValueOnce(hashedNewPassword);

@@ -41,6 +41,7 @@ describe('getNoteByIdHandler', () => {
     };
 
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.note.findUnique as jest.Mock).mockResolvedValue(mockedNote);
 
     const response = await request(app).get(baseUrl(mockedNote.id)).set('Authorization', 'Bearer mocktoken');

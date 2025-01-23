@@ -12,6 +12,7 @@ describe('createNoteHandler', () => {
   });
 
   it('Should return 404 - owner not found', async () => {
+    const mockedUser = adminUser;
     const noteData = {
       title: 'Test note',
       description: 'Test description',
@@ -19,6 +20,7 @@ describe('createNoteHandler', () => {
       ownerId: 999999,
     };
 
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(null);
 
     const response = await request(app).post(baseUrl).set('Authorization', 'Bearer mocktoken').send(noteData);
@@ -44,6 +46,7 @@ describe('createNoteHandler', () => {
       date: noteData.date.toDateString(),
     };
 
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.note.create as jest.Mock).mockResolvedValueOnce(mockedNote);
 

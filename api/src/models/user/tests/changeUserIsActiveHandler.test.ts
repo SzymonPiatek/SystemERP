@@ -25,6 +25,7 @@ describe('Change user isActive handler', () => {
     };
 
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.user.update as jest.Mock).mockResolvedValue(updatedUser);
 
     const response = await request(app).patch(baseUrl(mockedUser.id)).set('Authorization', 'Bearer mocktoken');
@@ -46,6 +47,7 @@ describe('Change user isActive handler', () => {
       isActive: false,
     };
 
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.user.update as jest.Mock).mockResolvedValue(updatedUser);
 
