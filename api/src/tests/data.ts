@@ -83,4 +83,6 @@ export const companyData = {
   apartmentNumber: '1',
   nip: '1234567890',
   regon: '1234567890',
+  createdAt: new Date('2025-01-22T13:36:35.561Z'),
+  updatedAt: new Date('2025-01-22T13:36:35.561Z'),
 };

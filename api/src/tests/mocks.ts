@@ -90,11 +90,11 @@ export const mockedRequest = ({
   params: Record<string, string>;
   cookies: Record<string, string>;
   headers: Record<string, string>;
-  userId: string | undefined;
+  userId: number | string | undefined;
 }) => {
   const req: Partial<Request> = {
     cookies: cookies,
-    userId: userId,
+    userId: userId?.toString(),
     headers: headers,
     body: body,
     params: params,
