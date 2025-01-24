@@ -13,13 +13,11 @@ export const getCompanyByIdHandler: RequestHandler = async (req, res): Promise<v
     });
 
     if (!currentUser) {
-      res.status(403).json({ success: false, message: 'User not found' });
+      res.status(403).json({ success: false, message: 'Access denied' });
       return;
-    }
-
-    if (currentUser.profile && currentUser.profile.role.name !== 'ADMIN') {
+    } else if (currentUser?.profile?.role.name !== 'ADMIN') {
       if (currentUser.companyId !== companyId) {
-        res.status(404).json({ success: false, message: 'Access denied' });
+        res.status(403).json({ success: false, message: 'Access denied' });
         return;
       }
     }

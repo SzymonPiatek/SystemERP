@@ -25,9 +25,10 @@ export const authorizeRole = (allowedRoles: string[]) => {
         return;
       }
 
-      if (!allowedRoles.includes('*')) {
-        const userRole = user.profile?.role?.name;
+      const userRole = user.profile?.role?.name;
+      req.userRoleName = userRole;
 
+      if (!allowedRoles.includes('*')) {
         if (!userRole || !allowedRoles.includes(userRole)) {
           res.status(403).json({ success: false, message: 'Access denied' });
           return;

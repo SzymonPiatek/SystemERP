@@ -5,6 +5,7 @@ declare global {
     export interface Request {
       user?: string | JwtPayload;
       userId?: string;
+      userRoleName?: string;
     }
   }
 }
