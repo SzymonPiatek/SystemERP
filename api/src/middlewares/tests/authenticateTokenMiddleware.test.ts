@@ -3,12 +3,12 @@ import { authenticateToken } from '@src/middlewares/authenticateTokenMiddleware'
 import { mockedRequest, mockedResponse, mockedNext } from '@src/tests/mocks';
 import { emptyRequest } from '@src/tests/data';
 
-describe('authMiddleware', () => {
+describe('authenticateTokenMiddleware', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should respond with 401 if no token is found in cookies', () => {
+  it('Should respond with 401 if no token is found in cookies', () => {
     const req = mockedRequest(emptyRequest);
     const res = mockedResponse();
 

@@ -7,7 +7,7 @@ describe('validateIdParam middleware', () => {
     jest.clearAllMocks();
   });
 
-  it('should respond with 400 if the id parameter is not a valid number', () => {
+  it('Should respond with 400 if the id parameter is not a valid number', () => {
     const body = { id: 'invalid' };
     const req = mockedRequest({ ...emptyRequest, body: body });
     const res = mockedResponse();
@@ -22,7 +22,7 @@ describe('validateIdParam middleware', () => {
     expect(mockedNext).not.toHaveBeenCalled();
   });
 
-  it('should respond with 400 if the id parameter is missing', () => {
+  it('Should respond with 400 if the id parameter is missing', () => {
     const req = mockedRequest(emptyRequest);
     const res = mockedResponse();
 

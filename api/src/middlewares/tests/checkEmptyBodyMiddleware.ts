@@ -7,7 +7,7 @@ describe('checkEmptyBody middleware', () => {
     jest.clearAllMocks();
   });
 
-  it('should respond with 400 if the request body is empty', () => {
+  it('Should respond with 400 if the request body is empty', () => {
     const req = mockedRequest(emptyRequest);
     const res = mockedResponse();
 
@@ -21,7 +21,7 @@ describe('checkEmptyBody middleware', () => {
     expect(mockedNext).not.toHaveBeenCalled();
   });
 
-  it('should call next if the request body is not empty', () => {
+  it('Should call next if the request body is not empty', () => {
     const body = { key: 'value' };
     const req = mockedRequest({ ...emptyRequest, body: body });
     const res = mockedResponse();
