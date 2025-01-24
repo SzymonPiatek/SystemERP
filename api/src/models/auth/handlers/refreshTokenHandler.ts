@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { refreshAccessToken } from '../services/authService';
-import { returnError } from '../../../utils/error';
+import { returnError } from '@src/utils/error';
 
 export const refreshTokensHandler: RequestHandler = async (req, res): Promise<void> => {
   const { refreshToken, accessToken } = req.query;

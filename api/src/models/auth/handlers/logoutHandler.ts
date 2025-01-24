@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { returnError } from '../../../utils/error';
+import { returnError } from '@src/utils/error';
 
 export const logoutHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
