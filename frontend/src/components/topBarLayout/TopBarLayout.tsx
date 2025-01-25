@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, IconButton, Text } from '@chakra-ui/react';
+import { Flex, HStack, IconButton, Text } from '@chakra-ui/react';
 import { FC, useContext } from 'react';
 import { Avatar } from '../ui/avatar';
 import { MdOutlineAnnouncement, MdOutlineLogout } from 'react-icons/md';

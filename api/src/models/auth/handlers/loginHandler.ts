@@ -27,6 +27,7 @@ export const loginHandler: RequestHandler = async (req, res): Promise<void> => {
         profile: {
           include: {
             role: true,
+            profilePic: true,
           },
         },
       },

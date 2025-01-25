@@ -19,6 +19,7 @@ export type Employee = {
   isActive: boolean;
   companyId: number;
 };
+
 export type Company = {
   id: number;
   name: string;
@@ -56,10 +57,19 @@ export type PermissionRole = {
 
 export type Profile = {
   id: number;
-  profilePicPath?: string;
+  profilePicId?: number;
   roleId: number;
   userId: number;
+  profilePic?: File;
   role?: Role;
+  user?: User;
+};
+
+export type File = {
+  id: number;
+  filePath: string;
+  fileName: string;
+  fileType: string;
 };
 
 export type Event = {
