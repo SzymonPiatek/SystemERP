@@ -20,7 +20,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  events Event[]
+  events         Event[]   @relation("OwnedEvents")
+  invitedEvents  EventInvitation[] @relation("InvitedToEvents")
   notes  Note[]
 }
 
@@ -90,17 +91,29 @@ model Profile {
 }
 
 model Event {
+  id          Int                @id @default(autoincrement())
+  title       String
+  description String?
+  isAllDay    Boolean            @default(false)
+  startDate   DateTime
+  endDate     DateTime
+  ownerId     Int
+  owner       User               @relation("OwnedEvents", fields: [ownerId], references: [id], onDelete: Cascade)
+  invitations EventInvitation[]  @relation("EventInvitations")
+
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model EventInvitation {
   id        Int      @id @default(autoincrement())
-  title     String
-  description String
-  isAllDay  Boolean  @default(false)
-  startDate DateTime
-  endDate   DateTime
-  ownerId   Int
-  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  eventId   Int
+  userId    Int
+  event     Event    @relation("EventInvitations", fields: [eventId], references: [id], onDelete: Cascade)
+  user      User     @relation("InvitedToEvents", fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now())
 }
 
 model Note {
