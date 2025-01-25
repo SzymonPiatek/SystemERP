@@ -45,6 +45,7 @@ export const ProfilePage: FC<{}> = () => {
                   <Avatar
                     className="avatar"
                     name={user?.firstName}
+                    src={user?.profile?.profilePicBase64 ?? ''}
                     w="full"
                     h="full"
                     transition="opacity 0.3s ease-in-out"

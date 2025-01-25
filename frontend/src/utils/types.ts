@@ -61,6 +61,7 @@ export type Profile = {
   roleId: number;
   userId: number;
   profilePic?: File;
+  profilePicBase64?: string;
   role?: Role;
   user?: User;
 };
