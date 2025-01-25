@@ -7,7 +7,6 @@ export type User = {
   password?: string;
   companyId?: number | null;
   profile?: Profile | null;
-  profilePicPath?: string;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -18,6 +17,7 @@ export type Profile = {
   roleId: number;
   userId: number;
   profilePic?: File | null;
+  profilePicBase64?: string;
   role: Role;
 };
 

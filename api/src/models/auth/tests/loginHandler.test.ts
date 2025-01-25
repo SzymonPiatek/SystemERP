@@ -17,6 +17,7 @@ describe(`POST /auth/login`, () => {
       ...safeMockedUser,
       createdAt: safeMockedUser.createdAt.toISOString(),
       updatedAt: safeMockedUser.updatedAt.toISOString(),
+      profile: { ...safeMockedUser.profile, profilePicBase64: null },
     };
 
     (prisma.user.findUnique as jest.Mock).mockResolvedValue(mockedUser);
