@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import userRoutes from '../models/user/routers/userRoutes';
-import authRoutes from '../models/auth/routers/authRoutes';
-import companyRoutes from '../models/company/routers/companyRoutes';
-import eventRoutes from '../models/event/routers/eventRoutes';
-import notesRoutes from '../models/note/routers/notesRoutes';
+import userRoutes from '@src/models/user/routers/userRoutes';
+import authRoutes from '@src/models/auth/routers/authRoutes';
+import companyRoutes from '@src/models/company/routers/companyRoutes';
+import eventRoutes from '@src/models/event/routers/eventRoutes';
+import notesRoutes from '@src/models/note/routers/notesRoutes';
 
 const apiRouter = Router();
 

@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { ACCESS_TOKEN_SECRET, verifyToken } from '../models/auth/services/authService';
+import { verifyToken } from '../models/auth/services/authService';
+
+export const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET as string;
 
 if (!ACCESS_TOKEN_SECRET) {
   throw new Error('ACCESS_TOKEN_SECRET is not defined');

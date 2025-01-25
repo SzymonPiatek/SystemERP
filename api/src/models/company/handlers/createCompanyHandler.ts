@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
-import { returnError } from '../../../utils/error';
+import { returnError } from '@src/utils/error';
 import Joi from 'joi';
-import prisma from '../../../prismaClient';
+import prisma from '@src/prismaClient';
 
 const companySchema = Joi.object({
   name: Joi.string().required(),
@@ -59,6 +59,7 @@ export const createCompanyHandler: RequestHandler = async (req, res): Promise<vo
       message: 'Company created',
       company: newCompany,
     });
+    return;
   } catch (error) {
     returnError(res, error);
   }

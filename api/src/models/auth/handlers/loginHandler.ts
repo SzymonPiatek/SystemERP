@@ -1,10 +1,10 @@
 import { RequestHandler } from 'express';
 import Joi from 'joi';
-import { comparePassword } from '../../../modules/authModule';
-import { returnError } from '../../../utils/error';
-import prisma from '../../../prismaClient';
+import { comparePassword } from '@src/modules/authModule';
+import { returnError } from '@src/utils/error';
+import prisma from '@src/prismaClient';
 import { generateAndSetTokens } from '../services/authService';
-import { excludePassword } from '../../user/services/returnSafeUserData';
+import { excludePassword } from '@src/models/user/services/returnSafeUserData';
 
 const loginSchema = Joi.object({
   email: Joi.string().email().required(),

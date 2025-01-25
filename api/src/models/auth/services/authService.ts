@@ -1,6 +1,6 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { User } from '../../../types/types';
-import logger from '../../../config/logger';
+import { User } from '@src/types/types';
+import logger from '@src/config/logger';
 import { Response } from 'express';
 
 export const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET as string;

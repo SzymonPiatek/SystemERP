@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
-import prisma from '../../../prismaClient';
-import { returnError } from '../../../utils/error';
+import prisma from '@src/prismaClient';
+import { returnError } from '@src/utils/error';
 import { excludePassword } from '../services/returnSafeUserData';
 
 export const changeUserIsActiveHandler: RequestHandler = async (req, res): Promise<void> => {

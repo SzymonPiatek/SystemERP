@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
-import prisma from '../../../prismaClient';
+import prisma from '@src/prismaClient';
 import { excludePassword } from '../services/returnSafeUserData';
-import { returnError } from '../../../utils/error';
+import { returnError } from '@src/utils/error';
 import Joi from 'joi';
 
 const userSchema = Joi.object({

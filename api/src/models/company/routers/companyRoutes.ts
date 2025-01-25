@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { authenticateToken } from '../../../middlewares/authMiddleware';
-import { apiLimiter, authLimiter } from '../../../middlewares/limiterMiddleware';
-import checkEmptyBody from '../../../middlewares/bodyMiddleware';
-import { validateIdParam } from '../../../middlewares/idMiddleware';
-import { authorizeRole } from '../../../middlewares/roleMiddleware';
+import { authenticateToken } from '@src/middlewares/authenticateTokenMiddleware';
+import { apiLimiter, authLimiter } from '@src/middlewares/limiterMiddleware';
+import checkEmptyBody from '@src/middlewares/checkEmptyBodyMiddleware';
+import { validateIdParam } from '@src/middlewares/validateIdParamMiddleware';
+import { authorizeRole } from '@src/middlewares/authorizeRoleMiddleware';
 import { getAllCompaniesHandler } from '../handlers/getAllCompaniesHandler';
 import { getCompanyByIdHandler } from '../handlers/getCompanyByIdHandler';
 import { createCompanyHandler } from '../handlers/createCompanyHandler';
@@ -15,7 +15,7 @@ const router = Router();
 router.get('/', apiLimiter, authenticateToken, authorizeRole(['ADMIN']), getAllCompaniesHandler);
 
 // GET COMPANY BY ID
-router.get('/:id', apiLimiter, authenticateToken, validateIdParam, getCompanyByIdHandler);
+router.get('/:id', apiLimiter, authenticateToken, authorizeRole(['*']), validateIdParam, getCompanyByIdHandler);
 
 // CREATE COMPANY
 router.post('/', authLimiter, authenticateToken, authorizeRole(['ADMIN']), checkEmptyBody, createCompanyHandler);

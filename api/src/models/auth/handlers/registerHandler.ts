@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express';
-import { hashPassword } from '../../../modules/authModule';
-import { returnError } from '../../../utils/error';
+import { hashPassword } from '@src/modules/authModule';
+import { returnError } from '@src/utils/error';
 import Joi from 'joi';
-import prisma from '../../../prismaClient';
+import prisma from '@src/prismaClient';
 
 const userSchema = Joi.object({
   email: Joi.string().email().required(),

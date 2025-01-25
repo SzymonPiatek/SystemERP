@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express';
-import { addTextCondition } from '../../../utils/queryConditions';
-import prisma from '../../../prismaClient';
-import paginateData from '../../../utils/pagination';
-import { returnError } from '../../../utils/error';
+import { addTextCondition } from '@src/utils/queryConditions';
+import prisma from '@src/prismaClient';
+import paginateData from '@src/utils/pagination';
+import { returnError } from '@src/utils/error';
 
 export const getAllCompaniesHandler: RequestHandler = async (req, res): Promise<void> => {
   try {

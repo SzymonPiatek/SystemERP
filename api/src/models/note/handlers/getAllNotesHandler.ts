@@ -1,12 +1,10 @@
 import { RequestHandler } from 'express';
-import prisma from '../../../prismaClient';
-import paginateData from '../../../utils/pagination';
-import { returnError } from '../../../utils/error';
+import prisma from '@src/prismaClient';
+import paginateData from '@src/utils/pagination';
+import { returnError } from '@src/utils/error';
 
 export const getAllNotesHandler: RequestHandler = async (req, res) => {
   try {
-    console.log(req.userId);
-    
     const userId = Number(req.userId);
 
     const limit = parseInt(req.query.limit as string, 10) || 10;
