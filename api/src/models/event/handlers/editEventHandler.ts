@@ -9,6 +9,7 @@ const eventSchema = Joi.object({
   startDate: Joi.date().optional(),
   endDate: Joi.date().optional(),
   isAllDay: Joi.boolean().optional(),
+  invited: Joi.array().items(Joi.number()).optional(),
 });
 
 export const editEventHandler: RequestHandler = async (req, res): Promise<void> => {
@@ -28,7 +29,7 @@ export const editEventHandler: RequestHandler = async (req, res): Promise<void> 
       return;
     }
 
-    const { title, description, startDate, endDate, isAllDay } = value;
+    const { title, description, startDate, endDate, isAllDay, invited } = value;
 
     const updatedData: {
       title?: string;
@@ -49,7 +50,68 @@ export const editEventHandler: RequestHandler = async (req, res): Promise<void> 
       data: updatedData,
     });
 
-    res.status(200).json({ success: true, message: 'Event updated successfully', event: updatedEvent });
+    if (invited && Array.isArray(invited)) {
+      const currentInvitations = await prisma.eventInvitation.findMany({
+        where: { eventId: id },
+        select: { userId: true },
+      });
+
+      const currentInvitedIds = currentInvitations.map((inv) => inv.userId);
+
+      const toRemove = currentInvitedIds.filter((userId) => !invited.includes(userId));
+
+      const toAdd = invited.filter((userId) => !currentInvitedIds.includes(userId));
+
+      if (toRemove.length > 0) {
+        await prisma.eventInvitation.deleteMany({
+          where: {
+            eventId: id,
+            userId: { in: toRemove },
+          },
+        });
+      }
+
+      if (toAdd.length > 0) {
+        const validUsers = await prisma.user.findMany({
+          where: { id: { in: toAdd } },
+        });
+
+        const newInvitations = validUsers.map((user) => ({
+          eventId: id,
+          userId: user.id,
+        }));
+
+        await prisma.eventInvitation.createMany({
+          data: newInvitations,
+        });
+      }
+    }
+
+    const updatedInvitations = await prisma.eventInvitation.findMany({
+      where: { eventId: id },
+      include: {
+        user: {
+          select: {
+            id: true,
+            email: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Event updated successfully',
+      event: {
+        ...updatedEvent,
+        invitations: updatedInvitations.map((inv) => ({
+          userId: inv.userId,
+          user: inv.user,
+        })),
+      },
+    });
     return;
   } catch (error) {
     returnError(res, error);

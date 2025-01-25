@@ -10,6 +10,7 @@ jest.mock('@src/prismaClient', () => ({
     createMany: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
+    deleteMany: jest.fn(),
   },
   role: {
     findUnique: jest.fn(),
@@ -20,6 +21,7 @@ jest.mock('@src/prismaClient', () => ({
     createMany: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
+    deleteMany: jest.fn(),
   },
   note: {
     findUnique: jest.fn(),
@@ -30,6 +32,7 @@ jest.mock('@src/prismaClient', () => ({
     createMany: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
+    deleteMany: jest.fn(),
   },
   event: {
     findUnique: jest.fn(),
@@ -40,6 +43,7 @@ jest.mock('@src/prismaClient', () => ({
     createMany: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
+    deleteMany: jest.fn(),
   },
   eventInvitation: {
     findUnique: jest.fn(),
@@ -50,6 +54,7 @@ jest.mock('@src/prismaClient', () => ({
     createMany: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
+    deleteMany: jest.fn(),
   },
   company: {
     findUnique: jest.fn(),
@@ -60,6 +65,7 @@ jest.mock('@src/prismaClient', () => ({
     createMany: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
+    deleteMany: jest.fn(),
   },
 }));
 
