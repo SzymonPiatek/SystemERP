@@ -79,6 +79,13 @@ jest.mock('@src/utils/error', () => ({
   returnError: jest.fn(),
 }));
 
+jest.mock('@src/models/email/services/smtpServer', () => ({
+  smtpServer: {
+    listen: jest.fn((port, callback) => callback()),
+    close: jest.fn((callback) => callback && callback()),
+  },
+}));
+
 export const mockedRequest = ({
   body = {},
   params = {},
