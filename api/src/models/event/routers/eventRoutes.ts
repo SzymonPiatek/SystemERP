@@ -18,7 +18,7 @@ router.get('/', apiLimiter, authenticateToken, authorizeRole(['*']), getAllEvent
 router.get('/:id', apiLimiter, authenticateToken, authorizeRole(['*']), validateIdParam, getEventByIdHandler);
 
 // CREATE EVENT
-router.post('/', authLimiter, authenticateToken, authorizeRole(['*']), checkEmptyBody, createEventHandler);
+router.post('/', authLimiter, authenticateToken, authorizeRole(['*']), createEventHandler);
 
 // EDIT EVENT
 router.patch('/:id', authLimiter, authenticateToken, authorizeRole(['*']), validateIdParam, checkEmptyBody, editEventHandler);

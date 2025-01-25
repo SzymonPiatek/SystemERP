@@ -9,7 +9,7 @@ const emailSchema = Joi.object({
   text: Joi.any().required(),
 });
 
-export const sendEmailHandler: RequestHandler = async (req, res, nexta): Promise<void> => {
+export const sendEmailHandler: RequestHandler = async (req, res): Promise<void> => {
   const { error, value } = emailSchema.validate(req.body);
   if (error) {
     res.status(400).json({ success: false, message: error.details[0].message });
