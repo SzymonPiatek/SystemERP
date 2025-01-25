@@ -1,4 +1,4 @@
-import { Card, Grid, GridItem, Text, Box, Icon } from '@chakra-ui/react';
+import { Card, Grid, GridItem, Text, Box } from '@chakra-ui/react';
 import { FC, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext.tsx';
 import { Avatar } from '../components/ui/avatar.tsx';

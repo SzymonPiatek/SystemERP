@@ -11,15 +11,6 @@ export type User = {
   roleName?: string;
 };
 
-export type Employee = {
-  id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-  isActive: boolean;
-  companyId: number;
-};
-
 export type Company = {
   id: number;
   name: string;
