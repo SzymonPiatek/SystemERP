@@ -1,5 +1,6 @@
 import { SMTPServer } from 'smtp-server';
 import fs from 'fs';
+import path from 'path';
 
 export const smtpServer = new SMTPServer({
   authOptional: true,
@@ -14,7 +15,14 @@ export const smtpServer = new SMTPServer({
       console.log('Odebrano wiadomość e-mail:');
       console.log(emailData);
 
-      fs.writeFileSync(`emails/${Date.now()}.eml`, emailData);
+      const emailsDir = path.join(__dirname, '../../../emails');
+
+      if (!fs.existsSync(emailsDir)) {
+        fs.mkdirSync(emailsDir, { recursive: true });
+      }
+
+      const filePath = path.join(emailsDir, `${Date.now()}.eml`);
+      fs.writeFileSync(filePath, emailData);
 
       callback();
     });
@@ -22,8 +30,11 @@ export const smtpServer = new SMTPServer({
   onAuth(auth, session, callback) {
     const { username, password } = auth;
 
-    if (username === 'test' && password === 'password') {
-      callback(null, { user: 'test' });
+    const validUser = process.env.SMTP_USER;
+    const validPassword = process.env.SMTP_PASS;
+
+    if (username === validUser && password === validPassword) {
+      callback(null, { user: username });
     } else {
       callback(new Error('Niepoprawne dane logowania'));
     }

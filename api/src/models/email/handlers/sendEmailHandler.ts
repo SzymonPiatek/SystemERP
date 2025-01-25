@@ -1,31 +1,26 @@
 import { RequestHandler } from 'express';
-import nodemailer from 'nodemailer';
 import { returnError } from '@src/utils/error';
 import Joi from 'joi';
+import { transporter } from '@src/models/email/services/transporter';
 
 const emailSchema = Joi.object({
-  from: Joi.string().email().required(),
   to: Joi.string().email().required(),
   subject: Joi.string().required(),
   text: Joi.any().required(),
 });
 
 export const sendEmailHandler: RequestHandler = async (req, res, nexta): Promise<void> => {
-  const { from, to, subject, text } = req.body;
+  const { error, value } = emailSchema.validate(req.body);
+  if (error) {
+    res.status(400).json({ success: false, message: error.details[0].message });
+    return;
+  }
 
   try {
-    const transporter = nodemailer.createTransport({
-      host: 'localhost',
-      port: 2525,
-      secure: false,
-      auth: {
-        user: 'admin',
-        pass: 'TestPassword',
-      },
-    });
+    const { to, subject, text } = value;
 
     const info = await transporter.sendMail({
-      from,
+      from: process.env.SMTP_USER,
       to,
       subject,
       text,

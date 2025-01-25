@@ -9,6 +9,7 @@ services:
       - '5000'
     env_file:
       - ./envs/.env-api
+      - ./envs/.env-email
       - ./envs/.env-auth
       - ./envs/.env-db
     volumes:
