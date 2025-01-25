@@ -9,6 +9,8 @@ import { validateIdParam } from '@src/middlewares/validateIdParamMiddleware';
 import { editUserDataHandler } from '../handlers/editUserDataHandler';
 import { changeUserIsActiveHandler } from '../handlers/changeUserIsActiveHandler';
 import { changeUserPasswordHandler } from '../handlers/changeUserPasswordHandler';
+import { setProfilePictureHandler } from '@src/models/user/handlers/setProfilePictureHandler';
+import upload from '@src/middlewares/uploadMiddleware';
 
 const router = Router();
 
@@ -33,6 +35,17 @@ router.patch(
   checkEmptyBody,
   validateIdParam,
   changeUserPasswordHandler,
+);
+
+// SET PROFILE PICTURE
+router.post(
+  '/:id/profile_pic',
+  authLimiter,
+  authenticateToken,
+  authorizeRole(['*']),
+  validateIdParam,
+  upload.single('file'),
+  setProfilePictureHandler,
 );
 
 export default router;

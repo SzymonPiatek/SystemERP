@@ -77,11 +77,24 @@ model PermissionRole {
   @@id([permissionId, roleId])
 }
 
+model File {
+  id          Int      @id @default(autoincrement())
+  filePath    String
+  fileName    String
+  fileType    String
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  profiles    Profile[]
+}
+
 model Profile {
   id             Int     @id @default(autoincrement())
-  profilePicPath String?
+  profilePicId   Int?
   roleId         Int
   userId         Int     @unique
+  profilePic     File?   @relation(fields: [profilePicId], references: [id])
   role           Role    @relation(fields: [roleId], references: [id])
   user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
