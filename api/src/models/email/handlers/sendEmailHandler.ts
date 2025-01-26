@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { returnError } from '@src/utils/error';
 import Joi from 'joi';
-import { transporter } from '@src/models/email/services/transporter';
+import { sendEmail } from '@src/models/email/services/transporter';
 
 const emailSchema = Joi.object({
   to: Joi.string().email().required(),
@@ -18,17 +18,11 @@ export const sendEmailHandler: RequestHandler = async (req, res): Promise<void> 
 
   try {
     const { to, subject, text } = value;
-
-    const info = await transporter.sendMail({
-      from: process.env.SMTP_USER,
-      to,
-      subject,
-      text,
-    });
+    const email = await sendEmail(to, subject, text);
 
     res.status(200).json({
-      message: 'Email został wysłany',
-      info,
+      message: 'Email was sent',
+      email: email,
     });
     return;
   } catch (error) {

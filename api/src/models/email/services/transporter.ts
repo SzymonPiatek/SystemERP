@@ -14,3 +14,17 @@ export const transporter = nodemailer.createTransport({
   logger: true,
   debug: true,
 });
+
+export const sendEmail = async (to: string, subject: string, text: string) => {
+  try {
+    const info = await transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to,
+      subject,
+      text,
+    });
+    return info;
+  } catch (error: any) {
+    throw new Error(`Failed to send email to ${to}: ${error.message}`);
+  }
+};

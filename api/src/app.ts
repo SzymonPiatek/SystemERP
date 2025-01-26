@@ -6,7 +6,6 @@ import { corsConfig } from './routes/cors';
 import blockDoubleSlashesMiddleware from './middlewares/blockDoubleSlashesMiddleware';
 import swaggerSpec from './swaggerConfig';
 import apiRouter from './routes';
-import { smtpServer } from '@src/models/email/services/smtpServer';
 
 const app = express();
 
@@ -22,9 +21,5 @@ app.use(blockDoubleSlashesMiddleware);
 
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/v1', apiRouter);
-
-smtpServer.listen(2525, () => {
-  console.log('Serwer SMTP działa na porcie 2525');
-});
 
 export default app;
