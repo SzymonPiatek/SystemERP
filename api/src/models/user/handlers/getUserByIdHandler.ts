@@ -3,6 +3,7 @@ import { returnError } from '@src/utils/error';
 import prisma from '@src/prismaClient';
 import { excludePassword } from '../services/returnSafeUserData';
 import fs from 'fs/promises';
+import { getFile } from '@src/models/file/services/getFile';
 
 export const getUserByIdHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
@@ -22,13 +23,8 @@ export const getUserByIdHandler: RequestHandler = async (req, res): Promise<void
       const safeData = excludePassword(user);
 
       let profilePicBase64: string | null = null;
-      if (user.profile?.profilePic?.filePath) {
-        try {
-          const fileBuffer = await fs.readFile(user.profile.profilePic.filePath);
-          profilePicBase64 = `data:${user.profile.profilePic.fileType};base64,${fileBuffer.toString('base64')}`;
-        } catch (err) {
-          console.error('Failed to read profile picture:', err);
-        }
+      if (user.profile?.profilePic) {
+        profilePicBase64 = await getFile(user.profile?.profilePic);
       }
 
       res.status(200).json({

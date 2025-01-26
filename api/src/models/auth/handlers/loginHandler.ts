@@ -6,6 +6,7 @@ import prisma from '@src/prismaClient';
 import { generateAndSetTokens } from '../services/authService';
 import { excludePassword } from '@src/models/user/services/returnSafeUserData';
 import fs from 'fs/promises';
+import { getFile } from '@src/models/file/services/getFile';
 
 const loginSchema = Joi.object({
   email: Joi.string().email().required(),
@@ -49,13 +50,8 @@ export const loginHandler: RequestHandler = async (req, res): Promise<void> => {
     const safeData = excludePassword(user);
 
     let profilePicBase64: string | null = null;
-    if (user.profile?.profilePic?.filePath) {
-      try {
-        const fileBuffer = await fs.readFile(user.profile.profilePic.filePath);
-        profilePicBase64 = `data:${user.profile.profilePic.fileType};base64,${fileBuffer.toString('base64')}`;
-      } catch (err) {
-        console.error('Failed to read profile picture:', err);
-      }
+    if (user.profile?.profilePic) {
+      profilePicBase64 = await getFile(user.profile?.profilePic);
     }
 
     res.status(200).json({
