@@ -11,7 +11,8 @@
     "tsc": "tsc --watch",
     "seed": "npx prisma db seed",
     "test": "jest --passWithNoTests",
-    "test:coverage": "jest --passWithNoTests --coverage"
+    "test:coverage": "jest --passWithNoTests --coverage",
+    "clean:uploads": "find src/uploads -type f ! -name '.gitignore' -delete"
   },
   "keywords": [],
   "author": "",
