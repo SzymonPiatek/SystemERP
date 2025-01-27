@@ -26,15 +26,18 @@ describe('getEventByIdHandler', () => {
       { ...newEvent, id: 2 },
       { ...newEvent, id: 3 },
     ];
+    const mockedEventInvitations: any = [];
+    const allEvents = [...mockedEvents, ...mockedEventInvitations];
 
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
     (prisma.event.findMany as jest.Mock).mockResolvedValue(mockedEvents);
+    (prisma.eventInvitation.findMany as jest.Mock).mockResolvedValue(mockedEventInvitations);
 
     const response = await request(app).get(baseUrl).set('Authorization', 'Bearer mocktoken');
 
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
-    expect(response.body.events).toEqual(mockedEvents);
-    expect(response.body.count).toEqual(mockedEvents.length);
+    expect(response.body.events).toEqual(allEvents);
+    expect(response.body.count).toEqual(allEvents.length);
   });
 });
