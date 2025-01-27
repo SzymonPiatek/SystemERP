@@ -13,10 +13,19 @@ export type User = {
 
 export type Profile = {
   id: number;
-  profilePicPath?: string | null;
+  profilePicId?: number | null;
   roleId: number;
   userId: number;
+  profilePic?: File | null;
+  profilePicBase64?: string;
   role: Role;
+};
+
+export type File = {
+  id: number;
+  filePath: string;
+  fileName: string;
+  fileType: string;
 };
 
 export type Role = {

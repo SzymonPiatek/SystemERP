@@ -6,6 +6,7 @@ import { corsConfig } from './routes/cors';
 import blockDoubleSlashesMiddleware from './middlewares/blockDoubleSlashesMiddleware';
 import swaggerSpec from './swaggerConfig';
 import apiRouter from './routes';
+import path from 'path';
 
 const app = express();
 
@@ -21,5 +22,6 @@ app.use(blockDoubleSlashesMiddleware);
 
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/v1', apiRouter);
+app.use('/uploads', express.static(path.resolve(__dirname, '../uploads')));
 
 export default app;

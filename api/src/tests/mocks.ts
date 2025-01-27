@@ -10,6 +10,15 @@ jest.mock('@src/prismaClient', () => ({
     update: jest.fn(),
     delete: jest.fn(),
   },
+  profile: {
+    findUnique: jest.fn(),
+    findMany: jest.fn(),
+    findFirst: jest.fn(),
+    count: jest.fn(),
+    create: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+  },
   role: {
     findUnique: jest.fn(),
     findMany: jest.fn(),

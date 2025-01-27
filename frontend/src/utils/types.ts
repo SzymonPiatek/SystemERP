@@ -11,14 +11,6 @@ export type User = {
   roleName?: string;
 };
 
-export type Employee = {
-  id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-  isActive: boolean;
-  companyId: number;
-};
 export type Company = {
   id: number;
   name: string;
@@ -56,10 +48,20 @@ export type PermissionRole = {
 
 export type Profile = {
   id: number;
-  profilePicPath?: string;
+  profilePicId?: number;
   roleId: number;
   userId: number;
+  profilePic?: File;
+  profilePicBase64?: string;
   role?: Role;
+  user?: User;
+};
+
+export type File = {
+  id: number;
+  filePath: string;
+  fileName: string;
+  fileType: string;
 };
 
 export type Event = {
