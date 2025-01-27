@@ -88,6 +88,10 @@ jest.mock('@src/utils/error', () => ({
   returnError: jest.fn(),
 }));
 
+jest.mock('@src/models/email/services/transporter', () => ({
+  sendEmail: jest.fn(),
+}));
+
 export const mockedRequest = ({
   body = {},
   params = {},

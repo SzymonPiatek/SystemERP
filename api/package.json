@@ -46,6 +46,8 @@
   "dependencies": {
     "@prisma/client": "^5.22.0",
     "@types/multer": "^1.4.12",
+    "@types/nodemailer": "^6.4.17",
+    "@types/smtp-server": "^3.5.10",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
@@ -55,6 +57,8 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.10.0",
+    "smtp-server": "^3.13.6",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "winston": "^3.17.0"
