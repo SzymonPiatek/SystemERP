@@ -1,4 +1,4 @@
-import { Card, Grid, GridItem, Text, Box, Icon } from '@chakra-ui/react';
+import { Card, Grid, GridItem, Text, Box } from '@chakra-ui/react';
 import { FC, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext.tsx';
 import { Avatar } from '../components/ui/avatar.tsx';
@@ -45,6 +45,7 @@ export const ProfilePage: FC<{}> = () => {
                   <Avatar
                     className="avatar"
                     name={user?.firstName}
+                    src={user?.profile?.profilePicBase64 ?? ''}
                     w="full"
                     h="full"
                     transition="opacity 0.3s ease-in-out"

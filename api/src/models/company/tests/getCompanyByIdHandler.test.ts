@@ -22,7 +22,6 @@ describe(`Get company by id`, () => {
       (prisma.company.findUnique as jest.Mock).mockResolvedValueOnce(null);
 
       const response = await request(app).get(baseUrl(9999999)).set('Authorization', 'Bearer mocktoken');
-      console.log(response.body);
 
       expect(response.status).toBe(404);
       expect(response.body.success).toBe(false);

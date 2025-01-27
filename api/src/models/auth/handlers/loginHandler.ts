@@ -5,6 +5,8 @@ import { returnError } from '@src/utils/error';
 import prisma from '@src/prismaClient';
 import { generateAndSetTokens } from '../services/authService';
 import { excludePassword } from '@src/models/user/services/returnSafeUserData';
+import fs from 'fs/promises';
+import { getFile } from '@src/models/file/services/getFile';
 
 const loginSchema = Joi.object({
   email: Joi.string().email().required(),
@@ -27,6 +29,7 @@ export const loginHandler: RequestHandler = async (req, res): Promise<void> => {
         profile: {
           include: {
             role: true,
+            profilePic: true,
           },
         },
       },
@@ -46,10 +49,21 @@ export const loginHandler: RequestHandler = async (req, res): Promise<void> => {
     await generateAndSetTokens(res, user);
     const safeData = excludePassword(user);
 
+    let profilePicBase64: string | null = null;
+    if (user.profile?.profilePic) {
+      profilePicBase64 = await getFile(user.profile?.profilePic);
+    }
+
     res.status(200).json({
       success: true,
       message: 'Login successful',
-      user: safeData,
+      user: {
+        ...safeData,
+        profile: {
+          ...safeData.profile,
+          profilePicBase64,
+        },
+      },
     });
     return;
   } catch (error) {

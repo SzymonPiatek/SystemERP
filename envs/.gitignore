@@ -2,3 +2,4 @@
 .env-db
 .env-auth
 .env-web
+.env-email

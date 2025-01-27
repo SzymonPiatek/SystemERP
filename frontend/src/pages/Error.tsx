@@ -9,7 +9,9 @@ interface RouteError {
 
 export const Error: FC = () => {
   const error = useRouteError() as RouteError;
-  console.log(error);
+  if (error) {
+    console.log(error);
+  }
 
   if (!error) {
     return (

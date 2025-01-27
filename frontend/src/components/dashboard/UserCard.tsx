@@ -10,7 +10,7 @@ export const UserCard: FC<{}> = () => {
       <Card.Body>
         <Grid templateRows="repeat(2, 1fr)" templateColumns="repeat(3, 1fr)">
           <GridItem rowSpan={2} colSpan={1} pr="4">
-            <Avatar w="120px" h="120px"></Avatar>
+            <Avatar src={user?.profile?.profilePicBase64} w="120px" h="120px"></Avatar>
           </GridItem>
           <GridItem rowSpan={1} colSpan={2} alignContent="center">
             <Text textStyle="xl">

@@ -1,31 +1,31 @@
 import axiosFetch from '../utils/axiosFetch';
 import API from '../utils/apiRoutes';
-import { Employee, TableData, QueryParamsProps } from '../utils/types';
+import { TableData, QueryParamsProps, User } from '../utils/types';
 
 export const getUsers = async (params?: QueryParamsProps) =>
-  axiosFetch<TableData<Employee>>({ url: API.users.all, params });
+  axiosFetch<TableData<User>>({ url: API.users.all, params });
 
 export const deleteUser = async (userId: number) =>
-  axiosFetch<TableData<Employee>>({
+  axiosFetch<TableData<User>>({
     url: API.users.user(userId) + '/change_active',
     method: 'patch',
   });
 export const editUser = async (
-  data: Omit<Employee, 'id' | 'isActive' | 'companyId'>,
+  data: Omit<User, 'id' | 'isActive' | 'companyId'>,
   userId: number,
   params?: QueryParamsProps,
 ) =>
-  axiosFetch<TableData<Employee>>({
+  axiosFetch<TableData<User>>({
     url: API.users.user(userId),
     method: 'patch',
     data,
     params,
   });
 export const addUser = async (
-  data: Omit<Employee, 'id' | 'isActive' | 'companyId'>,
+  data: Omit<User, 'id' | 'isActive' | 'companyId'>,
   params?: QueryParamsProps,
 ) =>
-  axiosFetch<TableData<Employee>>({
+  axiosFetch<TableData<User>>({
     url: API.users.all,
     method: 'post',
     data,

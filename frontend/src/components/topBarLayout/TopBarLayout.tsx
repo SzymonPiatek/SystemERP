@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, IconButton, Text } from '@chakra-ui/react';
+import { Flex, HStack, IconButton, Text } from '@chakra-ui/react';
 import { FC, useContext } from 'react';
 import { Avatar } from '../ui/avatar';
 import { MdOutlineAnnouncement, MdOutlineLogout } from 'react-icons/md';
@@ -53,12 +53,7 @@ export const TopBarLayout: FC<TopBarProps> = ({ user }) => {
           </Link>
         </Flex>
         <Link to="/profile">
-          <Avatar
-            size="xs"
-            name="John Doe"
-            src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da842aad38faee8092ff24740893"
-            cursor="pointer"
-          />
+          <Avatar size="xs" src={user.profile?.profilePicBase64 ?? ''} cursor="pointer" />
         </Link>
       </Flex>
     </Flex>
