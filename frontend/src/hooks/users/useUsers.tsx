@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import type { Employee, QueryParamsProps, TableData, User } from '../../utils/types.ts';
+import type { QueryParamsProps, TableData, User } from '../../utils/types.ts';
 import { getUsers, addUser, editUser, deleteUser } from '../../actions/usersActions.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toaster } from '../../components/ui/toaster.tsx';
@@ -25,8 +25,8 @@ export const useAddUser = () => {
 
   return useMutation<
     TableData<User>,
-    AxiosError,
-    { newUser: Omit<Employee, 'id' | 'isActive' | 'companyId'> }
+    AxiosError<{ message?: string }>,
+    { newUser: Omit<User, 'id' | 'isActive' | 'companyId'> }
   >({
     mutationKey: ['allUsers'],
     mutationFn: ({ newUser }) => addUser(newUser),
@@ -39,9 +39,10 @@ export const useAddUser = () => {
       queryClient.invalidateQueries({ queryKey: ['allUsers'] });
     },
     onError: (error) => {
+      const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
       toaster.create({
         title: 'Error',
-        description: `An error has occurred. ${error}`,
+        description: errorMessage,
         type: 'error',
       });
     },
@@ -51,7 +52,7 @@ export const useAddUser = () => {
 export const useDeleteUser = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<TableData<Employee>, AxiosError, { userId: number }>({
+  return useMutation<TableData<User>, AxiosError<{ message?: string }>, { userId: number }>({
     mutationKey: ['allUsers'],
     mutationFn: ({ userId }) => deleteUser(userId),
     onSuccess: () => {
@@ -63,9 +64,10 @@ export const useDeleteUser = () => {
       queryClient.invalidateQueries({ queryKey: ['allUsers'] });
     },
     onError: (error) => {
+      const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
       toaster.create({
         title: 'Error',
-        description: `An error has occurred. ${error}`,
+        description: errorMessage,
         type: 'error',
       });
     },
@@ -76,8 +78,8 @@ export const useEditUser = () => {
 
   return useMutation<
     TableData<User>,
-    AxiosError,
-    { updatedUser: Omit<Employee, 'id' | 'isActive' | 'companyId'>; id: number }
+    AxiosError<{ message?: string }>,
+    { updatedUser: Omit<User, 'id' | 'isActive' | 'companyId'>; id: number }
   >({
     mutationKey: ['allUsers'],
     mutationFn: ({ updatedUser, id }) => editUser(updatedUser, id),
@@ -90,9 +92,10 @@ export const useEditUser = () => {
       queryClient.invalidateQueries({ queryKey: ['allUsers'] });
     },
     onError: (error) => {
+      const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
       toaster.create({
         title: 'Error',
-        description: `An error has occurred. ${error}`,
+        description: errorMessage,
         type: 'error',
       });
     },

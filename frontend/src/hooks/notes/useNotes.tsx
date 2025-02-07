@@ -27,7 +27,7 @@ export const useNotes = (params: QueryParamsProps) => {
 export const useAddNote = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<NoteResponse, AxiosError, { newNote: NotePayload }>({
+  return useMutation<NoteResponse, AxiosError<{ message?: string }>, { newNote: NotePayload }>({
     mutationKey: ['allNotes'],
     mutationFn: async ({ newNote }) => {
       try {
@@ -45,9 +45,10 @@ export const useAddNote = () => {
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
     },
     onError: (error) => {
+      const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
       toaster.create({
         title: 'Error',
-        description: `An error has occurred. ${error}`,
+        description: errorMessage,
         type: 'error',
       });
     },
@@ -57,7 +58,11 @@ export const useAddNote = () => {
 export const useDeleteNote = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<{ success: boolean; message: string }, AxiosError, { noteId: number }>({
+  return useMutation<
+    { success: boolean; message: string },
+    AxiosError<{ message?: string }>,
+    { noteId: number }
+  >({
     mutationKey: ['allNotes'],
     mutationFn: ({ noteId }) => deleteNote(noteId),
     onSuccess: () => {
@@ -69,9 +74,10 @@ export const useDeleteNote = () => {
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
     },
     onError: (error) => {
+      const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
       toaster.create({
         title: 'Error',
-        description: `An error has occurred. ${error}`,
+        description: errorMessage,
         type: 'error',
       });
     },
@@ -83,7 +89,7 @@ export const useEditNote = () => {
 
   return useMutation<
     NoteResponse,
-    AxiosError,
+    AxiosError<{ message?: string }>,
     { updatedNote: Omit<NotePayload, 'ownerId'>; id: number }
   >({
     mutationKey: ['allNotes'],
@@ -103,9 +109,10 @@ export const useEditNote = () => {
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
     },
     onError: (error) => {
+      const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
       toaster.create({
         title: 'Error',
-        description: `An error has occurred. ${error}`,
+        description: errorMessage,
         type: 'error',
       });
     },

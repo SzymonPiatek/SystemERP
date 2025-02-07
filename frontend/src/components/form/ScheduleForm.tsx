@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogActionTrigger,
 } from '../../components/ui/dialog';
+import { toaster } from '../../components/ui/toaster.tsx';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
@@ -18,7 +19,6 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 import { MdClose } from 'react-icons/md';
 import { useAddEvent } from '../../hooks/events/useEvents';
-import toast from 'react-hot-toast';
 import { Field } from '../ui/field';
 
 export const ScheduleForm: FC<{}> = () => {
@@ -44,7 +44,11 @@ export const ScheduleForm: FC<{}> = () => {
 
   const handleCreateEvent = () => {
     if (!user?.id) {
-      toast.error('User is not authenticated.');
+      toaster.create({
+        title: 'Error',
+        description: 'User is not authenticated.',
+        type: 'error',
+      });
       return;
     }
 

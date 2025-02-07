@@ -1,5 +1,5 @@
 import { Button, Card, IconButton, Input } from '@chakra-ui/react';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   DialogRoot,
   DialogTrigger,
@@ -14,10 +14,10 @@ import {
 import 'react-datepicker/dist/react-datepicker.css';
 import { MdClose, MdEdit } from 'react-icons/md';
 import { Field } from '../ui/field';
-import { Employee } from '../../utils/types';
+import { User } from '../../utils/types';
 
 type UserFormProps = {
-  user: Employee;
+  user: User;
   onEdit: (props: any) => void;
 };
 
@@ -33,6 +33,16 @@ export const UsersForm: FC<UserFormProps> = ({ user, onEdit }) => {
     lastName,
     email,
   });
+
+  useEffect(() => {
+    if (open) {
+      setUpdatedUser({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+      });
+    }
+  }, [open, user]);
 
   const handleOpenChange = (e: { open: boolean }) => {
     setOpen(e.open);
