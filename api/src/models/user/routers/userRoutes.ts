@@ -23,7 +23,7 @@ router.get('/', apiLimiter, authenticateToken, authorizeRole(['ADMIN', 'ENTITY_A
 router.get('/:id', apiLimiter, authenticateToken, authorizeRole(['*']), validateIdParam, getUserByIdHandler);
 
 // CHANGE FORGOTTEN PASSWORD
-router.patch('/change_forgotten_password', changeForgottenPasswordHandler);
+router.patch('/change_forgotten_password', authLimiter, changeForgottenPasswordHandler);
 
 // EDIT USER
 router.patch('/:id', authLimiter, authenticateToken, authorizeRole(['*']), checkEmptyBody, validateIdParam, editUserDataHandler);
