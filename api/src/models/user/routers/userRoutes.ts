@@ -12,6 +12,7 @@ import { changeUserPasswordHandler } from '../handlers/changeUserPasswordHandler
 import { setProfilePictureHandler } from '@src/models/user/handlers/setProfilePictureHandler';
 import upload from '@src/middlewares/uploadMiddleware';
 import { sendResetPasswordHandler } from '@src/models/user/handlers/sendResetPasswordHandler';
+import { changeForgottenPasswordHandler } from '@src/models/user/handlers/changeForgottenPasswordHandler';
 
 const router = Router();
 
@@ -20,6 +21,9 @@ router.get('/', apiLimiter, authenticateToken, authorizeRole(['ADMIN', 'ENTITY_A
 
 // GET USER BY ID
 router.get('/:id', apiLimiter, authenticateToken, authorizeRole(['*']), validateIdParam, getUserByIdHandler);
+
+// CHANGE FORGOTTEN PASSWORD
+router.patch('/change_forgotten_password', changeForgottenPasswordHandler);
 
 // EDIT USER
 router.patch('/:id', authLimiter, authenticateToken, authorizeRole(['*']), checkEmptyBody, validateIdParam, editUserDataHandler);
@@ -50,6 +54,6 @@ router.post(
 );
 
 // SEND RESET PASSWORD
-router.post('/forgot_password', authLimiter, sendResetPasswordHandler);
+router.post('/forgot_password', authLimiter, checkEmptyBody, sendResetPasswordHandler);
 
 export default router;
