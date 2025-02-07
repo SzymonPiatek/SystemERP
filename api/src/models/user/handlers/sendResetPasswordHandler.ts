@@ -32,10 +32,9 @@ export const sendResetPasswordHandler: RequestHandler = async (req, res): Promis
     );
 
     const resetLink = `${process.env.HOST}/reset-password?token=${token}`;
+    const subject = 'Reset Password';
 
-    const text = `Click the link to reset your password: \n${resetLink}`;
-
-    const info = await sendEmailWithTemplate(email, 'Reset Password', 'sendResetPassword', { name: `${user.firstName} ${user.lastName}` });
+    const info = await sendEmailWithTemplate(email, subject, 'sendResetPassword', { user, resetLink, subject });
 
     if (!info) {
       res.status(400).json({ success: false, message: 'Error while sending email' });
