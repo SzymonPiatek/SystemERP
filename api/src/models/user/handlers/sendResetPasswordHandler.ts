@@ -3,7 +3,7 @@ import { returnError } from '@src/utils/error';
 import Joi from 'joi';
 import prisma from '@src/prismaClient';
 import { tokenGenerator } from '@src/models/auth/services/authService';
-import { sendEmail } from '@src/models/email/services/transporter';
+import { sendEmail, sendEmailWithTemplate } from '@src/models/email/services/transporter';
 
 const resetSchema = Joi.object({
   email: Joi.string().email().required(),
@@ -35,7 +35,7 @@ export const sendResetPasswordHandler: RequestHandler = async (req, res): Promis
 
     const text = `Click the link to reset your password: \n${resetLink}`;
 
-    const info = await sendEmail(email, 'Reset Password', text);
+    const info = await sendEmailWithTemplate(email, 'Reset Password', 'sendResetPassword', { name: `${user.firstName} ${user.lastName}` });
 
     if (!info) {
       res.status(400).json({ success: false, message: 'Error while sending email' });
