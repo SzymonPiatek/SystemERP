@@ -11,6 +11,7 @@ import { changeUserIsActiveHandler } from '../handlers/changeUserIsActiveHandler
 import { changeUserPasswordHandler } from '../handlers/changeUserPasswordHandler';
 import { setProfilePictureHandler } from '@src/models/user/handlers/setProfilePictureHandler';
 import upload from '@src/middlewares/uploadMiddleware';
+import { sendResetPasswordHandler } from '@src/models/user/handlers/sendResetPasswordHandler';
 
 const router = Router();
 
@@ -47,5 +48,8 @@ router.post(
   upload.single('file'),
   setProfilePictureHandler,
 );
+
+// SEND RESET PASSWORD
+router.post('/forgot_password', authLimiter, sendResetPasswordHandler);
 
 export default router;
