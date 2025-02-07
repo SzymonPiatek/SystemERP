@@ -27,33 +27,33 @@ export const changeForgottenPasswordHandler: RequestHandler = async (req, res): 
       res.status(400).json({ success: false, message: 'Invalid or expired token' });
       return;
     }
-    //
-    // if (!decoded.id) {
-    //   res.status(400).json({ success: false, message: 'Invalid token payload' });
-    //   return;
-    // }
-    //
-    // const userId = Number(decoded.id);
-    //
-    // const user = await prisma.user.findUnique({ where: { id: userId } });
-    // if (!user) {
-    //   res.status(400).json({ success: false, message: 'User not found' });
-    //   return;
-    // }
-    //
-    // const hashedPassword = await hashPassword(newPassword);
-    //
-    // const newUserData = await prisma.user.update({
-    //   where: { id: userId },
-    //   data: { password: hashedPassword },
-    // });
-    //
-    // if (!newUserData) {
-    //   res.status(400).json({ success: false, message: 'Error while updating password' });
-    //   return;
-    // }
 
-    res.status(200).json({ success: true, message: 'Password successfully reset', decoded });
+    if (!decoded.id) {
+      res.status(400).json({ success: false, message: 'Invalid token payload' });
+      return;
+    }
+
+    const userId = Number(decoded.id);
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      res.status(400).json({ success: false, message: 'User not found' });
+      return;
+    }
+
+    const hashedPassword = await hashPassword(newPassword);
+
+    const newUserData = await prisma.user.update({
+      where: { id: userId },
+      data: { password: hashedPassword },
+    });
+
+    if (!newUserData) {
+      res.status(400).json({ success: false, message: 'Error while updating password' });
+      return;
+    }
+
+    res.status(200).json({ success: true, message: 'Password successfully reset' });
     return;
   } catch (error) {
     returnError(res, error);
