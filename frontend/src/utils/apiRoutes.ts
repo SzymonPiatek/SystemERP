@@ -9,6 +9,9 @@ const API = {
     user: (id: number) => `/users/${id}`,
     changeActive: (id: number) => `/users/${id}/change_active`,
     changePassword: (id: number) => `/users/${id}/change_password`,
+    changeForgottenPassword: '/users/change_forgotten_password/:token',
+    setProfilePicture: (id: number) => `/users/${id}/profile_pic`,
+    forgotPassword: '/user/forgot_password',
   },
   companies: {
     all: '/companies',
