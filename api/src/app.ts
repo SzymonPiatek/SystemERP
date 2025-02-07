@@ -7,6 +7,7 @@ import blockDoubleSlashesMiddleware from './middlewares/blockDoubleSlashesMiddle
 import swaggerSpec from './swaggerConfig';
 import apiRouter from './routes';
 import path from 'path';
+import { engine } from 'express-handlebars';
 
 const app = express();
 
@@ -19,6 +20,10 @@ app.use(cookieParser());
 app.use(helmetConfig);
 app.use(corsConfig);
 app.use(blockDoubleSlashesMiddleware);
+
+app.engine('hbs', engine({ extname: '.hbs' }));
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, './models/email/templates/'));
 
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/v1', apiRouter);
