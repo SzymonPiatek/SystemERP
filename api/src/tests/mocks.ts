@@ -87,6 +87,7 @@ jest.mock('@src/models/auth/services/authService', () => ({
   generateAndSetTokens: jest.fn(),
   refreshAccessToken: jest.fn(),
   verifyToken: jest.fn(),
+  tokenGenerator: jest.fn(),
 }));
 
 jest.mock('@src/middlewares/authenticateTokenMiddleware', () => ({
@@ -111,6 +112,7 @@ jest.mock('@src/utils/error', () => ({
 
 jest.mock('@src/models/email/services/transporter', () => ({
   sendEmail: jest.fn(),
+  sendEmailWithTemplate: jest.fn(),
 }));
 
 export const mockedRequest = ({
