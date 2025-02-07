@@ -35,7 +35,19 @@ export const sendResetPasswordHandler: RequestHandler = async (req, res): Promis
 
     const text = `Click the link to reset your password: \n${resetLink}`;
 
-    await sendEmail(email, 'Reset Password', text);
+    const info = await sendEmail(email, 'Reset Password', text);
+
+    if (!info) {
+      res.status(400).json({ success: false, message: 'Error while sending email' });
+      return;
+    }
+
+    const updatedUser = await prisma.user.update({ where: { email }, data: { isPasswordResetting: true } });
+
+    if (!updatedUser) {
+      res.status(400).json({ success: false, message: 'Error while updating user' });
+      return;
+    }
 
     res.status(200).json({ success: true, message: 'Password reset email sent' });
     return;

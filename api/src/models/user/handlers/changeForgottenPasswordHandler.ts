@@ -41,11 +41,16 @@ export const changeForgottenPasswordHandler: RequestHandler = async (req, res): 
       return;
     }
 
+    if (user.isPasswordResetting === false) {
+      res.status(400).json({ success: false, message: 'Access denied' });
+      return;
+    }
+
     const hashedPassword = await hashPassword(newPassword);
 
     const newUserData = await prisma.user.update({
       where: { id: userId },
-      data: { password: hashedPassword },
+      data: { password: hashedPassword, isPasswordResetting: false },
     });
 
     if (!newUserData) {
