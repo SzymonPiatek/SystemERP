@@ -16,19 +16,26 @@ describe('Change user isActive handler', () => {
   it(`Should toggle the user's isActive status to true`, async () => {
     const mockedUser = {
       ...testUser,
+      id: 1,
+      isActive: true,
+    };
+
+    const secondUser = {
+      ...testUser,
+      id: 2,
       isActive: false,
     };
 
     const updatedUser = {
-      ...mockedUser,
+      ...secondUser,
       isActive: true,
     };
 
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
-    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(secondUser);
     (prisma.user.update as jest.Mock).mockResolvedValue(updatedUser);
 
-    const response = await request(app).patch(baseUrl(mockedUser.id)).set('Authorization', 'Bearer mocktoken');
+    const response = await request(app).patch(baseUrl(secondUser.id)).set('Authorization', 'Bearer mocktoken');
 
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
@@ -39,19 +46,26 @@ describe('Change user isActive handler', () => {
   it(`Should toggle the user's isActive status to false`, async () => {
     const mockedUser = {
       ...testUser,
+      id: 1,
+      isActive: true,
+    };
+
+    const secondUser = {
+      ...testUser,
+      id: 2,
       isActive: true,
     };
 
     const updatedUser = {
-      ...mockedUser,
+      ...secondUser,
       isActive: false,
     };
 
     (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
-    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(secondUser);
     (prisma.user.update as jest.Mock).mockResolvedValue(updatedUser);
 
-    const response = await request(app).patch(baseUrl(mockedUser.id)).set('Authorization', 'Bearer mocktoken');
+    const response = await request(app).patch(baseUrl(secondUser.id)).set('Authorization', 'Bearer mocktoken');
 
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
