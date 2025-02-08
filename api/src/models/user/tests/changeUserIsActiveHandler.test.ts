@@ -72,4 +72,27 @@ describe('Change user isActive handler', () => {
     expect(response.body.message).toBe('User deactivated successfully');
     expect(response.body.user).toEqual(expect.objectContaining({ isActive: false }));
   });
+
+  it(`Should throw error for the same user`, async () => {
+    const mockedUser = {
+      ...testUser,
+      id: 1,
+      isActive: true,
+    };
+
+    const updatedUser = {
+      ...mockedUser,
+      isActive: true,
+    };
+
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
+    (prisma.user.findUnique as jest.Mock).mockResolvedValueOnce(mockedUser);
+    (prisma.user.update as jest.Mock).mockResolvedValue(updatedUser);
+
+    const response = await request(app).patch(baseUrl(mockedUser.id)).set('Authorization', 'Bearer mocktoken');
+
+    expect(response.status).toBe(409);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe('Error, the same user');
+  });
 });
