@@ -8,6 +8,7 @@ import { getEventByIdHandler } from '../handlers/getEventByIdHandler';
 import { createEventHandler } from '../handlers/createEventHandler';
 import { editEventHandler } from '../handlers/editEventHandler';
 import { authorizeRole } from '@src/middlewares/authorizeRoleMiddleware';
+import { deleteEventHandler } from '@src/models/event/handlers/deleteEventHandler';
 
 const router = Router();
 
@@ -22,5 +23,8 @@ router.post('/', authLimiter, authenticateToken, authorizeRole(['*']), createEve
 
 // EDIT EVENT
 router.patch('/:id', authLimiter, authenticateToken, authorizeRole(['*']), validateIdParam, checkEmptyBody, editEventHandler);
+
+// DELETE EVENT
+router.delete('/:id', authLimiter, authenticateToken, authorizeRole(['*']), validateIdParam, deleteEventHandler);
 
 export default router;
