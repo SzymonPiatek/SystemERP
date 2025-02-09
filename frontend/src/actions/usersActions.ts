@@ -1,21 +1,21 @@
 import axiosFetch from '../utils/axiosFetch';
 import API from '../utils/apiRoutes';
-import { TableData, QueryParamsProps, User } from '../utils/types';
+import { TableData, QueryParamsProps, User, UserResponse } from '../utils/types';
 
 export const getUsers = async (params?: QueryParamsProps) =>
   axiosFetch<TableData<User>>({ url: API.users.all, params });
 
 export const deleteUser = async (userId: number) =>
-  axiosFetch<TableData<User>>({
+  axiosFetch<UserResponse>({
     url: API.users.user(userId) + '/change_active',
     method: 'patch',
   });
 export const editUser = async (
-  data: Omit<User, 'id' | 'isActive' | 'companyId'>,
+  data: { firstName: string; lastName: string; email: string },
   userId: number,
   params?: QueryParamsProps,
 ) =>
-  axiosFetch<TableData<User>>({
+  axiosFetch<UserResponse>({
     url: API.users.user(userId),
     method: 'patch',
     data,
@@ -25,8 +25,8 @@ export const addUser = async (
   data: Omit<User, 'id' | 'isActive' | 'companyId'>,
   params?: QueryParamsProps,
 ) =>
-  axiosFetch<TableData<User>>({
-    url: API.users.all,
+  axiosFetch<UserResponse>({
+    url: API.auth.register,
     method: 'post',
     data,
     params,

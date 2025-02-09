@@ -31,15 +31,16 @@ export const useAddNote = () => {
     mutationKey: ['allNotes'],
     mutationFn: async ({ newNote }) => {
       try {
-        return await addNote(newNote);
+        const response = await addNote(newNote);
+        return response;
       } catch (error) {
         throw error;
       }
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
       toaster.create({
         title: 'Success',
-        description: 'Note successfully added.',
+        description: response.message || 'Note successfully added.',
         type: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
@@ -64,11 +65,14 @@ export const useDeleteNote = () => {
     { noteId: number }
   >({
     mutationKey: ['allNotes'],
-    mutationFn: ({ noteId }) => deleteNote(noteId),
-    onSuccess: () => {
+    mutationFn: async ({ noteId }) => {
+      const response = deleteNote(noteId);
+      return response;
+    },
+    onSuccess: (response) => {
       toaster.create({
         title: 'Success',
-        description: 'Note successfully deleted.',
+        description: response.message || 'Note successfully deleted.',
         type: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
@@ -95,15 +99,16 @@ export const useEditNote = () => {
     mutationKey: ['allNotes'],
     mutationFn: async ({ updatedNote, id }) => {
       try {
-        return await editNote(id, updatedNote);
+        const response = await editNote(id, updatedNote);
+        return response;
       } catch (error) {
         throw error;
       }
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
       toaster.create({
         title: 'Success',
-        description: 'Note successfully updated.',
+        description: response.message || 'Note successfully updated.',
         type: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
