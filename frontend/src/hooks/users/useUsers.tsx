@@ -54,11 +54,14 @@ export const useDeleteUser = () => {
 
   return useMutation<TableData<User>, AxiosError<{ message?: string }>, { userId: number }>({
     mutationKey: ['allUsers'],
-    mutationFn: ({ userId }) => deleteUser(userId),
-    onSuccess: () => {
+    mutationFn: async ({ userId }) => {
+      const response = await deleteUser(userId);
+      return response;
+    },
+    onSuccess: (response) => {
       toaster.create({
         title: 'Success',
-        description: 'User successfully deactivated/activated.',
+        description: response.message || 'User activated/deactivated successfully.',
         type: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['allUsers'] });

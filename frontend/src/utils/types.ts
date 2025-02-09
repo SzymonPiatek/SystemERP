@@ -114,6 +114,7 @@ export type TableData<T> = {
   next: number;
   total: number;
   totalPages: number;
+  message?: string;
 };
 
 export type LoginDataProps = {
