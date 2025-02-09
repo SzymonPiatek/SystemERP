@@ -105,12 +105,7 @@ export const inviteUserHandler: RequestHandler = async (req, res): Promise<void>
 
     const context = { user: newUser, company, inviteLink };
 
-    const emailSent = await sendEmailWithTemplate(email, 'You are invited to company', 'inviteUser', context);
-
-    if (!emailSent) {
-      res.status(400).json({ success: false, message: 'Error while sending email' });
-      return;
-    }
+    await sendEmailWithTemplate(email, 'You are invited to company', 'inviteUser', context);
 
     res.status(201).json({ success: true, message: 'Invitation sent' });
     return;

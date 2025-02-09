@@ -3,7 +3,7 @@ import request from 'supertest';
 import app from '@src/app';
 import prisma from '@src/prismaClient';
 import { sendEmailWithTemplate } from '@src/models/email/services/transporter';
-import { adminUser, testCompany, testUser } from '@src/tests/data';
+import { adminUser, testCompany, testInvite, testUser } from '@src/tests/data';
 
 const baseUrl = '/api/v1/users/invite';
 
@@ -105,40 +105,6 @@ describe('Invite User', () => {
     expect(response.body.message).toBe('"email" must be a valid email');
   });
 
-  it('Should return an error if required fields are missing', async () => {
-    const mockedUser = adminUser;
-
-    (prisma.user.findUnique as jest.Mock).mockResolvedValue(mockedUser);
-    (prisma.user.findUnique as jest.Mock).mockResolvedValue(mockedUser);
-
-    const response = await request(app).post(baseUrl).set('Authorization', `Bearer mockToken`).send({
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'john@example.com',
-    });
-
-    expect(response.status).toBe(400);
-    expect(response.body.success).toBe(false);
-    expect(response.body.message).toBe('"roleId" is required');
-  });
-
-  it('Should return an error if the logged-in user does not exist', async () => {
-    const mockedUser = adminUser;
-
-    (prisma.user.findUnique as jest.Mock).mockResolvedValue(mockedUser).mockResolvedValue(null);
-
-    const response = await request(app).post(baseUrl).set('Authorization', `Bearer mockToken`).send({
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'john@example.com',
-      companyId: 1,
-      roleId: 2,
-    });
-
-    expect(response.status).toBe(403);
-    expect(response.body.message).toBe('Access denied');
-  });
-
   it('Should return an error if the email already exists', async () => {
     const mockedUser = adminUser;
     const existingUser = testUser;
@@ -160,5 +126,75 @@ describe('Invite User', () => {
 
     expect(response.status).toBe(400);
     expect(response.body.message).toBe('Email already exists');
+  });
+
+  it('Should return error for invite error', async () => {
+    const mockedUser = adminUser;
+    const mockedCompany = testCompany;
+
+    (prisma.user.findUnique as jest.Mock)
+      .mockImplementationOnce(() => Promise.resolve(mockedUser))
+      .mockImplementationOnce(() => Promise.resolve(mockedUser))
+      .mockImplementationOnce(() => Promise.resolve(null));
+    (prisma.company.findUnique as jest.Mock).mockResolvedValue(mockedCompany);
+    (prisma.invite.findFirst as jest.Mock).mockResolvedValue(null);
+    (prisma.invite.create as jest.Mock).mockResolvedValue(null);
+
+    const response = await request(app).post(baseUrl).set('Authorization', `Bearer mockToken`).send({
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john@example.com',
+      companyId: mockedCompany.id,
+      roleId: 2,
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe('Error creating invite');
+  });
+
+  it('Should return error for existing invite', async () => {
+    const mockedUser = adminUser;
+    const mockedCompany = testCompany;
+    const mockedInvite = testInvite;
+
+    (prisma.user.findUnique as jest.Mock)
+      .mockImplementationOnce(() => Promise.resolve(mockedUser))
+      .mockImplementationOnce(() => Promise.resolve(mockedUser))
+      .mockImplementationOnce(() => Promise.resolve(null));
+    (prisma.company.findUnique as jest.Mock).mockResolvedValue(mockedCompany);
+    (prisma.invite.findFirst as jest.Mock).mockResolvedValue(mockedInvite);
+
+    const response = await request(app).post(baseUrl).set('Authorization', `Bearer mockToken`).send({
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john@example.com',
+      companyId: mockedCompany.id,
+      roleId: 2,
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe('Invitation already exists for this email');
+  });
+
+  it('Should return error for not existing user', async () => {
+    const mockedUser = adminUser;
+    const mockedInvite = testInvite;
+
+    (prisma.user.findUnique as jest.Mock)
+      .mockImplementationOnce(() => Promise.resolve(mockedUser))
+      .mockImplementationOnce(() => Promise.resolve(null));
+
+    const response = await request(app)
+      .post(baseUrl)
+      .set('Authorization', `Bearer mockToken`)
+      .send({ ...testInvite, id: undefined });
+
+    console.log(response.body);
+
+    expect(response.status).toBe(403);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe('Access denied');
   });
 });

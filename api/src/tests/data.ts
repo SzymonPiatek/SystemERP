@@ -100,3 +100,11 @@ export const eventData = {
   createdAt: new Date('2025-01-22T13:36:35.561Z'),
   updatedAt: new Date('2025-01-22T13:36:35.561Z'),
 };
+
+export const testInvite = {
+  id: 1,
+  firstName: 'Test',
+  lastName: 'User',
+  email: 'test@test.com',
+  roleId: 1,
+};
