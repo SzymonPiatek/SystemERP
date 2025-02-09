@@ -3,12 +3,13 @@ import { returnError } from '@src/utils/error';
 import Joi from 'joi';
 import prisma from '@src/prismaClient';
 import { sendEmail } from '@src/models/email/services/transporter';
+import crypto from 'crypto';
 
 const inviteSchema = Joi.object({
-  fistName: Joi.string().required(),
+  firstName: Joi.string().required(),
   lastName: Joi.string().required(),
   email: Joi.string().email().required(),
-  companyId: Joi.string().optional(),
+  companyId: Joi.number().optional(),
   roleId: Joi.number().required(),
 });
 
@@ -26,73 +27,58 @@ export const inviteUserHandler: RequestHandler = async (req, res): Promise<void>
 
     const loggedInUser = await prisma.user.findUnique({
       where: { id: userId },
-      include: {
-        profile: {
-          include: {
-            role: true,
-          },
-        },
+      include: { profile: { include: { role: true } } },
+    });
+
+    if (!loggedInUser || loggedInUser.profile?.role.name !== 'ADMIN') {
+      res.status(403).json({ success: false, message: 'Access denied' });
+      return;
+    }
+
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
+      res.status(400).json({ success: false, message: 'Email already exists' });
+      return;
+    }
+
+    const inviteToken = crypto.randomBytes(32).toString('hex');
+    const expiresAt = new Date();
+    expiresAt.setHours(expiresAt.getHours() + 24);
+
+    const isInviteExist = await prisma.invite.findUnique({ where: { email } });
+    if (isInviteExist) {
+      res.status(400).json({ success: false, message: 'Invitation already exists for this email' });
+      return;
+    }
+
+    const invite = await prisma.invite.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        companyId,
+        roleId,
+        token: inviteToken,
+        expiresAt,
       },
     });
-    if (!loggedInUser) {
-      res.status(404).json({ success: false, message: 'Access denied' });
+
+    if (!invite) {
+      res.status(400).json({ success: false, message: 'Error creating invite' });
       return;
     }
 
-    const isEmailExist = await prisma.user.findUnique({ where: { email } });
-    if (isEmailExist) {
-      res.status(404).json({ success: false, message: 'Email already exist' });
-      return;
-    }
+    const inviteLink = `${process.env.HOST}/accept-invite?token=${inviteToken}`;
+    const emailContent = `You have been invited to join the company. Click the link to accept: ${inviteLink}`;
 
-    if (loggedInUser?.profile?.role.name !== 'ADMIN') {
-      if (companyId === undefined || companyId === null) {
-        res.status(403).json({ success: false, message: 'Access denied' });
-        return;
-      } else {
-        if (companyId !== loggedInUser.companyId) {
-          res.status(403).json({ success: false, message: 'Access denied' });
-          return;
-        }
-      }
+    const emailSent = await sendEmail(email, 'You are invited to the company', emailContent);
 
-      if (roleId === 1) {
-        res.status(403).json({ success: false, message: 'Access denied' });
-        return;
-      }
-    }
-
-    if (companyId !== null && companyId !== undefined) {
-      const companyExists = await prisma.company.findUnique({
-        where: { id: companyId },
-      });
-
-      if (!companyExists) {
-        res.status(400).json({ success: false, message: 'Invalid companyId' });
-        return;
-      }
-    }
-
-    const roleExists = await prisma.role.findUnique({
-      where: { id: roleId },
-    });
-
-    if (!roleExists) {
-      res.status(400).json({ success: false, message: 'Invalid roleId' });
-      return;
-    }
-
-    const info = await sendEmail(email, 'You are invited to company', 'You are invited to company');
-
-    if (!info) {
+    if (!emailSent) {
       res.status(400).json({ success: false, message: 'Error while sending email' });
       return;
     }
 
-    res.status(201).json({
-      success: true,
-      message: 'Invite email sent',
-    });
+    res.status(201).json({ success: true, message: 'Invitation sent' });
     return;
   } catch (error) {
     returnError(res, error);
