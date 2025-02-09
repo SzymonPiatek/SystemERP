@@ -1,4 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
+import { AxiosError } from 'axios';
+
+// DB Models
 
 export type User = {
   id: number;
@@ -32,18 +35,6 @@ export type Role = {
   name: string;
   action: string;
   subject: string;
-};
-
-export type Permission = {
-  id: number;
-  name: string;
-  action: string;
-  subject: string;
-};
-
-export type PermissionRole = {
-  permissionId: number;
-  roleId: number;
 };
 
 export type Profile = {
@@ -83,16 +74,36 @@ export type Note = {
   updatedAt: Date;
 };
 
-export type NotesResponse = {
+// Responses
+
+export type BaseResponse = {
   success: boolean;
   message: string;
-  notes: Note[];
 };
 
-export type NotePayload = {
-  ownerId: number;
+// Event Responses
+
+export type EventsResponse = BaseResponse & { events: Event[] };
+
+export type EventResponse = BaseResponse & { event: Event };
+
+export type EditEventPayload = {
   title: string;
-  description: string;
+  startDate: string;
+  endDate: string;
+};
+
+export type AddEventPayload = {
+  title: string;
+  startDate: string;
+  endDate: string;
+  ownerId: number;
+};
+
+// Note Responses
+
+export type NoteResponse = BaseResponse & {
+  note: Note;
 };
 
 export type EditNotePayload = {
@@ -100,20 +111,35 @@ export type EditNotePayload = {
   description: string;
 };
 
-export type NoteResponse = {
-  success: boolean;
-  message: string;
-  note: Note;
+export type AddNotePayload = {
+  title: string;
+  description: string;
+  date?: Date;
+  ownerId: number;
 };
+
+// User Responses
+
 export type UserResponse = {
   success: boolean;
   message: string;
 };
 
-export type EventResponse = {
-  success: boolean;
-  message: string;
-  events: Event[];
+export type EditUserPayload = {
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
+// Auth Responses
+
+export type LoginDataProps = {
+  email: string;
+  password: string;
+};
+
+export type LoginResponse = BaseResponse & {
+  user: User;
 };
 
 export type TableData<T> = {
@@ -127,21 +153,12 @@ export type TableData<T> = {
   message?: string;
 };
 
-export type LoginDataProps = {
-  email: string;
-  password: string;
-};
-
-export type LoginResponse = {
-  success: boolean;
-  message: string;
-  user: User;
-};
-
-export interface ErrorResponse {
+export type ErrorResponse = {
   message?: string;
   errors?: string[];
-}
+};
+
+export type ToastForErrorHookErrorType = AxiosError & { response: { data: { message?: string } } };
 
 export type QueryParamsProps = Record<string, string | number | null>;
 

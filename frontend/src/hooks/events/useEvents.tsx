@@ -1,15 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  addEvent,
-  getEvents,
-  deleteEvent,
-  editEvent,
+import { addEvent, getEvents, deleteEvent, editEvent } from '../../actions/eventActions';
+import type {
   AddEventPayload,
   EditEventPayload,
-} from '../../actions/eventActions';
-import type { Event, EventResponse } from '../../utils/types.ts';
+  Event,
+  EventResponse,
+  ToastForErrorHookErrorType,
+} from '../../utils/types';
 import { AxiosError } from 'axios';
-import { toaster } from '../../components/ui/toaster';
+import { toastForErrorHook, toastForSuccessHook } from '../../utils/hooks';
 
 export const useEvents = () => {
   return useQuery<Event[], AxiosError>({
@@ -24,29 +23,21 @@ export const useEvents = () => {
     },
   });
 };
+
 export const useAddEvent = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<EventResponse, AxiosError, { data: AddEventPayload }>({
+  return useMutation<EventResponse, ToastForErrorHookErrorType, { data: AddEventPayload }>({
     mutationFn: async ({ data }) => {
       const response = await addEvent(data);
       return response;
     },
     onSuccess: (response) => {
-      toaster.create({
-        title: 'Success',
-        description: response.message || 'Event successfully added.',
-        type: 'success',
-      });
-
+      toastForSuccessHook({ response });
       queryClient.invalidateQueries({ queryKey: ['allEvents'] });
     },
-    onError: (error: AxiosError) => {
-      toaster.create({
-        title: 'Error',
-        description: `Error adding event: ${error.message}`,
-        type: 'error',
-      });
+    onError: (error) => {
+      toastForErrorHook({ error });
     },
   });
 };
@@ -54,26 +45,18 @@ export const useAddEvent = () => {
 export const useDeleteEvent = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<EventResponse, AxiosError, { eventId: number }>({
+  return useMutation<EventResponse, ToastForErrorHookErrorType, { eventId: number }>({
     mutationKey: ['allEvents'],
     mutationFn: async ({ eventId }) => {
       const response = await deleteEvent(eventId);
       return response;
     },
     onSuccess: (response) => {
-      toaster.create({
-        title: 'Success',
-        description: response.message || 'Event successfully deleted.',
-        type: 'success',
-      });
+      toastForSuccessHook({ response });
       queryClient.invalidateQueries({ queryKey: ['allEvents'] });
     },
-    onError: (error: AxiosError) => {
-      toaster.create({
-        title: 'Error',
-        description: `Error deleting event: ${error.message}`,
-        type: 'error',
-      });
+    onError: (error) => {
+      toastForErrorHook({ error });
     },
   });
 };
@@ -81,26 +64,21 @@ export const useDeleteEvent = () => {
 export const useEditEvent = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<EventResponse, AxiosError, { updatedEvent: EditEventPayload; id: number }>({
+  return useMutation<
+    EventResponse,
+    ToastForErrorHookErrorType,
+    { updatedEvent: EditEventPayload; id: number }
+  >({
     mutationFn: async ({ updatedEvent, id }) => {
       const response = await editEvent(id, updatedEvent);
       return response;
     },
     onSuccess: (response) => {
-      toaster.create({
-        title: 'Success',
-        description: response.message || 'Event successfully updated.',
-        type: 'success',
-      });
-
+      toastForSuccessHook({ response });
       queryClient.invalidateQueries({ queryKey: ['allEvents'] });
     },
-    onError: (error: AxiosError) => {
-      toaster.create({
-        title: 'Error',
-        description: `Error updating event: ${error.message}`,
-        type: 'error',
-      });
+    onError: (error) => {
+      toastForErrorHook({ error });
     },
   });
 };
