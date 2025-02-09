@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 import { returnError } from '@src/utils/error';
 import Joi from 'joi';
 import prisma from '@src/prismaClient';
-import { sendEmail } from '@src/models/email/services/transporter';
+import { sendEmailWithTemplate } from '@src/models/email/services/transporter';
 import crypto from 'crypto';
 
 const inviteSchema = Joi.object({
@@ -30,9 +30,36 @@ export const inviteUserHandler: RequestHandler = async (req, res): Promise<void>
       include: { profile: { include: { role: true } } },
     });
 
-    if (!loggedInUser || loggedInUser.profile?.role.name !== 'ADMIN') {
+    if (!loggedInUser) {
       res.status(403).json({ success: false, message: 'Access denied' });
       return;
+    }
+
+    if (loggedInUser?.profile?.role.name !== 'ADMIN') {
+      if (companyId === null || companyId === undefined) {
+        res.status(403).json({ success: false, message: 'Access denied' });
+        return;
+      }
+
+      if (companyId !== loggedInUser.companyId) {
+        res.status(403).json({ success: false, message: 'Access denied' });
+        return;
+      }
+
+      if (roleId === 1) {
+        res.status(403).json({ success: false, message: 'Access denied' });
+        return;
+      }
+    }
+
+    let company = null;
+    if (companyId) {
+      company = await prisma.company.findUnique({ where: { id: companyId } });
+
+      if (!company) {
+        res.status(404).json({ success: false, message: 'Company not found' });
+        return;
+      }
     }
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -45,7 +72,7 @@ export const inviteUserHandler: RequestHandler = async (req, res): Promise<void>
     const expiresAt = new Date();
     expiresAt.setHours(expiresAt.getHours() + 24);
 
-    const isInviteExist = await prisma.invite.findUnique({ where: { email } });
+    const isInviteExist = await prisma.invite.findFirst({ where: { email } });
     if (isInviteExist) {
       res.status(400).json({ success: false, message: 'Invitation already exists for this email' });
       return;
@@ -69,9 +96,16 @@ export const inviteUserHandler: RequestHandler = async (req, res): Promise<void>
     }
 
     const inviteLink = `${process.env.HOST}/accept-invite?token=${inviteToken}`;
-    const emailContent = `You have been invited to join the company. Click the link to accept: ${inviteLink}`;
 
-    const emailSent = await sendEmail(email, 'You are invited to the company', emailContent);
+    const newUser = {
+      firstName,
+      lastName,
+      email,
+    };
+
+    const context = { user: newUser, company, inviteLink };
+
+    const emailSent = await sendEmailWithTemplate(email, 'You are invited to company', 'inviteUser', context);
 
     if (!emailSent) {
       res.status(400).json({ success: false, message: 'Error while sending email' });
