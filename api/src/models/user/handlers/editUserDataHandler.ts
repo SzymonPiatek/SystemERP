@@ -66,7 +66,7 @@ export const editUserDataHandler: RequestHandler = async (req, res): Promise<voi
       res.status(200).json({ success: true, message: 'User updated successfully', user: safeData });
       return;
     } else {
-      res.status(404).json({ success: false, message: 'Access denied' });
+      res.status(403).json({ success: false, message: 'Access denied' });
       return;
     }
   } catch (error) {

@@ -76,6 +76,17 @@ jest.mock('@src/prismaClient', () => ({
     delete: jest.fn(),
     deleteMany: jest.fn(),
   },
+  invite: {
+    findUnique: jest.fn(),
+    findMany: jest.fn(),
+    findFirst: jest.fn(),
+    count: jest.fn(),
+    create: jest.fn(),
+    createMany: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+    deleteMany: jest.fn(),
+  },
 }));
 
 jest.mock('@src/modules/authModule', () => ({
