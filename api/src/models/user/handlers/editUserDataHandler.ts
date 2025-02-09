@@ -42,7 +42,7 @@ export const editUserDataHandler: RequestHandler = async (req, res): Promise<voi
       },
     });
 
-    if (user.id === userId || (loggedInUser && loggedInUser.profile && loggedInUser.profile.role.name === 'ADMIN')) {
+    if (user.id === userId || loggedInUser?.profile?.role.name === 'ADMIN') {
       if (email) {
         const existingUserWithEmail = await prisma.user.findUnique({ where: { email } });
         if (existingUserWithEmail && existingUserWithEmail.id !== user.id) {
