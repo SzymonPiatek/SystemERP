@@ -135,9 +135,6 @@
         <span>* Notatka?</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
         <span>Zrobione</span>
       </td>
     </tr>
@@ -152,11 +149,7 @@
         <span>* Zmiana hasła użytkownika</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
+        <span>Zrobione</span>
       </td>
     </tr>
     <tr>
@@ -169,9 +162,6 @@
         <span>* Tworzenie firmy</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
         <span>Zrobione</span>
       </td>
     </tr>   
@@ -183,7 +173,6 @@
         <span>* Logowanie użytkownika</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
         <span>Zrobione</span>
       </td>
     </tr>  
@@ -194,13 +183,11 @@
         <span>* Tworzenie wydarzenia</span><br>
         <span>* Pobranie wszystkich wydarzeń</span><br>
         <span>* Pobranie wydarzenia o danym id</span><br>
-        <span>* Edycja wydarzenia</span>
+        <span>* Edycja wydarzenia</span><br>
+        <span>* Usuwanie wydarzenia</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>
     <tr>
@@ -210,13 +197,11 @@
         <span>* Tworzenie notatki</span><br>
         <span>* Pobranie wszystkich notatek</span><br>
         <span>* Pobranie notatki o danym id</span><br>
-        <span>* Edycja notatki</span>
+        <span>* Edycja notatki</span><br>
+        <span>* Usuwanie notatki</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>  
   </tbody>
@@ -246,16 +231,11 @@
       <td>2</td>
       <td>Przygotowanie kolorystyki strony</td>
       <td>
-        <span>* Domyślny</span><br>
         <span>* Tryb ciemny?</span><br>
-        <span>* Tryb jasny?</span><br>
-        <span>* Tryb kontrastowy?</span>
+        <span>* Tryb jasny?</span>
       </td>
       <td>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>
     <tr>
@@ -264,18 +244,13 @@
       <td>
         <span>* Strona główna</span><br>
         <span>* Strona logowania</span><br>
-        <span>* Strona dodawania użytkownika</span><br>
-        <span>* Strona profilu użytkownika</span><br>
-        <span>* Pasek nawigacji</span><br>
+        <span>* Profil użytkownika</span><br>
+        <span>* Lista użytkowników</span><br>
+        <span>* Lista notatek</span><br>
         <span>* Kalendarz/harmonogram</span>
       </td>
       <td>
-        <span>W trakcie</span><br>
-        <span>Zrobione</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>
     <tr>
@@ -287,9 +262,7 @@
         <span>* Spotkanie/Wydarzenie</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>
   </tbody>
@@ -336,12 +309,6 @@
   <tbody>
     <tr>
       <td>1</td>
-      <td>Analiza, stworzenie diagramów bazy danych</td>
-      <td>Vertabelo?, PyCharm automatyczne generowanie?</td>
-      <td>W trakcie</td>
-    </tr>
-    <tr>
-      <td>2</td>
       <td>Stworzenie dokumentacji API</td>
       <td>
         <span>* Użytkownicy</span><br>
@@ -351,11 +318,7 @@
         <span>* Notatki</span>
       </td>
       <td>
-        <span>W trakcie</span><br>
-        <span>Zrobione</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>
   </tbody>
