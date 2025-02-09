@@ -53,7 +53,7 @@ export const getAllUsersHandler: RequestHandler = async (req, res): Promise<void
       return;
     }
 
-    if (currentUser && currentUser.profile && currentUser.profile.role) {
+    if (currentUser?.profile?.role) {
       if (currentUser.profile.role.name !== 'ADMIN') {
         const userCompanyId = currentUser.companyId;
 

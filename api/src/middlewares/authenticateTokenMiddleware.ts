@@ -17,6 +17,12 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
 
   try {
     const decoded = verifyToken(token, ACCESS_TOKEN_SECRET);
+
+    if (!decoded || !decoded.id) {
+      res.status(401).json({ message: 'Invalid token structure' });
+      return;
+    }
+
     req.userId = decoded.id;
     next();
   } catch (err) {
