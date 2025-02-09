@@ -124,6 +124,7 @@ jest.mock('@src/utils/error', () => ({
 jest.mock('@src/models/email/services/transporter', () => ({
   sendEmail: jest.fn(),
   sendEmailWithTemplate: jest.fn(),
+  compileTemplate: jest.fn(),
 }));
 
 export const mockedRequest = ({
