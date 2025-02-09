@@ -105,6 +105,16 @@ export type NoteResponse = {
   message: string;
   note: Note;
 };
+export type UserResponse = {
+  success: boolean;
+  message: string;
+};
+
+export type EventResponse = {
+  success: boolean;
+  message: string;
+  events: Event[];
+};
 
 export type TableData<T> = {
   data: T[];
@@ -114,6 +124,7 @@ export type TableData<T> = {
   next: number;
   total: number;
   totalPages: number;
+  message?: string;
 };
 
 export type LoginDataProps = {

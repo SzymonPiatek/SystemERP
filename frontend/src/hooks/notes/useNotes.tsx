@@ -27,27 +27,29 @@ export const useNotes = (params: QueryParamsProps) => {
 export const useAddNote = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<NoteResponse, AxiosError, { newNote: NotePayload }>({
+  return useMutation<NoteResponse, AxiosError<{ message?: string }>, { newNote: NotePayload }>({
     mutationKey: ['allNotes'],
     mutationFn: async ({ newNote }) => {
       try {
-        return await addNote(newNote);
+        const response = await addNote(newNote);
+        return response;
       } catch (error) {
         throw error;
       }
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
       toaster.create({
         title: 'Success',
-        description: 'Note successfully added.',
+        description: response.message || 'Note successfully added.',
         type: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
     },
     onError: (error) => {
+      const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
       toaster.create({
         title: 'Error',
-        description: `An error has occurred. ${error}`,
+        description: errorMessage,
         type: 'error',
       });
     },
@@ -57,21 +59,29 @@ export const useAddNote = () => {
 export const useDeleteNote = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<{ success: boolean; message: string }, AxiosError, { noteId: number }>({
+  return useMutation<
+    { success: boolean; message: string },
+    AxiosError<{ message?: string }>,
+    { noteId: number }
+  >({
     mutationKey: ['allNotes'],
-    mutationFn: ({ noteId }) => deleteNote(noteId),
-    onSuccess: () => {
+    mutationFn: async ({ noteId }) => {
+      const response = deleteNote(noteId);
+      return response;
+    },
+    onSuccess: (response) => {
       toaster.create({
         title: 'Success',
-        description: 'Note successfully deleted.',
+        description: response.message || 'Note successfully deleted.',
         type: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
     },
     onError: (error) => {
+      const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
       toaster.create({
         title: 'Error',
-        description: `An error has occurred. ${error}`,
+        description: errorMessage,
         type: 'error',
       });
     },
@@ -83,29 +93,31 @@ export const useEditNote = () => {
 
   return useMutation<
     NoteResponse,
-    AxiosError,
+    AxiosError<{ message?: string }>,
     { updatedNote: Omit<NotePayload, 'ownerId'>; id: number }
   >({
     mutationKey: ['allNotes'],
     mutationFn: async ({ updatedNote, id }) => {
       try {
-        return await editNote(id, updatedNote);
+        const response = await editNote(id, updatedNote);
+        return response;
       } catch (error) {
         throw error;
       }
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
       toaster.create({
         title: 'Success',
-        description: 'Note successfully updated.',
+        description: response.message || 'Note successfully updated.',
         type: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
     },
     onError: (error) => {
+      const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
       toaster.create({
         title: 'Error',
-        description: `An error has occurred. ${error}`,
+        description: errorMessage,
         type: 'error',
       });
     },

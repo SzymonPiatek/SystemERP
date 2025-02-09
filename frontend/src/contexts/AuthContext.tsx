@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from 'react';
 import { User } from '../utils/types';
 import { logout as apiLogout } from '../actions/authActions.ts';
-import toast from 'react-hot-toast';
+import { toaster } from '../components/ui/toaster.tsx';
 
 type AuthContextProps = {
   user: User | null;
@@ -45,7 +45,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     try {
       await apiLogout();
-      toast.success('Successfully logged out!');
+      toaster.create({
+        title: 'Success',
+        description: 'Successfully logged out!',
+        type: 'success',
+      });
     } catch (err) {
       console.error('Błąd podczas wylogowywania:', err);
     }

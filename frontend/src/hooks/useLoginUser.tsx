@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { LoginDataProps, LoginResponse } from '../utils/types';
-import toast from 'react-hot-toast';
 import { AuthContext } from '../contexts/AuthContext';
 import { useContext } from 'react';
+import { toaster } from '../components/ui/toaster.tsx';
 
 export const useLoginUser = () => {
   const { setUser } = useContext(AuthContext);
@@ -33,10 +33,18 @@ export const useLoginUser = () => {
     },
     onSuccess: (data: LoginResponse) => {
       setUser(data.user);
-      toast.success(data.message);
+      toaster.create({
+        title: 'Success',
+        description: `${data.message}`,
+        type: 'success',
+      });
     },
     onError: (error: any) => {
-      toast.error(error.message);
+      toaster.create({
+        title: 'Error',
+        description: `${error.message}`,
+        type: 'error',
+      });
     },
   });
 };

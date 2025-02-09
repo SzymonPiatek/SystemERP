@@ -7,7 +7,7 @@ import {
   AddEventPayload,
   EditEventPayload,
 } from '../../actions/eventActions';
-import type { Event } from '../../utils/types.ts';
+import type { Event, EventResponse } from '../../utils/types.ts';
 import { AxiosError } from 'axios';
 import { toaster } from '../../components/ui/toaster';
 
@@ -27,14 +27,15 @@ export const useEvents = () => {
 export const useAddEvent = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<void, AxiosError, { data: AddEventPayload }>({
+  return useMutation<EventResponse, AxiosError, { data: AddEventPayload }>({
     mutationFn: async ({ data }) => {
-      await addEvent(data);
+      const response = await addEvent(data);
+      return response;
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
       toaster.create({
         title: 'Success',
-        description: 'Event successfully added.',
+        description: response.message || 'Event successfully added.',
         type: 'success',
       });
 
@@ -53,18 +54,16 @@ export const useAddEvent = () => {
 export const useDeleteEvent = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<void, AxiosError, { eventId: number }>({
+  return useMutation<EventResponse, AxiosError, { eventId: number }>({
     mutationKey: ['allEvents'],
     mutationFn: async ({ eventId }) => {
       const response = await deleteEvent(eventId);
-      if (!response.success) {
-        throw new Error(response.message);
-      }
+      return response;
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
       toaster.create({
         title: 'Success',
-        description: 'Event successfully deleted.',
+        description: response.message || 'Event successfully deleted.',
         type: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['allEvents'] });
@@ -82,14 +81,15 @@ export const useDeleteEvent = () => {
 export const useEditEvent = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<void, AxiosError, { updatedEvent: EditEventPayload; id: number }>({
+  return useMutation<EventResponse, AxiosError, { updatedEvent: EditEventPayload; id: number }>({
     mutationFn: async ({ updatedEvent, id }) => {
-      await editEvent(id, updatedEvent);
+      const response = await editEvent(id, updatedEvent);
+      return response;
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
       toaster.create({
         title: 'Success',
-        description: 'Event successfully updated.',
+        description: response.message || 'Event successfully updated.',
         type: 'success',
       });
 
