@@ -1,6 +1,6 @@
 /**
  * @swagger
- * /api/v1/email:
+ * /email:
  *   post:
  *     summary: Send an email
  *     tags: [Email]
