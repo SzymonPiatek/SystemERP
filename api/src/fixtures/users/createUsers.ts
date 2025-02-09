@@ -1,5 +1,6 @@
 import prisma from '../../prismaClient';
 import { createUsersData } from './createUsersData';
+import { createCompanies } from '@src/fixtures/companies/createCompanies';
 
 type UserDataProps = {
   id: number;
@@ -8,7 +9,7 @@ type UserDataProps = {
   firstName: string;
   lastName: string;
   isActive: boolean;
-  companyId: number | null;
+  companyName: string | null; // Change companyId -> companyName for mapping
   profile: {
     create: {
       roleId: number;
@@ -16,7 +17,7 @@ type UserDataProps = {
   };
 };
 
-const createUser = async (userData: UserDataProps) => {
+const createUser = async (userData: UserDataProps, companyMap: Record<string, number>) => {
   try {
     await prisma.user.upsert({
       where: {
@@ -28,7 +29,7 @@ const createUser = async (userData: UserDataProps) => {
         firstName: userData.firstName,
         lastName: userData.lastName,
         isActive: userData.isActive,
-        companyId: userData.companyId,
+        companyId: userData.companyName ? companyMap[userData.companyName] : null,
         profile: {
           update: {
             roleId: userData.profile.create.roleId,
@@ -41,7 +42,7 @@ const createUser = async (userData: UserDataProps) => {
         firstName: userData.firstName,
         lastName: userData.lastName,
         isActive: userData.isActive,
-        companyId: userData.companyId,
+        companyId: userData.companyName ? companyMap[userData.companyName] : null,
         profile: {
           create: {
             roleId: userData.profile.create.roleId,
@@ -56,9 +57,10 @@ const createUser = async (userData: UserDataProps) => {
 };
 
 export const createUsers = async () => {
+  const companyMap = await createCompanies();
   const users = await createUsersData();
 
   for (const user of users) {
-    await createUser(user);
+    await createUser(user, companyMap);
   }
 };
