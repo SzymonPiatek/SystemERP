@@ -9,7 +9,7 @@ export const changeUserIsActiveHandler: RequestHandler = async (req, res): Promi
     const userId = Number(req.userId);
 
     if (id === userId) {
-      res.status(409).json({ success: false, message: 'Error, the same user' });
+      res.status(409).json({ success: false, message: 'You cannot change your own status' });
       return;
     }
 

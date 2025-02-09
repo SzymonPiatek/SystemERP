@@ -93,6 +93,6 @@ describe('Change user isActive handler', () => {
 
     expect(response.status).toBe(409);
     expect(response.body.success).toBe(false);
-    expect(response.body.message).toBe('Error, the same user');
+    expect(response.body.message).toBe('You cannot change your own status');
   });
 });
