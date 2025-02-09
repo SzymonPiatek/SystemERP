@@ -107,4 +107,5 @@ export const testInvite = {
   lastName: 'User',
   email: 'test@test.com',
   roleId: 1,
+  companyId: undefined,
 };

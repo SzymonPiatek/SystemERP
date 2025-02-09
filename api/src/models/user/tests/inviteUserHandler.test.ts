@@ -191,8 +191,6 @@ describe('Invite User', () => {
       .set('Authorization', `Bearer mockToken`)
       .send({ ...testInvite, id: undefined });
 
-    console.log(response.body);
-
     expect(response.status).toBe(403);
     expect(response.body.success).toBe(false);
     expect(response.body.message).toBe('Access denied');
