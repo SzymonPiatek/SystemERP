@@ -13,11 +13,12 @@
   - [3.2 Frontend](#etap-ii-frontend)
   - [3.3 DevOps](#etap-ii-devops)
   - [3.4 Documentation](#etap-ii-documentation)
-- [4. Technologie](#technologie)
-  - [4.1 Backend](#technologie-backend)
-  - [4.2 Database](#technologie-database)
-  - [4.3 Frontend](#technologie-frontend)
-  - [4.4 DevOps](#technologie-devops)
+- [4. Etap III](#etap-iii)
+- [5. Technologie](#technologie)
+  - [5.1 Backend](#technologie-backend)
+  - [5.2 Database](#technologie-database)
+  - [5.3 Frontend](#technologie-frontend)
+  - [5.4 DevOps](#technologie-devops)
 
 ---
 
@@ -135,9 +136,6 @@
         <span>* Notatka?</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
         <span>Zrobione</span>
       </td>
     </tr>
@@ -152,11 +150,7 @@
         <span>* Zmiana hasła użytkownika</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
+        <span>Zrobione</span>
       </td>
     </tr>
     <tr>
@@ -169,9 +163,6 @@
         <span>* Tworzenie firmy</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
         <span>Zrobione</span>
       </td>
     </tr>   
@@ -183,7 +174,6 @@
         <span>* Logowanie użytkownika</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
         <span>Zrobione</span>
       </td>
     </tr>  
@@ -194,13 +184,11 @@
         <span>* Tworzenie wydarzenia</span><br>
         <span>* Pobranie wszystkich wydarzeń</span><br>
         <span>* Pobranie wydarzenia o danym id</span><br>
-        <span>* Edycja wydarzenia</span>
+        <span>* Edycja wydarzenia</span><br>
+        <span>* Usuwanie wydarzenia</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>
     <tr>
@@ -210,13 +198,11 @@
         <span>* Tworzenie notatki</span><br>
         <span>* Pobranie wszystkich notatek</span><br>
         <span>* Pobranie notatki o danym id</span><br>
-        <span>* Edycja notatki</span>
+        <span>* Edycja notatki</span><br>
+        <span>* Usuwanie notatki</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>Zrobione</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>  
   </tbody>
@@ -246,16 +232,11 @@
       <td>2</td>
       <td>Przygotowanie kolorystyki strony</td>
       <td>
-        <span>* Domyślny</span><br>
         <span>* Tryb ciemny?</span><br>
-        <span>* Tryb jasny?</span><br>
-        <span>* Tryb kontrastowy?</span>
+        <span>* Tryb jasny?</span>
       </td>
       <td>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>
     <tr>
@@ -264,18 +245,13 @@
       <td>
         <span>* Strona główna</span><br>
         <span>* Strona logowania</span><br>
-        <span>* Strona dodawania użytkownika</span><br>
-        <span>* Strona profilu użytkownika</span><br>
-        <span>* Pasek nawigacji</span><br>
+        <span>* Profil użytkownika</span><br>
+        <span>* Lista użytkowników</span><br>
+        <span>* Lista notatek</span><br>
         <span>* Kalendarz/harmonogram</span>
       </td>
       <td>
-        <span>W trakcie</span><br>
-        <span>Zrobione</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>
     <tr>
@@ -287,9 +263,7 @@
         <span>* Spotkanie/Wydarzenie</span>
       </td>
       <td>
-        <span>Zrobione</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
     </tr>
   </tbody>
@@ -336,12 +310,6 @@
   <tbody>
     <tr>
       <td>1</td>
-      <td>Analiza, stworzenie diagramów bazy danych</td>
-      <td>Vertabelo?, PyCharm automatyczne generowanie?</td>
-      <td>W trakcie</td>
-    </tr>
-    <tr>
-      <td>2</td>
       <td>Stworzenie dokumentacji API</td>
       <td>
         <span>* Użytkownicy</span><br>
@@ -351,12 +319,89 @@
         <span>* Notatki</span>
       </td>
       <td>
-        <span>W trakcie</span><br>
-        <span>Zrobione</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span><br>
-        <span>W trakcie</span>
+        <span>Zrobione</span>
       </td>
+    </tr>
+  </tbody>
+</table>
+
+-----
+
+## Etap III
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 5%;">Lp</th>
+      <th style="width: 45%;">Zadanie</th>
+      <th style="width: 35%;">Uwagi</th>
+      <th style="width: 15%;">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Dodanie obsługi plików</td>
+      <td>Zapis, odczyt</td>
+      <td>W trakcie</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Obsługa avatarów</td>
+      <td></td>
+      <td>W trakcie</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Inwentaryzacja</td>
+      <td>
+        <span>* Model przedmiotu</span><br>
+        <span>* Model miejsca</span><br>
+        <span>* Model rezerwacji</span>
+      </td>
+      <td>W trakcie</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Zapraszanie użytkowników przez firmę</td>
+      <td></td>
+      <td>W trakcie</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Polecenia od pracodawcy</td>
+      <td></td>
+      <td>W trakcie</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Mailing</td>
+      <td>
+        <span>* Mailing z użyciem tekstu</span><br>
+        <span>* Mailing z użyciem template'ów</span>
+      </td>
+      <td>Zrobione</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Resetowanie zapomnianego hasła</td>
+      <td>
+        <span>* Backend</span><br>
+        <span>* Frontend</span>
+      </td>
+      <td>W trakcie</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Fix refresh token</td>
+      <td></td>
+      <td>W trakcie</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Dodanie zaległych testów (Etap II)</td>
+      <td></td>
+      <td>Zrobione</td>
     </tr>
   </tbody>
 </table>
