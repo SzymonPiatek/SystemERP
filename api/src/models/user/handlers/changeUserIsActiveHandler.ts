@@ -6,6 +6,12 @@ import { excludePassword } from '../services/returnSafeUserData';
 export const changeUserIsActiveHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
     const id = Number(req.params.id);
+    const userId = Number(req.userId);
+
+    if (id === userId) {
+      res.status(409).json({ success: false, message: 'You cannot change your own status' });
+      return;
+    }
 
     const user = await prisma.user.findUnique({ where: { id: id } });
     if (!user) {
