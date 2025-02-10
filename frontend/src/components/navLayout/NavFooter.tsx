@@ -4,7 +4,7 @@ const NavFooter = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <Flex color="black" justify="center" direction="column" alignItems="center">
+    <Flex color="black" justify="center" direction="column" alignItems="center" pb={2}>
       <VStack justify="center" align="center">
         <Text fontSize="xs" color="gray.600" textAlign="center">
           &copy; {currentYear} NovaERP

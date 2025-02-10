@@ -7,9 +7,9 @@ import type {
   TableData,
   NotePayload,
 } from '../../utils/types.ts';
-import { getNotes, addNote, editNote, deleteNote } from '../../actions/noteActions.ts';
+import { getNotes, addNote, editNote, deleteNote } from '../../actions/noteActions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toaster } from '../../components/ui/toaster.tsx';
+import { toaster } from '../../components/ui/toaster';
 
 export const useNotes = (params: QueryParamsProps) => {
   return useQuery<TableData<Note>, AxiosError>({
