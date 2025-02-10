@@ -67,6 +67,7 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
     events?.map((event: any) => ({
       id: event.id,
       title: event.title,
+      description: event.description,
       allDay: event.isAllDay,
       start: new Date(event.startDate),
       end: new Date(event.endDate),
@@ -93,6 +94,7 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
 
     const payload = {
       title,
+      description,
       startDate: startDate.toISOString(),
       endDate: endDate.toISOString(),
     };

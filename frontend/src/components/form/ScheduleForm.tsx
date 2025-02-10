@@ -1,5 +1,5 @@
-import { Button, Card, IconButton, Input, Text } from '@chakra-ui/react';
-import { FC, useState, useContext } from 'react';
+import { Button, Card, IconButton, Input, Text, Textarea } from '@chakra-ui/react';
+import { FC, useState, useContext, useEffect } from 'react';
 import {
   DialogRoot,
   DialogTrigger,
@@ -24,6 +24,8 @@ import { Field } from '../ui/field';
 export const ScheduleForm: FC<{}> = () => {
   const [open, setOpen] = useState(false);
   const [updatedTitle, setUpdatedTitle] = useState('');
+  const [description, setDescription] = useState('');
+
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
   const { user } = useContext(AuthContext);
@@ -54,6 +56,7 @@ export const ScheduleForm: FC<{}> = () => {
 
     const payload = {
       title: updatedTitle,
+      description: description,
       startDate: startDate.toISOString(),
       endDate: endDate.toISOString(),
       ownerId: user.id,
@@ -62,6 +65,15 @@ export const ScheduleForm: FC<{}> = () => {
     addEvent({ data: payload });
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (!open) {
+      setUpdatedTitle('');
+      setDescription('');
+      setStartDate(new Date());
+      setEndDate(new Date());
+    }
+  }, [open]);
 
   const isButtonDisabled = !updatedTitle || !startDate || !endDate;
 
@@ -88,6 +100,12 @@ export const ScheduleForm: FC<{}> = () => {
                   placeholder="Enter title"
                 />
               </Field>
+              <Text fontWeight="bold">Description:</Text>
+              <Textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Event Description"
+              />
               <Text fontSize="sm" fontWeight="bold" mb={2} mt={4}>
                 Start Date
               </Text>
