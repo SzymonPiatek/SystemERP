@@ -26,12 +26,7 @@ export const LoginPage: FC = () => {
       justifyContent="center"
     >
       {/* Logo */}
-      <GridItem
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        mx={{ base: 20, lg: 'none' }}
-      >
+      <GridItem justifyContent="center" alignItems="center" display={{ base: 'none', lg: 'flex' }}>
         <Logo />
       </GridItem>
 
