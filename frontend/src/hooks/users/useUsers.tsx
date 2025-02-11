@@ -1,9 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import type { QueryParamsProps, TableData, User, UserResponse } from '../../utils/types.ts';
-import { getUsers, addUser, editUser, deleteUser } from '../../actions/usersActions.ts';
+import {
+  EditUserPayload,
+  QueryParamsProps,
+  TableData,
+  ToastForErrorHookErrorType,
+  User,
+  UserResponse,
+} from '../../utils/types';
+import { getUsers, editUser, changeUserActivity } from '../../actions/usersActions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toaster } from '../../components/ui/toaster.tsx';
+import { toastForErrorHook, toastForSuccessHook } from '../../utils/hooks';
 
 export const useUsers = (params: QueryParamsProps) => {
   return useQuery<TableData<User>, AxiosError>({
@@ -20,62 +27,22 @@ export const useUsers = (params: QueryParamsProps) => {
     },
   });
 };
-export const useAddUser = () => {
+
+export const useChangeUserActivity = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<
-    UserResponse,
-    AxiosError<{ message?: string }>,
-    { newUser: Omit<User, 'id' | 'isActive' | 'companyId'> }
-  >({
-    mutationKey: ['allUsers'],
-    mutationFn: async ({ newUser }) => {
-      const response = await addUser(newUser);
-      return response;
-    },
-    onSuccess: (response) => {
-      toaster.create({
-        title: 'Success',
-        description: response.message || 'User successfully added.',
-        type: 'success',
-      });
-      queryClient.invalidateQueries({ queryKey: ['allUsers'] });
-    },
-    onError: (error) => {
-      const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
-      toaster.create({
-        title: 'Error',
-        description: errorMessage,
-        type: 'error',
-      });
-    },
-  });
-};
-
-export const useDeleteUser = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation<UserResponse, AxiosError<{ message?: string }>, { userId: number }>({
+  return useMutation<UserResponse, ToastForErrorHookErrorType, { userId: number }>({
     mutationKey: ['allUsers'],
     mutationFn: async ({ userId }) => {
-      const response = await deleteUser(userId);
+      const response = await changeUserActivity(userId);
       return response;
     },
     onSuccess: (response) => {
-      toaster.create({
-        title: 'Success',
-        description: response.message || 'User activated/deactivated successfully.',
-        type: 'success',
-      });
+      toastForSuccessHook({ response });
       queryClient.invalidateQueries({ queryKey: ['allUsers'] });
     },
     onError: (error) => {
-      const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
-      toaster.create({
-        title: 'Error',
-        description: errorMessage,
-        type: 'error',
-      });
+      toastForErrorHook({ error });
     },
   });
 };
@@ -84,8 +51,8 @@ export const useEditUser = () => {
 
   return useMutation<
     UserResponse,
-    AxiosError<{ message?: string }>,
-    { updatedUser: Omit<User, 'id' | 'isActive' | 'companyId'>; id: number }
+    ToastForErrorHookErrorType,
+    { updatedUser: EditUserPayload; id: number }
   >({
     mutationKey: ['allUsers'],
     mutationFn: async ({ updatedUser, id }) => {
@@ -93,20 +60,11 @@ export const useEditUser = () => {
       return response;
     },
     onSuccess: (response) => {
-      toaster.create({
-        title: 'Success',
-        description: response.message || 'User successfully updated.',
-        type: 'success',
-      });
+      toastForSuccessHook({ response });
       queryClient.invalidateQueries({ queryKey: ['allUsers'] });
     },
     onError: (error) => {
-      const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
-      toaster.create({
-        title: 'Error',
-        description: errorMessage,
-        type: 'error',
-      });
+      toastForErrorHook({ error });
     },
   });
 };

@@ -2,16 +2,17 @@ const API = {
   auth: {
     login: '/auth/login',
     logout: '/auth/logout',
-    register: '/auth/register',
   },
   users: {
     all: '/users',
     user: (id: number) => `/users/${id}`,
     changeActive: (id: number) => `/users/${id}/change_active`,
     changePassword: (id: number) => `/users/${id}/change_password`,
-    changeForgottenPassword: '/users/change_forgotten_password/:token',
     setProfilePicture: (id: number) => `/users/${id}/profile_pic`,
+    changeForgottenPassword: '/users/change_forgotten_password',
     forgotPassword: '/user/forgot_password',
+    invite: '/users/invite',
+    acceptInvite: '/user/accept_invite',
   },
   companies: {
     all: '/companies',

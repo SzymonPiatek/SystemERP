@@ -3,7 +3,7 @@ import { returnError } from '@src/utils/error';
 import Joi from 'joi';
 import prisma from '@src/prismaClient';
 import { tokenGenerator } from '@src/models/auth/services/authService';
-import { sendEmail, sendEmailWithTemplate } from '@src/models/email/services/transporter';
+import { sendEmailWithTemplate } from '@src/models/email/services/transporter';
 
 const resetSchema = Joi.object({
   email: Joi.string().email().required(),

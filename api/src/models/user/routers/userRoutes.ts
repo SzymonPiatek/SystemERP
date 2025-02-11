@@ -13,6 +13,8 @@ import { setProfilePictureHandler } from '@src/models/user/handlers/setProfilePi
 import upload from '@src/middlewares/uploadMiddleware';
 import { sendResetPasswordHandler } from '@src/models/user/handlers/sendResetPasswordHandler';
 import { changeForgottenPasswordHandler } from '@src/models/user/handlers/changeForgottenPasswordHandler';
+import { inviteUserHandler } from '@src/models/user/handlers/inviteUserHandler';
+import { acceptInviteHandler } from '@src/models/user/handlers/acceptInviteHandler';
 
 const router = Router();
 
@@ -55,5 +57,18 @@ router.post(
 
 // SEND RESET PASSWORD
 router.post('/forgot_password', authLimiter, checkEmptyBody, sendResetPasswordHandler);
+
+// INVITE USER
+router.post(
+  '/invite',
+  authLimiter,
+  authenticateToken,
+  authorizeRole(['ADMIN', 'OWNER', 'ENTITY_ADMIN']),
+  checkEmptyBody,
+  inviteUserHandler,
+);
+
+// ACCEPT INVITE
+router.post('/accept_invite', authLimiter, checkEmptyBody, acceptInviteHandler);
 
 export default router;

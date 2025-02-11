@@ -3,7 +3,7 @@
  * /email:
  *   post:
  *     summary: Send an email
- *     tags: [Email]
+ *     tags: [Emails]
  *     description: Sends an email with the specified recipient, subject, and content.
  *     requestBody:
  *       required: true
