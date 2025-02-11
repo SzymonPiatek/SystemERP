@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Flex, CheckboxGroup, Heading, SimpleGrid } from '@chakra-ui/react';
-import { QueryParamsProps } from '../../utils/types.ts';
+import { Heading, SimpleGrid } from '@chakra-ui/react';
 import { useSearchParams } from 'react-router-dom';
 import { useUsers } from '../../hooks/users/useUsers.tsx';
 import { CheckboxCard } from '../ui/checkbox-card.tsx';
+import { QueryParamsProps } from '../../utils/types.ts';
 
 export const SelectUserList: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -12,8 +12,9 @@ export const SelectUserList: React.FC = () => {
     limit: 1000,
   });
 
-  const { data, isLoading, isError } = useUsers(queryParams);
+  const { data } = useUsers(queryParams);
   const users = data?.data ?? [];
+  const [invitedUsers, setInvitedUsers] = useState<number[]>([]);
 
   useEffect(() => {
     const params: Record<string, string> = {};
@@ -27,33 +28,39 @@ export const SelectUserList: React.FC = () => {
     }
   }, [queryParams, searchParams, setSearchParams]);
 
+  const toggleInvitedUser = (userId: number) => {
+    setInvitedUsers((prevUsers) => {
+      if (prevUsers.includes(userId)) {
+        return prevUsers.filter((id) => id !== userId);
+      } else {
+        return [...prevUsers, userId];
+      }
+    });
+    console.log(invitedUsers);
+  };
+
   return (
     <>
+      <Heading>Invited people</Heading>
+
+      {invitedUsers.length === 0 ? (
+        <p>No users invited</p>
+      ) : (
+        invitedUsers.map((user) => <p key={user}>{user}</p>)
+      )}
       <Heading>Invite to event: </Heading>
       <SimpleGrid columns={2} maxH="14rem" overflow="auto">
         {users.map((user) => (
-          <InviteUserCard
+          <CheckboxCard
             key={user.id}
-            id={user.id}
-            firstName={user.firstName}
-            lastName={user.lastName}
+            label={user.firstName}
+            description={user.lastName}
+            value={user.id}
+            onChange={() => toggleInvitedUser(user.id)}
+            isChecked={invitedUsers.includes(user.id)}
           />
         ))}
       </SimpleGrid>
     </>
   );
 };
-
-function InviteUserCard({
-  id,
-  firstName,
-  lastName,
-}: {
-  id: number;
-  firstName: string;
-  lastName: string;
-}) {
-  return <CheckboxCard key={id} label={firstName} description={lastName} />;
-}
-
-export default InviteUserCard;
