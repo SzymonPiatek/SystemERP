@@ -42,7 +42,7 @@ export const editUserDataHandler: RequestHandler = async (req, res): Promise<voi
       },
     });
 
-    if (user.id === userId || (loggedInUser && loggedInUser.profile && loggedInUser.profile.role.name === 'ADMIN')) {
+    if (user.id === userId || loggedInUser?.profile?.role.name === 'ADMIN') {
       if (email) {
         const existingUserWithEmail = await prisma.user.findUnique({ where: { email } });
         if (existingUserWithEmail && existingUserWithEmail.id !== user.id) {
@@ -66,7 +66,7 @@ export const editUserDataHandler: RequestHandler = async (req, res): Promise<voi
       res.status(200).json({ success: true, message: 'User updated successfully', user: safeData });
       return;
     } else {
-      res.status(404).json({ success: false, message: 'Access denied' });
+      res.status(403).json({ success: false, message: 'Access denied' });
       return;
     }
   } catch (error) {
