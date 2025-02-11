@@ -20,6 +20,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { MdClose } from 'react-icons/md';
 import { useAddEvent } from '../../hooks/events/useEvents';
 import { Field } from '../ui/field';
+import { SelectUserList } from '../list/SelectUserList.tsx';
 
 export const ScheduleForm: FC<{}> = () => {
   const [open, setOpen] = useState(false);
@@ -129,6 +130,7 @@ export const ScheduleForm: FC<{}> = () => {
                 placeholderText="Select an end date and time"
                 customInput={<Input />}
               />
+              <SelectUserList />
             </Card.Body>
           </Card.Root>
         </DialogBody>
