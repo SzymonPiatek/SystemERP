@@ -1,4 +1,5 @@
-import { hashPassword } from '../../modules/authModule';
+import { hashPassword } from '@src/modules/authModule';
+import { companiesData } from '@src/fixtures/companies/companiesData';
 
 export const createUsersData = async () => {
   const hashedPassword = await hashPassword('Testowe123!');
@@ -11,7 +12,7 @@ export const createUsersData = async () => {
       firstName: 'Testowy',
       lastName: 'Admin',
       isActive: true,
-      companyId: null,
+      companyName: null,
       profile: {
         create: {
           roleId: 1,
@@ -25,7 +26,7 @@ export const createUsersData = async () => {
       firstName: 'Entity',
       lastName: 'Admin',
       isActive: true,
-      companyId: null,
+      companyName: companiesData[0].name,
       profile: {
         create: {
           roleId: 2,
@@ -39,7 +40,7 @@ export const createUsersData = async () => {
       firstName: 'Testowy',
       lastName: 'Owner',
       isActive: true,
-      companyId: null,
+      companyName: companiesData[0].name,
       profile: {
         create: {
           roleId: 3,
@@ -53,7 +54,7 @@ export const createUsersData = async () => {
       firstName: 'Testowy',
       lastName: 'Manager',
       isActive: true,
-      companyId: null,
+      companyName: companiesData[0].name,
       profile: {
         create: {
           roleId: 4,
@@ -67,7 +68,7 @@ export const createUsersData = async () => {
       firstName: 'Testowy',
       lastName: 'Worker',
       isActive: true,
-      companyId: null,
+      companyName: companiesData[0].name,
       profile: {
         create: {
           roleId: 5,
@@ -81,7 +82,7 @@ export const createUsersData = async () => {
       firstName: 'Testowy',
       lastName: 'Worker2',
       isActive: true,
-      companyId: null,
+      companyName: companiesData[0].name,
       profile: {
         create: {
           roleId: 5,
@@ -95,7 +96,7 @@ export const createUsersData = async () => {
       firstName: 'Testowy',
       lastName: 'Worker3',
       isActive: true,
-      companyId: null,
+      companyName: companiesData[0].name,
       profile: {
         create: {
           roleId: 5,

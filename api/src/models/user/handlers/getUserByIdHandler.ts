@@ -2,7 +2,6 @@ import { RequestHandler } from 'express';
 import { returnError } from '@src/utils/error';
 import prisma from '@src/prismaClient';
 import { excludePassword } from '../services/returnSafeUserData';
-import fs from 'fs/promises';
 import { getFile } from '@src/models/file/services/getFile';
 
 export const getUserByIdHandler: RequestHandler = async (req, res): Promise<void> => {

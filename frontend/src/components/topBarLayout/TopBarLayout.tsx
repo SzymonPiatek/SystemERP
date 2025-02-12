@@ -17,6 +17,8 @@ export const TopBarLayout: FC = () => {
       bg={{ base: 'white', _dark: 'black' }}
       color={{ base: 'black', _dark: 'white' }}
       width="100%"
+      px={4}
+      py={2}
     >
       {/* LOGO */}
       <Box maxW={{ base: '80px', lg: '200px' }}>
@@ -24,7 +26,7 @@ export const TopBarLayout: FC = () => {
       </Box>
 
       {/* Login section */}
-      <Flex alignItems="center" gap="6" flex="1" justify="flex-end" pr={4}>
+      <Flex alignItems="center" gap="6" flex="1" justify="flex-end">
         <HStack gap="1">
           <ColorModeButton variant="outline" size="xs" />
           <IconButton size="xs" onClick={logout} variant="outline" aria-label="Logout">

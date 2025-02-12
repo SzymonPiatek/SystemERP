@@ -2,16 +2,17 @@ import prisma from '../../prismaClient';
 import { companiesData } from './companiesData';
 
 export const createCompanies = async () => {
-  const upsertPromises = companiesData.map((company) =>
-    prisma.company.upsert({
-      where: { name: company.name },
-      update: {
-        ...company,
-        id: undefined,
-      },
-      create: company,
-    }),
-  );
+  const companyMap: Record<string, number> = {};
 
-  await Promise.all(upsertPromises);
+  for (const company of companiesData) {
+    const createdCompany = await prisma.company.upsert({
+      where: { name: company.name },
+      update: { ...company },
+      create: company,
+    });
+
+    companyMap[company.name] = createdCompany.id;
+  }
+
+  return companyMap;
 };
