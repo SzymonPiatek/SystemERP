@@ -94,7 +94,7 @@ export const NoteForm: FC<NoteFormProps> = ({ title, description, id }) => {
         </DialogBody>
 
         <DialogFooter>
-          <DialogActionTrigger>
+          <DialogActionTrigger asChild>
             <Button variant="outline">Cancel</Button>
           </DialogActionTrigger>
 

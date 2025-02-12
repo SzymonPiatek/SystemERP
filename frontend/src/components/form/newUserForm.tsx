@@ -106,7 +106,7 @@ export const NewUserForm: FC<NewUserFormProps> = () => {
         </DialogBody>
 
         <DialogFooter>
-          <DialogActionTrigger>
+          <DialogActionTrigger asChild>
             <Button variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>

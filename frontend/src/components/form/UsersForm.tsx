@@ -109,7 +109,7 @@ export const UsersForm: FC<UserFormProps> = ({ user, onEdit }) => {
         </DialogBody>
 
         <DialogFooter>
-          <DialogActionTrigger>
+          <DialogActionTrigger asChild>
             <Button variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>

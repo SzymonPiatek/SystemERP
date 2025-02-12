@@ -70,6 +70,15 @@ export type Event = {
   start: Date;
   end: Date;
   ownerId: number;
+  invitations: EventInvitation[];
+};
+
+export type EventInvitation = {
+  id: number;
+  user: User;
+  event: Event;
+  userId: number;
+  eventId: number;
 };
 
 export type Note = {

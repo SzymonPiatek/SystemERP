@@ -14,6 +14,7 @@ export const SelectUserList: React.FC = () => {
 
   const { data } = useUsers(queryParams);
   const users = data?.data ?? [];
+
   const [invitedUsers, setInvitedUsers] = useState<number[]>([]);
 
   useEffect(() => {
@@ -57,7 +58,7 @@ export const SelectUserList: React.FC = () => {
             description={user.lastName}
             value={user.id}
             onChange={() => toggleInvitedUser(user.id)}
-            isChecked={invitedUsers.includes(user.id)}
+            ischecked={invitedUsers.includes(user.id)}
           />
         ))}
       </SimpleGrid>

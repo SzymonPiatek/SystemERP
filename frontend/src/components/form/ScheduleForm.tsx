@@ -1,4 +1,4 @@
-import { Button, Card, IconButton, Input, Text, Textarea } from '@chakra-ui/react';
+import { Box, Button, Card, IconButton, Input, SimpleGrid, Text, Textarea } from '@chakra-ui/react';
 import { FC, useState, useContext, useEffect } from 'react';
 import {
   DialogRoot,
@@ -80,11 +80,7 @@ export const ScheduleForm: FC<{}> = () => {
 
   return (
     <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger>
-        <Button variant="outline" m="2">
-          Add Event
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger>Add Event</DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
@@ -94,49 +90,53 @@ export const ScheduleForm: FC<{}> = () => {
         <DialogBody>
           <Card.Root>
             <Card.Body gap="2">
-              <Field label="Title" required>
-                <Input
-                  value={updatedTitle}
-                  onChange={(e) => setUpdatedTitle(e.target.value)}
-                  placeholder="Enter title"
-                />
-              </Field>
-              <Text fontWeight="bold">Description:</Text>
-              <Textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Event Description"
-              />
-              <Text fontSize="sm" fontWeight="bold" mb={2} mt={4}>
-                Start Date
-              </Text>
-              <DatePicker
-                selected={startDate}
-                onChange={handleStartDateChange}
-                showTimeSelect
-                dateFormat="Pp"
-                placeholderText="Select a start date and time"
-                customInput={<Input />}
-              />
+              <SimpleGrid columns={2}>
+                <Box>
+                  <Field label="Title" required>
+                    <Input
+                      value={updatedTitle}
+                      onChange={(e) => setUpdatedTitle(e.target.value)}
+                      placeholder="Enter title"
+                    />
+                  </Field>
+                  <Text fontWeight="bold">Description:</Text>
+                  <Textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Event Description"
+                  />
+                  <Text fontSize="sm" fontWeight="bold" mb={2} mt={4}>
+                    Start Date
+                  </Text>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={handleStartDateChange}
+                    showTimeSelect
+                    dateFormat="Pp"
+                    placeholderText="Select a start date and time"
+                    customInput={<Input />}
+                  />
 
-              <Text fontSize="sm" fontWeight="bold" mb={2} mt={4}>
-                End Date
-              </Text>
-              <DatePicker
-                selected={endDate}
-                onChange={handleEndDateChange}
-                showTimeSelect
-                dateFormat="Pp"
-                placeholderText="Select an end date and time"
-                customInput={<Input />}
-              />
-              <SelectUserList />
+                  <Text fontSize="sm" fontWeight="bold" mb={2} mt={4}>
+                    End Date
+                  </Text>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={handleEndDateChange}
+                    showTimeSelect
+                    dateFormat="Pp"
+                    placeholderText="Select an end date and time"
+                    customInput={<Input />}
+                  />
+                </Box>
+                <SelectUserList />
+              </SimpleGrid>
             </Card.Body>
           </Card.Root>
         </DialogBody>
 
         <DialogFooter>
-          <DialogActionTrigger>
+          <DialogActionTrigger asChild>
             <Button variant="outline">Cancel</Button>
           </DialogActionTrigger>
 
