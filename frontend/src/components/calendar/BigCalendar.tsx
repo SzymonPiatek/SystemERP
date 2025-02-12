@@ -15,6 +15,7 @@ import {
 import DatePicker from 'react-datepicker';
 import { MdClose } from 'react-icons/md';
 import { useDeleteEvent, useEditEvent, useEvents } from '../../hooks/events/useEvents';
+import { SelectUserList } from '../list/SelectUserList';
 
 const localizer = momentLocalizer(moment);
 
@@ -33,10 +34,14 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
   const [id, setId] = useState<number | null>(null);
+  const [invitedUsers, setInvitedUsers] = useState<number[]>([]);
 
   const { data: events, isLoading, isError, error } = useEvents();
   const { mutate: deleteEvent } = useDeleteEvent();
   const { mutate: editEvent } = useEditEvent();
+
+  const invites = events ? events.flatMap((event) => event.invitations) : [];
+  console.log(invites);
 
   useEffect(() => {
     if (!dialogState.open) {
@@ -46,6 +51,7 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
       setStartDate(new Date());
       setEndDate(new Date());
       setId(null);
+      setInvitedUsers([]);
     }
   }, [dialogState.open]);
 
@@ -64,14 +70,21 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
   }
 
   const formattedEvents =
-    events?.map((event: any) => ({
-      id: event.id,
-      title: event.title,
-      description: event.description,
-      allDay: event.isAllDay,
-      start: new Date(event.startDate),
-      end: new Date(event.endDate),
-    })) || [];
+    Array.from(
+      new Map(
+        events?.map((event: any) => [
+          event.id,
+          {
+            id: event.id,
+            title: event.title,
+            description: event.description,
+            allDay: event.isAllDay,
+            start: new Date(event.startDate),
+            end: new Date(event.endDate),
+          },
+        ]),
+      ).values(),
+    ) || [];
 
   const handleOnChangeView = (selectedView: View) => {
     setView(selectedView);
@@ -83,8 +96,13 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
     setDescription(event.description);
     setStartDate(event.start);
     setEndDate(event.end);
-    setDialogState({ open: true });
     setId(event.id);
+
+    const eventInvites = invites.filter((invite) => invite.eventId === event.id);
+    const userIds = eventInvites.map((invite) => invite.userId);
+    setInvitedUsers(userIds);
+
+    setDialogState({ open: true });
   };
 
   const handleSave = () => {
@@ -92,11 +110,14 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
       return;
     }
 
+    const invitations = [...invitedUsers];
+
     const payload = {
       title,
       description,
       startDate: startDate.toISOString(),
       endDate: endDate.toISOString(),
+      invited: invitations,
     };
 
     editEvent({ updatedEvent: payload, id });
@@ -167,6 +188,10 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
                   customInput={<Input />}
                 />
               </Stack>
+              <SelectUserList
+                onUserSelectionChange={setInvitedUsers}
+                selectedUsers={invitedUsers}
+              />
             </DialogBody>
             <DialogFooter>
               <Button variant="outline" onClick={handleSave}>

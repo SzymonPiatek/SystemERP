@@ -1,54 +1,39 @@
-import React, { useEffect, useState } from 'react';
 import { Box, Heading, SimpleGrid } from '@chakra-ui/react';
-import { useSearchParams } from 'react-router-dom';
 import { useUsers } from '../../hooks/users/useUsers.tsx';
 import { CheckboxCard } from '../ui/checkbox-card.tsx';
-import { QueryParamsProps } from '../../utils/types.ts';
 
-export const SelectUserList: React.FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [queryParams, setQueryParams] = useState<QueryParamsProps>({
-    search: searchParams.get('search') || '',
-    limit: 1000,
-  });
+interface SelectUserListProps {
+  onUserSelectionChange: (selectedUsers: number[]) => void;
+  selectedUsers: number[];
+}
 
-  const { data } = useUsers(queryParams);
-  const users = data?.data ?? [];
-
-  const [invitedUsers, setInvitedUsers] = useState<number[]>([]);
-
-  useEffect(() => {
-    const params: Record<string, string> = {};
-    for (const key in queryParams) {
-      if (queryParams[key]) {
-        params[key] = queryParams[key].toString();
-      }
-    }
-    if (JSON.stringify(params) !== JSON.stringify(Object.fromEntries(searchParams))) {
-      setSearchParams(params, { replace: true });
-    }
-  }, [queryParams, searchParams, setSearchParams]);
+export const SelectUserList: React.FC<SelectUserListProps> = ({
+  onUserSelectionChange,
+  selectedUsers,
+}) => {
+  const { data: userData } = useUsers({ limit: 1000 });
+  const users = userData?.data ?? [];
 
   const toggleInvitedUser = (userId: number) => {
-    setInvitedUsers((prevUsers) => {
-      if (prevUsers.includes(userId)) {
-        return prevUsers.filter((id) => id !== userId);
-      } else {
-        return [...prevUsers, userId];
-      }
-    });
-    console.log(invitedUsers);
+    const updatedUsers = selectedUsers.includes(userId)
+      ? selectedUsers.filter((id) => id !== userId)
+      : [...selectedUsers, userId];
+
+    onUserSelectionChange(updatedUsers);
   };
+
+  const invitedUserObjects = users.filter((user) => selectedUsers.includes(user.id));
 
   return (
     <Box>
       <Heading>Invited people</Heading>
-
-      {invitedUsers.length === 0 ? (
-        <p>No users invited</p>
-      ) : (
-        invitedUsers.map((user) => <p key={user}>{user}</p>)
-      )}
+      <p>
+        {invitedUserObjects.length === 0 ? (
+          <span>No users invited</span>
+        ) : (
+          invitedUserObjects.map((user) => <span key={user.id}>{user.firstName} </span>)
+        )}
+      </p>
       <Heading>Invite to event: </Heading>
       <SimpleGrid columns={2} maxH="14rem" overflow="auto">
         {users.map((user) => (
@@ -58,7 +43,7 @@ export const SelectUserList: React.FC = () => {
             description={user.lastName}
             value={user.id}
             onChange={() => toggleInvitedUser(user.id)}
-            ischecked={invitedUsers.includes(user.id)}
+            defaultChecked={selectedUsers.includes(user.id)}
           />
         ))}
       </SimpleGrid>
