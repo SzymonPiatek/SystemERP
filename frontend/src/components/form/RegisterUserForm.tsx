@@ -25,16 +25,19 @@ export const NewUserForm: FC<RegisterUserForm> = () => {
     lastName: string;
     email: string;
     password: string;
+    password: string;
   }>({
     firstName: '',
     lastName: '',
     email: '',
+    password: '',
     password: '',
   });
 
   const handleOpenChange = (e: { open: boolean }) => {
     setOpen(e.open);
   };
+  const { mutate: registerUser } = useRegisterUser();
   const { mutate: registerUser } = useRegisterUser();
 
   const handleInputChange =
@@ -47,16 +50,19 @@ export const NewUserForm: FC<RegisterUserForm> = () => {
 
   const handleSave = async () => {
     if (!newUser.firstName || !newUser.lastName || !newUser.email || !newUser.password) {
+    if (!newUser.firstName || !newUser.lastName || !newUser.email || !newUser.password) {
       console.error('Please fill in all fields');
       return;
     }
 
     try {
       await registerUser({ newUser });
+      await registerUser({ newUser });
       setNewUser({
         firstName: '',
         lastName: '',
         email: '',
+        password: '',
         password: '',
       });
       setOpen(false);
@@ -109,6 +115,7 @@ export const NewUserForm: FC<RegisterUserForm> = () => {
         </DialogBody>
 
         <DialogFooter>
+          <DialogActionTrigger asChild>
           <DialogActionTrigger asChild>
             <Button variant="outline" onClick={() => setOpen(false)}>
               Cancel

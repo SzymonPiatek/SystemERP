@@ -7,6 +7,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useChangeUserActivity, useEditUser, useUsers } from '../hooks/users/useUsers.tsx';
 import { Pagination } from '../components/pagination/Pagination.tsx';
 import { UsersForm } from '../components/form/UsersForm.tsx';
+import { NewUserForm } from '../components/form/newUserForm.tsx';
 
 export const Users: FC<{}> = () => {
   const [pageLimit, setPageLimit] = useState(5);
@@ -126,6 +127,7 @@ export const Users: FC<{}> = () => {
               handlePageChange={handlePageChange}
               totalItems={totalItems || 1}
               setPageLimitToParent={setPageLimit}
+              children={<NewUserForm />}
             />
           )}
         </Card.Body>
