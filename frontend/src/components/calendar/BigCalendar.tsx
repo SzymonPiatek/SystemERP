@@ -2,7 +2,16 @@ import { useState, FC, useEffect } from 'react';
 import { Calendar, momentLocalizer, View, Views } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { Box, Button, Text, Stack, Input, Textarea, IconButton } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Text,
+  Stack,
+  Input,
+  Textarea,
+  IconButton,
+  SimpleGrid,
+} from '@chakra-ui/react';
 import {
   DialogRoot,
   DialogContent,
@@ -41,7 +50,6 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
   const { mutate: editEvent } = useEditEvent();
 
   const invites = events ? events.flatMap((event) => event.invitations) : [];
-  console.log(invites);
 
   useEffect(() => {
     if (!dialogState.open) {
@@ -152,46 +160,52 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
       />
 
       {selectedEvent && (
-        <DialogRoot {...dialogState} onOpenChange={setDialogState}>
+        <DialogRoot {...dialogState} onOpenChange={setDialogState} size="xl">
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Edit Event</DialogTitle>
             </DialogHeader>
             <DialogBody>
-              <Stack>
-                <Text fontWeight="bold">Title:</Text>
-                <Input
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Event Title"
-                />
-                <Text fontWeight="bold">Description:</Text>
-                <Textarea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Event Description"
-                />
-                <Text fontWeight="bold">Start Date:</Text>
-                <DatePicker
-                  selected={startDate}
-                  onChange={(date: Date | null) => setStartDate(date ?? new Date())}
-                  showTimeSelect
-                  dateFormat="Pp"
-                  customInput={<Input />}
-                />
-                <Text fontWeight="bold">End Date:</Text>
-                <DatePicker
-                  selected={endDate}
-                  onChange={(date: Date | null) => setEndDate(date ?? new Date())}
-                  showTimeSelect
-                  dateFormat="Pp"
-                  customInput={<Input />}
-                />
-              </Stack>
-              <SelectUserList
-                onUserSelectionChange={setInvitedUsers}
-                selectedUsers={invitedUsers}
-              />
+              <SimpleGrid columns={2} gap={4}>
+                <Stack>
+                  <Text fontWeight="bold">Title:</Text>
+                  <Input
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Event Title"
+                  />
+                  <Text fontWeight="bold">Description:</Text>
+                  <Textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Event Description"
+                  />
+                  <Text fontWeight="bold">Start Date:</Text>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date: Date | null) => setStartDate(date ?? new Date())}
+                    showTimeSelect
+                    dateFormat="Pp"
+                    customInput={<Input />}
+                  />
+                  <Text fontWeight="bold">End Date:</Text>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date: Date | null) => setEndDate(date ?? new Date())}
+                    showTimeSelect
+                    dateFormat="Pp"
+                    customInput={<Input />}
+                  />
+                </Stack>
+
+                <Box>
+                  <Text fontWeight="bold">Invite Users:</Text>
+                  <SelectUserList
+                    onUserSelectionChange={setInvitedUsers}
+                    selectedUsers={invitedUsers}
+                  />
+                </Box>
+              </SimpleGrid>
             </DialogBody>
             <DialogFooter>
               <Button variant="outline" onClick={handleSave}>

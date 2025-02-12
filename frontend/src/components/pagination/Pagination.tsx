@@ -14,6 +14,7 @@ interface PaginationComponentProps {
   handlePageChange: (page: number) => void;
   setPageLimitToParent: (limit: number) => void;
   children?: ReactElement;
+  isVisible?: boolean;
 }
 
 export const Pagination: FC<PaginationComponentProps> = ({
@@ -23,6 +24,7 @@ export const Pagination: FC<PaginationComponentProps> = ({
   handlePageChange,
   setPageLimitToParent,
   children,
+  isVisible = true,
 }) => {
   const [pageLimit, setPageLimit] = useState(pageSize);
   const pageSizeOptions = [5, 10, 15];
@@ -34,13 +36,16 @@ export const Pagination: FC<PaginationComponentProps> = ({
 
   return (
     <Grid templateColumns="1fr 1fr 1fr" alignItems="center">
-      <HStack justify="flex-start">
-        {pageSizeOptions.map((size) => (
-          <Button key={size} variant="outline" onClick={() => handlePageLimitChange(size)}>
-            {size}
-          </Button>
-        ))}
-      </HStack>
+      {isVisible && (
+        <HStack justify="flex-start">
+          {pageSizeOptions.map((size) => (
+            <Button key={size} variant="outline" onClick={() => handlePageLimitChange(size)}>
+              {size}
+            </Button>
+          ))}
+        </HStack>
+      )}
+
       <Box display="flex" justifyContent="center">
         <PaginationRoot
           page={currentPage}
