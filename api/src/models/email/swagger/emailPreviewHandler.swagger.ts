@@ -3,7 +3,7 @@
  * /email/preview/{name}:
  *   get:
  *     summary: Preview an email template
- *     tags: [Email]
+ *     tags: [Emails]
  *     description: Retrieves the HTML preview of an email template with pre-filled test data.
  *     parameters:
  *       - in: path

@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from 'react';
 import { QueryParamsProps } from '../utils/types.ts';
 import { MdOutlineOfflineBolt } from 'react-icons/md';
 import { useSearchParams } from 'react-router-dom';
-import { useDeleteUser, useEditUser, useUsers } from '../hooks/users/useUsers.tsx';
+import { useChangeUserActivity, useEditUser, useUsers } from '../hooks/users/useUsers.tsx';
 import { Pagination } from '../components/pagination/Pagination.tsx';
 import { UsersForm } from '../components/form/UsersForm.tsx';
 import { NewUserForm } from '../components/form/newUserForm.tsx';
@@ -25,7 +25,7 @@ export const Users: FC<{}> = () => {
   const totalItems = data?.total;
 
   const { mutate: editUser } = useEditUser();
-  const { mutate: deleteUser } = useDeleteUser();
+  const { mutate: deleteUser } = useChangeUserActivity();
 
   useEffect(() => {
     setQueryParams((prev) => ({

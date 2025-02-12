@@ -35,7 +35,7 @@ export const editCompanyDataHandler: RequestHandler = async (req, res): Promise<
 
     if (currentUser && currentUser?.profile?.role.name !== 'ADMIN') {
       if (currentUser.companyId !== companyId) {
-        res.status(404).json({ success: false, message: 'Access denied' });
+        res.status(403).json({ success: false, message: 'Access denied' });
         return;
       }
     }

@@ -14,7 +14,8 @@ import {
 import 'react-datepicker/dist/react-datepicker.css';
 import { MdClose, MdAddCircleOutline } from 'react-icons/md';
 import { Field } from '../ui/field';
-import { useAddUser } from '../../hooks/users/useUsers';
+import { useEditUser, useRegisterUser } from '../../hooks/users/useUsers';
+import { registerUser } from '../../actions/usersActions';
 
 type NewUserFormProps = {};
 
@@ -24,16 +25,18 @@ export const NewUserForm: FC<NewUserFormProps> = () => {
     firstName: string;
     lastName: string;
     email: string;
+    password: string;
   }>({
     firstName: '',
     lastName: '',
     email: '',
+    password: '',
   });
 
   const handleOpenChange = (e: { open: boolean }) => {
     setOpen(e.open);
   };
-  const { mutate: editUser } = useAddUser();
+  const { mutate: registerUser } = useRegisterUser();
 
   const handleInputChange =
     (field: keyof typeof newUser) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,17 +47,18 @@ export const NewUserForm: FC<NewUserFormProps> = () => {
     };
 
   const handleSave = async () => {
-    if (!newUser.firstName || !newUser.lastName || !newUser.email) {
+    if (!newUser.firstName || !newUser.lastName || !newUser.email || !newUser.password) {
       console.error('Please fill in all fields');
       return;
     }
 
     try {
-      await editUser({ newUser });
+      await registerUser({ newUser });
       setNewUser({
         firstName: '',
         lastName: '',
         email: '',
+        password: '',
       });
       setOpen(false);
     } catch (error) {

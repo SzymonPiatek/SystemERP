@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import { returnError } from '@src/utils/error';
-import { testUser } from '@src/tests/data';
+import { testCompany, testUser } from '@src/tests/data';
+import { compileTemplate } from '@src/models/email/services/transporter';
 
 export const emailPreviewHandler: RequestHandler = async (req, res): Promise<void> => {
   try {
@@ -11,31 +12,33 @@ export const emailPreviewHandler: RequestHandler = async (req, res): Promise<voi
       return;
     }
 
-    const templates = ['sendResetPassword'];
+    const templates = ['sendResetPassword', 'inviteUser'];
 
     if (!templates.includes(name)) {
       res.status(404).json({ success: false, message: 'Template not found' });
       return;
     }
 
-    let data;
+    let data: Record<string, any> = {};
+
     if (name === 'sendResetPassword') {
       data = {
         subject: 'Password Reset Request',
         user: testUser,
-        resetLink: 'http://localhost/reset-password?token=123456',
+        resetLink: '/',
+      };
+    } else if (name === 'inviteUser') {
+      data = {
+        subject: 'You are invited to company!',
+        user: testUser,
+        company: testCompany,
+        inviteLink: '/',
       };
     }
 
-    res.render(name, data, (err, html) => {
-      if (err) {
-        res.status(500).json({ success: false, message: 'Error rendering email' });
-        return;
-      } else {
-        res.send(html);
-        return;
-      }
-    });
+    const html = await compileTemplate(name, data);
+
+    res.send(html);
   } catch (error) {
     returnError(res, error);
   }

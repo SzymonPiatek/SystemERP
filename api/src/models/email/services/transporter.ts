@@ -18,11 +18,18 @@ export const transporter = nodemailer.createTransport({
   debug: false,
 });
 
-const compileTemplate = async (templateName: string, context: Record<string, any>) => {
+export const compileTemplate = async (templateName: string, context: Record<string, any>) => {
+  const basePath = path.join(__dirname, '../templates', 'base.hbs');
+  const baseSource = await fs.readFile(basePath, 'utf-8');
+  const baseTemplate = Handlebars.compile(baseSource);
+
   const filePath = path.join(__dirname, '../templates', `${templateName}.hbs`);
   const source = await fs.readFile(filePath, 'utf-8');
-  const template = Handlebars.compile(source);
-  return template(context);
+  const contentTemplate = Handlebars.compile(source);
+
+  const bodyContent = contentTemplate(context);
+
+  return baseTemplate({ ...context, body: bodyContent });
 };
 
 export const sendEmail = async (to: string, subject: string, text: string) => {
