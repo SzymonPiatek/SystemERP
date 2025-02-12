@@ -79,7 +79,7 @@ export const ScheduleForm: FC<{}> = () => {
   const isButtonDisabled = !updatedTitle || !startDate || !endDate;
 
   return (
-    <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange}>
+    <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange} size="xl">
       <DialogTrigger>Add Event</DialogTrigger>
 
       <DialogContent>
@@ -90,7 +90,7 @@ export const ScheduleForm: FC<{}> = () => {
         <DialogBody>
           <Card.Root>
             <Card.Body gap="2">
-              <SimpleGrid columns={2}>
+              <SimpleGrid columns={2} gap="4">
                 <Box>
                   <Field label="Title" required>
                     <Input

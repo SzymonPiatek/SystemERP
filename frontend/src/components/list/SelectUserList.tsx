@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Heading, SimpleGrid } from '@chakra-ui/react';
+import { Box, Heading, SimpleGrid } from '@chakra-ui/react';
 import { useSearchParams } from 'react-router-dom';
 import { useUsers } from '../../hooks/users/useUsers.tsx';
 import { CheckboxCard } from '../ui/checkbox-card.tsx';
@@ -41,7 +41,7 @@ export const SelectUserList: React.FC = () => {
   };
 
   return (
-    <>
+    <Box>
       <Heading>Invited people</Heading>
 
       {invitedUsers.length === 0 ? (
@@ -62,6 +62,6 @@ export const SelectUserList: React.FC = () => {
           />
         ))}
       </SimpleGrid>
-    </>
+    </Box>
   );
 };

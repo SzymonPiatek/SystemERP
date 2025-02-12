@@ -9,35 +9,26 @@ import {
   DialogFooter,
   DialogCloseTrigger,
   DialogTitle,
-  DialogActionTrigger,
 } from '../../components/ui/dialog';
-import 'react-datepicker/dist/react-datepicker.css';
 import { MdClose, MdAddCircleOutline } from 'react-icons/md';
 import { Field } from '../ui/field';
 import { useRegisterUser } from '../../hooks/users/useUsers';
 
-type RegisterUserForm = {};
+type RegisterUserFormProps = {};
 
-export const NewUserForm: FC<RegisterUserForm> = () => {
+export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
   const [open, setOpen] = useState(false);
-  const [newUser, setNewUser] = useState<{
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    password: string;
-  }>({
+  const [newUser, setNewUser] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    password: '',
-    password: '',
+    roleId: 2,
   });
 
   const handleOpenChange = (e: { open: boolean }) => {
     setOpen(e.open);
   };
-  const { mutate: registerUser } = useRegisterUser();
+
   const { mutate: registerUser } = useRegisterUser();
 
   const handleInputChange =
@@ -49,22 +40,16 @@ export const NewUserForm: FC<RegisterUserForm> = () => {
     };
 
   const handleSave = async () => {
-    if (!newUser.firstName || !newUser.lastName || !newUser.email || !newUser.password) {
-    if (!newUser.firstName || !newUser.lastName || !newUser.email || !newUser.password) {
+    const { firstName, lastName, email } = newUser;
+
+    if (!firstName || !lastName || !email) {
       console.error('Please fill in all fields');
       return;
     }
 
     try {
       await registerUser({ newUser });
-      await registerUser({ newUser });
-      setNewUser({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        password: '',
-      });
+      setNewUser({ firstName: '', lastName: '', email: '', roleId: 2 });
       setOpen(false);
     } catch (error) {
       console.error('Error creating user:', error);
@@ -115,13 +100,9 @@ export const NewUserForm: FC<RegisterUserForm> = () => {
         </DialogBody>
 
         <DialogFooter>
-          <DialogActionTrigger asChild>
-          <DialogActionTrigger asChild>
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              Cancel
-            </Button>
-          </DialogActionTrigger>
-
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
           <Button onClick={handleSave}>Save</Button>
         </DialogFooter>
 
