@@ -1,19 +1,21 @@
-import { Box, Heading, SimpleGrid, Input } from '@chakra-ui/react';
+import { Box, Heading, SimpleGrid, Input, Badge, Flex } from '@chakra-ui/react';
 import { useUsers } from '../../hooks/users/useUsers.tsx';
 import { CheckboxCard } from '../ui/checkbox-card.tsx';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { QueryParamsProps } from '../../utils/types.ts';
+import { QueryParamsProps, User } from '../../utils/types.ts';
 import { Pagination } from '../pagination/Pagination.tsx';
 
 interface SelectUserListProps {
   onUserSelectionChange: (selectedUsers: number[]) => void;
   selectedUsers: number[];
+  usersData?: User[];
 }
 
 export const SelectUserList: React.FC<SelectUserListProps> = ({
   onUserSelectionChange,
   selectedUsers,
+  usersData,
 }) => {
   const [pageLimit, setPageLimit] = useState(6);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -26,6 +28,7 @@ export const SelectUserList: React.FC<SelectUserListProps> = ({
   const users = userData?.data ?? [];
   const currentPage = userData?.page ?? 1;
   const totalItems = userData?.total;
+  const allInvites = usersData;
 
   const [invitedUsers, setInvitedUsers] = useState<number[]>(selectedUsers);
 
@@ -41,8 +44,6 @@ export const SelectUserList: React.FC<SelectUserListProps> = ({
     setInvitedUsers(updatedUsers);
     onUserSelectionChange(updatedUsers);
   };
-
-  const invitedUserObjects = users.filter((user) => invitedUsers.includes(user.id));
 
   useEffect(() => {
     setQueryParams({
@@ -70,13 +71,26 @@ export const SelectUserList: React.FC<SelectUserListProps> = ({
   return (
     <Box>
       <Heading>Invited people</Heading>
-      <p>
-        {invitedUserObjects.length === 0 ? (
-          <span>No users invited</span>
-        ) : (
-          invitedUserObjects.map((user) => <span key={user.id}>{user.firstName} </span>)
-        )}
-      </p>
+
+      {!allInvites ? (
+        <span>No users invited</span>
+      ) : (
+        <Flex wrap="wrap" gap={2} alignItems="center">
+          {allInvites.map((user) => (
+            <Badge
+              key={user.id}
+              variant="solid"
+              colorPalette="green"
+              px={1}
+              py={1}
+              borderRadius="md"
+            >
+              {user.firstName} {user.lastName}
+            </Badge>
+          ))}
+        </Flex>
+      )}
+
       <Heading>Invite to event: </Heading>
 
       <Input

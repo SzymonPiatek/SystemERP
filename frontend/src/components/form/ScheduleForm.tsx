@@ -1,15 +1,15 @@
 import { FC, useState, useContext, useEffect } from 'react';
 import { Box, Button, Card, IconButton, Input, SimpleGrid, Text, Textarea } from '@chakra-ui/react';
 import {
-  DialogRoot,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-  DialogCloseTrigger,
-  DialogTitle,
   DialogActionTrigger,
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogRoot,
+  DialogTitle,
+  DialogTrigger,
 } from '../../components/ui/dialog';
 import { toaster } from '../../components/ui/toaster.tsx';
 import DatePicker from 'react-datepicker';
@@ -69,6 +69,7 @@ export const ScheduleForm: FC<{}> = () => {
       setDescription('');
       setStartDate(new Date());
       setEndDate(new Date());
+      setSelectedUsers([]);
     }
   }, [open]);
 
@@ -76,7 +77,7 @@ export const ScheduleForm: FC<{}> = () => {
 
   return (
     <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange} size="xl">
-      <DialogTrigger>Add Event</DialogTrigger>
+      <DialogTrigger>AddEvent</DialogTrigger>
 
       <DialogContent>
         <DialogHeader>

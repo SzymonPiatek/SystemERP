@@ -25,6 +25,7 @@ import DatePicker from 'react-datepicker';
 import { MdClose } from 'react-icons/md';
 import { useDeleteEvent, useEditEvent, useEvents } from '../../hooks/events/useEvents';
 import { SelectUserList } from '../list/SelectUserList';
+import { User } from '../../utils/types';
 
 const localizer = momentLocalizer(moment);
 
@@ -44,6 +45,7 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
   const [endDate, setEndDate] = useState<Date>(new Date());
   const [id, setId] = useState<number | null>(null);
   const [invitedUsers, setInvitedUsers] = useState<number[]>([]);
+  const [usersData, setUsersData] = useState<User[]>([]);
 
   const { data: events, isLoading, isError, error } = useEvents();
   const { mutate: deleteEvent } = useDeleteEvent();
@@ -106,13 +108,21 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
     setEndDate(event.end);
     setId(event.id);
 
-    const eventInvites = invites.filter((invite) => invite.eventId === event.id);
+    const eventInvites = Array.from(
+      new Map(
+        invites
+          .filter((invite) => invite.eventId === event.id)
+          .map((invite) => [invite.userId, invite]),
+      ).values(),
+    );
     const userIds = eventInvites.map((invite) => invite.userId);
+    const users = eventInvites.map((user) => {
+      return user.user;
+    });
+    setUsersData(users);
     setInvitedUsers(userIds);
-
     setDialogState({ open: true });
   };
-
   const handleSave = () => {
     if (!id) {
       return;
@@ -203,6 +213,7 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
                   <SelectUserList
                     onUserSelectionChange={setInvitedUsers}
                     selectedUsers={invitedUsers}
+                    usersData={usersData}
                   />
                 </Box>
               </SimpleGrid>
