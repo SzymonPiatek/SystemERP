@@ -8,9 +8,9 @@ function AcceptInvitePage() {
       h="100vh"
       align="center"
       justify="center"
-      bgGradient="to-r"
-      gradientFrom="black"
-      gradientTo="red.700"
+      bgGradient="to-br"
+      gradientFrom="red.800"
+      gradientTo="black"
     >
       <Card.Root width="xl" p={6} textAlign="center">
         <Card.Body>
