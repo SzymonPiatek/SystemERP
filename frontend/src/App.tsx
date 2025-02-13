@@ -15,6 +15,7 @@ import Orders from './pages/Orders';
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute.tsx';
+import AcceptInvitePage from './pages/AcceptInvitePage.tsx';
 
 const router = createBrowserRouter(
   [
@@ -65,12 +66,11 @@ const router = createBrowserRouter(
       children: [
         {
           path: '/login',
-          children: [
-            {
-              index: true,
-              element: <LoginPage />,
-            },
-          ],
+          element: <LoginPage />,
+        },
+        {
+          path: '/accept-invite',
+          element: <AcceptInvitePage />,
         },
       ],
     },
