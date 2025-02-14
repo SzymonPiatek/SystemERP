@@ -8,8 +8,15 @@ import {
   ToastForErrorHookErrorType,
   User,
   UserResponse,
+  AcceptInvitePayload,
 } from '../../utils/types';
-import { getUsers, editUser, changeUserActivity, registerUser } from '../../actions/usersActions';
+import {
+  getUsers,
+  editUser,
+  changeUserActivity,
+  registerUser,
+  acceptInvite,
+} from '../../actions/usersActions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toastForErrorHook, toastForSuccessHook } from '../../utils/hooks';
 
@@ -81,6 +88,21 @@ export const useRegisterUser = () => {
     onSuccess: (response) => {
       toastForSuccessHook({ response });
       queryClient.invalidateQueries({ queryKey: ['allUsers'] });
+    },
+    onError: (error) => {
+      toastForErrorHook({ error });
+    },
+  });
+};
+
+export const useAcceptInvite = () => {
+  return useMutation<UserResponse, ToastForErrorHookErrorType, { accept: AcceptInvitePayload }>({
+    mutationFn: async ({ accept }) => {
+      const response = acceptInvite(accept);
+      return response;
+    },
+    onSuccess: (response) => {
+      toastForSuccessHook({ response });
     },
     onError: (error) => {
       toastForErrorHook({ error });
