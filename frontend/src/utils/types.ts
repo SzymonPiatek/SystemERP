@@ -140,6 +140,11 @@ export type EditUserPayload = {
   email: string;
 };
 
+export type AcceptInvitePayload = {
+  token: string;
+  password: string;
+};
+
 export type RegisterUserPayload = {
   firstName: string;
   lastName: string;

@@ -8,10 +8,18 @@ import {
   ToastForErrorHookErrorType,
   User,
   UserResponse,
+  AcceptInvitePayload,
 } from '../../utils/types';
-import { getUsers, editUser, changeUserActivity, registerUser } from '../../actions/usersActions';
+import {
+  getUsers,
+  editUser,
+  changeUserActivity,
+  registerUser,
+  acceptInvite,
+} from '../../actions/usersActions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toastForErrorHook, toastForSuccessHook } from '../../utils/hooks';
+import { useNavigate } from 'react-router-dom';
 
 export const useUsers = (params: QueryParamsProps) => {
   return useQuery<TableData<User>, AxiosError>({
@@ -81,6 +89,24 @@ export const useRegisterUser = () => {
     onSuccess: (response) => {
       toastForSuccessHook({ response });
       queryClient.invalidateQueries({ queryKey: ['allUsers'] });
+    },
+    onError: (error) => {
+      toastForErrorHook({ error });
+    },
+  });
+};
+
+export const useAcceptInvite = () => {
+  const navigate = useNavigate();
+
+  return useMutation<UserResponse, ToastForErrorHookErrorType, { accept: AcceptInvitePayload }>({
+    mutationFn: async ({ accept }) => {
+      const response = acceptInvite(accept);
+      return response;
+    },
+    onSuccess: (response) => {
+      toastForSuccessHook({ response });
+      navigate('/');
     },
     onError: (error) => {
       toastForErrorHook({ error });

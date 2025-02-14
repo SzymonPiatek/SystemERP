@@ -8,6 +8,7 @@ import {
   BaseResponse,
   EditUserPayload,
   RegisterUserPayload,
+  AcceptInvitePayload,
 } from '../utils/types';
 
 export const getUsers = async (params?: QueryParamsProps) =>
@@ -29,6 +30,14 @@ export const editUser = async (data: EditUserPayload, userId: number, params?: Q
 export const registerUser = async (data: RegisterUserPayload): Promise<UserResponse> => {
   return axiosFetch<UserResponse>({
     url: API.users.invite,
+    method: 'post',
+    data,
+  });
+};
+
+export const acceptInvite = async (data: AcceptInvitePayload) => {
+  return axiosFetch<UserResponse>({
+    url: API.users.acceptInvite,
     method: 'post',
     data,
   });
