@@ -1,4 +1,5 @@
 import { Button, Card, IconButton, Input } from '@chakra-ui/react';
+
 import { FC, useState } from 'react';
 import {
   DialogRoot,
@@ -13,6 +14,7 @@ import {
 import { MdClose, MdAddCircleOutline } from 'react-icons/md';
 import { Field } from '../ui/field';
 import { useRegisterUser } from '../../hooks/users/useUsers';
+import { roles } from '../../utils/roles';
 
 type RegisterUserFormProps = {};
 
@@ -22,8 +24,9 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
     firstName: '',
     lastName: '',
     email: '',
-    roleId: 2,
+    roleId: 5,
   });
+  const setRole = roles;
 
   const handleOpenChange = (e: { open: boolean }) => {
     setOpen(e.open);
@@ -49,7 +52,7 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
 
     try {
       await registerUser({ newUser });
-      setNewUser({ firstName: '', lastName: '', email: '', roleId: 2 });
+      setNewUser({ firstName: '', lastName: '', email: '', roleId: 5 });
       setOpen(false);
     } catch (error) {
       console.error('Error creating user:', error);
@@ -87,7 +90,17 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
                   placeholder="Enter last name"
                 />
               </Field>
-
+              <Field label="Role" required py="2">
+                <select
+                  onChange={(e) => setNewUser({ ...newUser, roleId: parseInt(e.target.value) })}
+                >
+                  {setRole.map((role) => (
+                    <option key={role.roleId} value={role.roleId}>
+                      {role.roleName}
+                    </option>
+                  ))}
+                </select>
+              </Field>
               <Field label="Email" required>
                 <Input
                   value={newUser.email}
