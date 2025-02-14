@@ -2,7 +2,16 @@ import { useState, FC, useEffect } from 'react';
 import { Calendar, momentLocalizer, View, Views } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { Box, Button, Text, Stack, Input, Textarea, IconButton } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Text,
+  Stack,
+  Input,
+  Textarea,
+  IconButton,
+  SimpleGrid,
+} from '@chakra-ui/react';
 import {
   DialogRoot,
   DialogContent,
@@ -15,6 +24,8 @@ import {
 import DatePicker from 'react-datepicker';
 import { MdClose } from 'react-icons/md';
 import { useDeleteEvent, useEditEvent, useEvents } from '../../hooks/events/useEvents';
+import { SelectUserList } from '../list/SelectUserList';
+import { User } from '../../utils/types';
 
 const localizer = momentLocalizer(moment);
 
@@ -33,10 +44,14 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
   const [id, setId] = useState<number | null>(null);
+  const [invitedUsers, setInvitedUsers] = useState<number[]>([]);
+  const [usersData, setUsersData] = useState<User[]>([]);
 
   const { data: events, isLoading, isError, error } = useEvents();
   const { mutate: deleteEvent } = useDeleteEvent();
   const { mutate: editEvent } = useEditEvent();
+
+  const invites = events ? events.flatMap((event) => event.invitations) : [];
 
   useEffect(() => {
     if (!dialogState.open) {
@@ -46,6 +61,7 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
       setStartDate(new Date());
       setEndDate(new Date());
       setId(null);
+      setInvitedUsers([]);
     }
   }, [dialogState.open]);
 
@@ -64,13 +80,21 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
   }
 
   const formattedEvents =
-    events?.map((event: any) => ({
-      id: event.id,
-      title: event.title,
-      allDay: event.isAllDay,
-      start: new Date(event.startDate),
-      end: new Date(event.endDate),
-    })) || [];
+    Array.from(
+      new Map(
+        events?.map((event: any) => [
+          event.id,
+          {
+            id: event.id,
+            title: event.title,
+            description: event.description,
+            allDay: event.isAllDay,
+            start: new Date(event.startDate),
+            end: new Date(event.endDate),
+          },
+        ]),
+      ).values(),
+    ) || [];
 
   const handleOnChangeView = (selectedView: View) => {
     setView(selectedView);
@@ -82,19 +106,36 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
     setDescription(event.description);
     setStartDate(event.start);
     setEndDate(event.end);
-    setDialogState({ open: true });
     setId(event.id);
-  };
 
+    const eventInvites = Array.from(
+      new Map(
+        invites
+          .filter((invite) => invite.eventId === event.id)
+          .map((invite) => [invite.userId, invite]),
+      ).values(),
+    );
+    const userIds = eventInvites.map((invite) => invite.userId);
+    const users = eventInvites.map((user) => {
+      return user.user;
+    });
+    setUsersData(users);
+    setInvitedUsers(userIds);
+    setDialogState({ open: true });
+  };
   const handleSave = () => {
     if (!id) {
       return;
     }
 
+    const invitations = [...invitedUsers];
+
     const payload = {
       title,
+      description,
       startDate: startDate.toISOString(),
       endDate: endDate.toISOString(),
+      invited: invitations,
     };
 
     editEvent({ updatedEvent: payload, id });
@@ -129,42 +170,53 @@ const BigCalendar: FC<BigCalendarProps> = ({ set, classes }) => {
       />
 
       {selectedEvent && (
-        <DialogRoot {...dialogState} onOpenChange={setDialogState}>
+        <DialogRoot {...dialogState} onOpenChange={setDialogState} size="xl">
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Edit Event</DialogTitle>
             </DialogHeader>
             <DialogBody>
-              <Stack>
-                <Text fontWeight="bold">Title:</Text>
-                <Input
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Event Title"
-                />
-                <Text fontWeight="bold">Description:</Text>
-                <Textarea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Event Description"
-                />
-                <Text fontWeight="bold">Start Date:</Text>
-                <DatePicker
-                  selected={startDate}
-                  onChange={(date: Date | null) => setStartDate(date ?? new Date())}
-                  showTimeSelect
-                  dateFormat="Pp"
-                  customInput={<Input />}
-                />
-                <Text fontWeight="bold">End Date:</Text>
-                <DatePicker
-                  selected={endDate}
-                  onChange={(date: Date | null) => setEndDate(date ?? new Date())}
-                  showTimeSelect
-                  dateFormat="Pp"
-                  customInput={<Input />}
-                />
-              </Stack>
+              <SimpleGrid columns={2} gap={4}>
+                <Stack>
+                  <Text fontWeight="bold">Title:</Text>
+                  <Input
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Event Title"
+                  />
+                  <Text fontWeight="bold">Description:</Text>
+                  <Textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Event Description"
+                  />
+                  <Text fontWeight="bold">Start Date:</Text>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date: Date | null) => setStartDate(date ?? new Date())}
+                    showTimeSelect
+                    dateFormat="Pp"
+                    customInput={<Input />}
+                  />
+                  <Text fontWeight="bold">End Date:</Text>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date: Date | null) => setEndDate(date ?? new Date())}
+                    showTimeSelect
+                    dateFormat="Pp"
+                    customInput={<Input />}
+                  />
+                </Stack>
+
+                <Box>
+                  <Text fontWeight="bold">Invite Users:</Text>
+                  <SelectUserList
+                    onUserSelectionChange={setInvitedUsers}
+                    selectedUsers={invitedUsers}
+                    usersData={usersData}
+                  />
+                </Box>
+              </SimpleGrid>
             </DialogBody>
             <DialogFooter>
               <Button variant="outline" onClick={handleSave}>

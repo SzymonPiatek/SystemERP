@@ -3,12 +3,13 @@ import { AxiosError } from 'axios';
 import {
   EditUserPayload,
   QueryParamsProps,
+  RegisterUserPayload,
   TableData,
   ToastForErrorHookErrorType,
   User,
   UserResponse,
 } from '../../utils/types';
-import { getUsers, editUser, changeUserActivity } from '../../actions/usersActions';
+import { getUsers, editUser, changeUserActivity, registerUser } from '../../actions/usersActions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toastForErrorHook, toastForSuccessHook } from '../../utils/hooks';
 
@@ -57,6 +58,24 @@ export const useEditUser = () => {
     mutationKey: ['allUsers'],
     mutationFn: async ({ updatedUser, id }) => {
       const response = editUser(updatedUser, id);
+      return response;
+    },
+    onSuccess: (response) => {
+      toastForSuccessHook({ response });
+      queryClient.invalidateQueries({ queryKey: ['allUsers'] });
+    },
+    onError: (error) => {
+      toastForErrorHook({ error });
+    },
+  });
+};
+export const useRegisterUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<UserResponse, ToastForErrorHookErrorType, { newUser: RegisterUserPayload }>({
+    mutationKey: ['allUsers'],
+    mutationFn: async ({ newUser }) => {
+      const response = registerUser(newUser);
       return response;
     },
     onSuccess: (response) => {

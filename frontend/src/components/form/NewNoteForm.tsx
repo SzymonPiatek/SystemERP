@@ -103,7 +103,7 @@ export const NewNoteForm: FC<NewNoteFormProps> = () => {
         </DialogBody>
 
         <DialogFooter>
-          <DialogActionTrigger>
+          <DialogActionTrigger asChild>
             <Button variant="outline">Cancel</Button>
           </DialogActionTrigger>
 
