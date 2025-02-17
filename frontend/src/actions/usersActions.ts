@@ -51,3 +51,14 @@ export const changePassword = async (data: changePasswordPayload, userId: number
     data,
   });
 };
+
+export const changePicture = async (file: File, userId: number) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  return axiosFetch<UserResponse>({
+    url: API.users.setProfilePicture(userId),
+    method: 'patch',
+    data: formData,
+  });
+};

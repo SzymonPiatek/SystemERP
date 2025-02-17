@@ -45,7 +45,7 @@ router.patch(
 );
 
 // SET PROFILE PICTURE
-router.post(
+router.patch(
   '/:id/profile_pic',
   authLimiter,
   authenticateToken,

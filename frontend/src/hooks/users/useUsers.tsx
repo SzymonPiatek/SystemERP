@@ -18,6 +18,7 @@ import {
   registerUser,
   acceptInvite,
   changePassword,
+  changePicture,
 } from '../../actions/usersActions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toastForErrorHook, toastForSuccessHook } from '../../utils/hooks';
@@ -120,6 +121,21 @@ export const useChangePassword = () => {
   >({
     mutationFn: async ({ updatedUser, id }) => {
       const response = changePassword(updatedUser, id);
+      return response;
+    },
+    onSuccess: (response) => {
+      toastForSuccessHook({ response });
+    },
+    onError: (error) => {
+      toastForErrorHook({ error });
+    },
+  });
+};
+
+export const useChangePic = () => {
+  return useMutation<UserResponse, ToastForErrorHookErrorType, { updatedUser: File; id: number }>({
+    mutationFn: async ({ updatedUser, id }) => {
+      const response = await changePicture(updatedUser, id);
       return response;
     },
     onSuccess: (response) => {

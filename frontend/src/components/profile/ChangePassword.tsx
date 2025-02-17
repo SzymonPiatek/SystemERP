@@ -54,7 +54,7 @@ export const ChangePassword: FC<ChangePasswordProps> = () => {
   return (
     <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger>
-        <IconButton variant="outline">
+        <IconButton variant="outline" p="2">
           <MdEdit /> Change Password
         </IconButton>
       </DialogTrigger>
