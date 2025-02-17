@@ -27,6 +27,7 @@ function AcceptInvitePage() {
       return;
     }
     mutate({ accept: { token, password } });
+    console.log({ accept: { token, password } });
   };
 
   return (

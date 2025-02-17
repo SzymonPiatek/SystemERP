@@ -19,6 +19,7 @@ import {
 } from '../../actions/usersActions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toastForErrorHook, toastForSuccessHook } from '../../utils/hooks';
+import { useNavigate } from 'react-router-dom';
 
 export const useUsers = (params: QueryParamsProps) => {
   return useQuery<TableData<User>, AxiosError>({
@@ -96,6 +97,8 @@ export const useRegisterUser = () => {
 };
 
 export const useAcceptInvite = () => {
+  const navigate = useNavigate();
+
   return useMutation<UserResponse, ToastForErrorHookErrorType, { accept: AcceptInvitePayload }>({
     mutationFn: async ({ accept }) => {
       const response = acceptInvite(accept);
@@ -103,6 +106,7 @@ export const useAcceptInvite = () => {
     },
     onSuccess: (response) => {
       toastForSuccessHook({ response });
+      navigate('/');
     },
     onError: (error) => {
       toastForErrorHook({ error });
