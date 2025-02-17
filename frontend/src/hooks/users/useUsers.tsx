@@ -9,6 +9,7 @@ import {
   User,
   UserResponse,
   AcceptInvitePayload,
+  changePasswordPayload,
 } from '../../utils/types';
 import {
   getUsers,
@@ -16,6 +17,7 @@ import {
   changeUserActivity,
   registerUser,
   acceptInvite,
+  changePassword,
 } from '../../actions/usersActions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toastForErrorHook, toastForSuccessHook } from '../../utils/hooks';
@@ -99,6 +101,25 @@ export const useAcceptInvite = () => {
   return useMutation<UserResponse, ToastForErrorHookErrorType, { accept: AcceptInvitePayload }>({
     mutationFn: async ({ accept }) => {
       const response = acceptInvite(accept);
+      return response;
+    },
+    onSuccess: (response) => {
+      toastForSuccessHook({ response });
+    },
+    onError: (error) => {
+      toastForErrorHook({ error });
+    },
+  });
+};
+
+export const useChangePassword = () => {
+  return useMutation<
+    UserResponse,
+    ToastForErrorHookErrorType,
+    { updatedUser: changePasswordPayload; id: number }
+  >({
+    mutationFn: async ({ updatedUser, id }) => {
+      const response = changePassword(updatedUser, id);
       return response;
     },
     onSuccess: (response) => {

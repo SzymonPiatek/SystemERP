@@ -8,6 +8,7 @@ import {
   FileUploadTrigger,
 } from '../components/ui/file-upload.tsx';
 import { MdCameraAlt } from 'react-icons/md';
+import { ChangePassword } from '../components/profile/ChangePassword.tsx';
 
 export const ProfilePage: FC<{}> = () => {
   const { user } = useContext(AuthContext);
@@ -71,6 +72,7 @@ export const ProfilePage: FC<{}> = () => {
             <Text>Email: {user?.email}</Text>
           </GridItem>
         </Grid>
+        <ChangePassword />
       </Card.Body>
     </Card.Root>
   );

@@ -9,6 +9,7 @@ import {
   EditUserPayload,
   RegisterUserPayload,
   AcceptInvitePayload,
+  changePasswordPayload,
 } from '../utils/types';
 
 export const getUsers = async (params?: QueryParamsProps) =>
@@ -39,6 +40,14 @@ export const acceptInvite = async (data: AcceptInvitePayload) => {
   return axiosFetch<UserResponse>({
     url: API.users.acceptInvite,
     method: 'post',
+    data,
+  });
+};
+
+export const changePassword = async (data: changePasswordPayload, userId: number) => {
+  return axiosFetch<UserResponse>({
+    url: API.users.changePassword(userId),
+    method: 'patch',
     data,
   });
 };
