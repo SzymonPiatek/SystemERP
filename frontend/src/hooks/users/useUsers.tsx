@@ -22,6 +22,7 @@ import {
 } from '../../actions/usersActions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toastForErrorHook, toastForSuccessHook } from '../../utils/hooks';
+import { forgotPassword } from '../../actions/authActions';
 
 export const useUsers = (params: QueryParamsProps) => {
   return useQuery<TableData<User>, AxiosError>({
@@ -136,6 +137,21 @@ export const useChangePic = () => {
   return useMutation<UserResponse, ToastForErrorHookErrorType, { updatedUser: File; id: number }>({
     mutationFn: async ({ updatedUser, id }) => {
       const response = await changePicture(updatedUser, id);
+      return response;
+    },
+    onSuccess: (response) => {
+      toastForSuccessHook({ response });
+    },
+    onError: (error) => {
+      toastForErrorHook({ error });
+    },
+  });
+};
+
+export const useForgotPassword = () => {
+  return useMutation<UserResponse, ToastForErrorHookErrorType, { email: string }>({
+    mutationFn: async ({ email }) => {
+      const response = await forgotPassword({ email });
       return response;
     },
     onSuccess: (response) => {

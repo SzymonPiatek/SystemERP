@@ -5,6 +5,7 @@ import { useLoginUser } from '../../hooks/useLoginUser.tsx';
 import CustomButton from '../../components/button/CustomButton.tsx';
 import { Logo } from '../../components/logo/Logo.tsx';
 import { PasswordInput } from '../../components/ui/password-input.tsx';
+import { ForgotPassword } from '../../components/form/ForgotPassword.tsx';
 
 export const LoginPage: FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -49,7 +50,7 @@ export const LoginPage: FC = () => {
                   placeholder="me@example.com"
                 />
               </Field.Root>
-              <Field.Root>
+              <Field.Root position="relative">
                 <Field.Label>Password</Field.Label>
                 <PasswordInput
                   type="password"
@@ -59,6 +60,9 @@ export const LoginPage: FC = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
                 />
+                <Box position="absolute" right="0">
+                  <ForgotPassword />
+                </Box>
               </Field.Root>
               <Box width="100%" display="flex" justifyContent="center" marginTop="1rem">
                 <CustomButton type="submit" variant="primary">
