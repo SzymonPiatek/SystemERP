@@ -16,6 +16,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute.tsx';
 import AcceptInvitePage from './pages/AcceptInvitePage.tsx';
+import ChangeForgottenPassword from './pages/ChangeForgottenPassword.tsx';
 
 const router = createBrowserRouter(
   [
@@ -67,10 +68,17 @@ const router = createBrowserRouter(
         {
           path: '/login',
           element: <LoginPage />,
+          errorElement: <Error />,
         },
         {
           path: '/accept-invite',
           element: <AcceptInvitePage />,
+          errorElement: <Error />,
+        },
+        {
+          path: '/reset-password',
+          element: <ChangeForgottenPassword />,
+          errorElement: <Error />,
         },
       ],
     },

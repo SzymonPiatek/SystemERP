@@ -1,5 +1,5 @@
 import { Box, Button, Input, Field, Text } from '@chakra-ui/react';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   DialogRoot,
   DialogTrigger,
@@ -25,7 +25,11 @@ export const ForgotPassword: FC<ForgotPasswordProps> = () => {
 
   const handleForgotPassword = async () => {
     mutate({ email: email });
+    setOpen(false);
   };
+  useEffect(() => {
+    setEmail('');
+  }, [open]);
 
   return (
     <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange}>

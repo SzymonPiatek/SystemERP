@@ -22,7 +22,8 @@ import {
 } from '../../actions/usersActions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toastForErrorHook, toastForSuccessHook } from '../../utils/hooks';
-import { forgotPassword } from '../../actions/authActions';
+import { forgotPassword, ResetPassword } from '../../actions/authActions';
+import { useNavigate } from 'react-router-dom';
 
 export const useUsers = (params: QueryParamsProps) => {
   return useQuery<TableData<User>, AxiosError>({
@@ -156,6 +157,26 @@ export const useForgotPassword = () => {
     },
     onSuccess: (response) => {
       toastForSuccessHook({ response });
+    },
+    onError: (error) => {
+      toastForErrorHook({ error });
+    },
+  });
+};
+export const useResetPassword = () => {
+  const navigate = useNavigate();
+  return useMutation<
+    UserResponse,
+    ToastForErrorHookErrorType,
+    { newPassword: string; token: string }
+  >({
+    mutationFn: async ({ newPassword, token }) => {
+      const response = await ResetPassword({ newPassword, token });
+      return response;
+    },
+    onSuccess: (response) => {
+      toastForSuccessHook({ response });
+      navigate('/');
     },
     onError: (error) => {
       toastForErrorHook({ error });

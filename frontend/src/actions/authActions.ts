@@ -11,3 +11,10 @@ export const forgotPassword = async (data: { email: string }) => {
     data,
   });
 };
+export const ResetPassword = async (data: { newPassword: string; token: string }) => {
+  return axiosFetch<UserResponse>({
+    url: API.users.changeForgottenPassword,
+    method: 'patch',
+    data,
+  });
+};
