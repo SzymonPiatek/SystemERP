@@ -10,7 +10,7 @@ const API = {
     changePassword: (id: number) => `/users/${id}/change_password`,
     setProfilePicture: (id: number) => `/users/${id}/profile_pic`,
     changeForgottenPassword: '/users/change_forgotten_password',
-    forgotPassword: '/user/forgot_password',
+    forgotPassword: '/users/forgot_password',
     invite: '/users/invite',
     acceptInvite: '/user/accept_invite',
   },
