@@ -1,4 +1,4 @@
-import { Box, Button, Card, Input, Field, Text } from '@chakra-ui/react';
+import { Box, Button, Input, Field, Text } from '@chakra-ui/react';
 import { FC, useState } from 'react';
 import {
   DialogRoot,
@@ -37,35 +37,31 @@ export const ForgotPassword: FC<ForgotPasswordProps> = () => {
 
       <DialogContent>
         <DialogBody>
-          <Card.Root>
-            <Card.Body>
-              <Box p={4}>
-                <Box display="flex" flexDirection="column" gap="1rem">
-                  <Logo />
-                  <Text fontSize="xl" alignSelf="center">
-                    Reset your password
-                  </Text>
-                  <Text>
-                    Enter your user account's verified email address and we will send you a password
-                    reset link.
-                  </Text>
-                  <Field.Root>
-                    <Input
-                      type="email"
-                      name="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email address"
-                    />
-                  </Field.Root>
-                  <Button variant="outline" onClick={handleForgotPassword}>
-                    Send Mail
-                  </Button>
-                </Box>
-              </Box>
-            </Card.Body>
-          </Card.Root>
+          <Box p={4}>
+            <Box display="flex" flexDirection="column" gap="1rem">
+              <Logo />
+              <Text fontSize="xl" alignSelf="center">
+                Reset your password
+              </Text>
+              <Text>
+                Enter your user account's verified email address and we will send you a password
+                reset link.
+              </Text>
+              <Field.Root>
+                <Input
+                  type="email"
+                  name="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email address"
+                />
+              </Field.Root>
+              <Button variant="outline" onClick={handleForgotPassword}>
+                Send Mail
+              </Button>
+            </Box>
+          </Box>
         </DialogBody>
 
         <DialogFooter>
