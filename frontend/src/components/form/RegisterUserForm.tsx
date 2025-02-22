@@ -16,6 +16,7 @@ import { Field } from '../ui/field';
 import { useRegisterUser } from '../../hooks/users/useUsers';
 import { roles } from '../../utils/roles';
 import { AuthContext } from '../../contexts/AuthContext';
+import { useCompanies } from '../../hooks/companies/useCompanies';
 
 type RegisterUserFormProps = {};
 
@@ -37,6 +38,8 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
   };
 
   const { mutate: registerUser } = useRegisterUser();
+  const { data, isLoading, isError } = useCompanies();
+  console.log(data);
 
   const handleInputChange =
     (field: keyof typeof newUser) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,6 +125,21 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
                   placeholder="Enter email"
                 />
               </Field>
+              {user?.profile?.roleId == 1 && (
+                <Field label="Company" required py="2">
+                  <select
+                    onChange={(e) =>
+                      setNewUser({ ...newUser, companyId: parseInt(e.target.value) })
+                    }
+                  >
+                    {data?.map((company) => (
+                      <option key={company.id} value={company.id}>
+                        {company.name}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+              )}
             </Card.Body>
           </Card.Root>
         </DialogBody>

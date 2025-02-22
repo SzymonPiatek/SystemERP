@@ -90,6 +90,10 @@ export type BaseResponse = {
   message: string;
 };
 
+// Company Responses
+
+export type CompaniesResponse = BaseResponse & { companies: Company[] };
+
 // Event Responses
 
 export type EventsResponse = BaseResponse & { events: Event[] };
