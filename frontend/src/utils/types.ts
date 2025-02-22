@@ -150,6 +150,7 @@ export type RegisterUserPayload = {
   lastName: string;
   email: string;
   roleId: number;
+  companyId?: number | null;
 };
 
 // Auth Responses

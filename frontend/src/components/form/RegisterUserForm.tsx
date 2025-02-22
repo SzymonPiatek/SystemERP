@@ -1,6 +1,6 @@
 import { Button, Card, IconButton, Input } from '@chakra-ui/react';
 
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import {
   DialogRoot,
   DialogTrigger,
@@ -15,16 +15,20 @@ import { MdClose, MdAddCircleOutline } from 'react-icons/md';
 import { Field } from '../ui/field';
 import { useRegisterUser } from '../../hooks/users/useUsers';
 import { roles } from '../../utils/roles';
+import { AuthContext } from '../../contexts/AuthContext';
 
 type RegisterUserFormProps = {};
 
 export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
+  const { user } = useContext(AuthContext);
+
   const [open, setOpen] = useState(false);
   const [newUser, setNewUser] = useState({
     firstName: '',
     lastName: '',
     email: '',
     roleId: roles[0]?.roleId || 5,
+    companyId: user?.companyId || null,
   });
   const setRole = roles;
 
@@ -43,7 +47,7 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
     };
 
   const handleSave = async () => {
-    const { firstName, lastName, email, roleId } = newUser;
+    const { firstName, lastName, email, roleId, companyId } = newUser;
 
     if (!firstName || !lastName || !email) {
       console.error('Please fill in all fields');
@@ -51,8 +55,18 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
     }
 
     try {
-      await registerUser({ newUser: { firstName, lastName, email, roleId } });
-      setNewUser({ firstName: '', lastName: '', email: '', roleId: roles[0]?.roleId });
+      if (companyId) {
+        await registerUser({ newUser: { firstName, lastName, email, roleId, companyId } });
+      } else {
+        await registerUser({ newUser: { firstName, lastName, email, roleId } });
+      }
+      setNewUser({
+        firstName: '',
+        lastName: '',
+        email: '',
+        roleId: roles[0]?.roleId,
+        companyId: null,
+      });
       setOpen(false);
     } catch (error) {
       console.error('Error creating user:', error);
