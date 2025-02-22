@@ -24,7 +24,7 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
     firstName: '',
     lastName: '',
     email: '',
-    roleId: 5,
+    roleId: roles[0]?.roleId || 5,
   });
   const setRole = roles;
 
@@ -43,7 +43,7 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
     };
 
   const handleSave = async () => {
-    const { firstName, lastName, email } = newUser;
+    const { firstName, lastName, email, roleId } = newUser;
 
     if (!firstName || !lastName || !email) {
       console.error('Please fill in all fields');
@@ -51,8 +51,8 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
     }
 
     try {
-      await registerUser({ newUser });
-      setNewUser({ firstName: '', lastName: '', email: '', roleId: 5 });
+      await registerUser({ newUser: { firstName, lastName, email, roleId } });
+      setNewUser({ firstName: '', lastName: '', email: '', roleId: roles[0]?.roleId });
       setOpen(false);
     } catch (error) {
       console.error('Error creating user:', error);
