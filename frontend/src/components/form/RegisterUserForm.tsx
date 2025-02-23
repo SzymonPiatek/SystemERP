@@ -1,6 +1,6 @@
 import { Button, Card, IconButton, Input } from '@chakra-ui/react';
 
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import {
   DialogRoot,
   DialogTrigger,
@@ -38,8 +38,8 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
   };
 
   const { mutate: registerUser } = useRegisterUser();
-  const { data, isLoading, isError } = useCompanies();
-  console.log(data);
+  const { data } = useCompanies();
+  const companies = data?.data || [];
 
   const handleInputChange =
     (field: keyof typeof newUser) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,18 +63,23 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
       } else {
         await registerUser({ newUser: { firstName, lastName, email, roleId } });
       }
-      setNewUser({
-        firstName: '',
-        lastName: '',
-        email: '',
-        roleId: roles[0]?.roleId,
-        companyId: null,
-      });
       setOpen(false);
     } catch (error) {
       console.error('Error creating user:', error);
     }
   };
+
+  useEffect(() => {
+    if (!open) {
+      setNewUser({
+        firstName: '',
+        lastName: '',
+        email: '',
+        roleId: roles[0]?.roleId || 5,
+        companyId: null,
+      });
+    }
+  }, [open]);
 
   return (
     <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange}>
@@ -129,10 +134,17 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
                 <Field label="Company" required py="2">
                   <select
                     onChange={(e) =>
-                      setNewUser({ ...newUser, companyId: parseInt(e.target.value) })
+                      setNewUser({
+                        ...newUser,
+                        companyId: e.target.value ? parseInt(e.target.value) : null,
+                      })
                     }
+                    value={newUser.companyId || ''}
                   >
-                    {data?.map((company) => (
+                    <option value="" disabled>
+                      Select a company
+                    </option>
+                    {companies.map((company) => (
                       <option key={company.id} value={company.id}>
                         {company.name}
                       </option>

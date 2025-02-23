@@ -92,7 +92,7 @@ export type BaseResponse = {
 
 // Company Responses
 
-export type CompaniesResponse = BaseResponse & { companies: Company[] };
+export type CompaniesResponse = BaseResponse & { data: Company[] };
 
 // Event Responses
 
