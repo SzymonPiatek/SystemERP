@@ -19,7 +19,7 @@ import { acceptInviteHandler } from '@src/models/user/handlers/acceptInviteHandl
 const router = Router();
 
 // GET ALL USERS
-router.get('/', apiLimiter, authenticateToken, authorizeRole(['ADMIN', 'ENTITY_ADMIN', 'OWNER', 'MANAGER']), getAllUsersHandler);
+router.get('/', apiLimiter, authenticateToken, authorizeRole(['*']), getAllUsersHandler);
 
 // GET USER BY ID
 router.get('/:id', apiLimiter, authenticateToken, authorizeRole(['*']), validateIdParam, getUserByIdHandler);

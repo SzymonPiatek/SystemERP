@@ -101,6 +101,8 @@ export const useRegisterUser = () => {
 };
 
 export const useAcceptInvite = () => {
+  const navigate = useNavigate();
+
   return useMutation<UserResponse, ToastForErrorHookErrorType, { accept: AcceptInvitePayload }>({
     mutationFn: async ({ accept }) => {
       const response = acceptInvite(accept);
@@ -108,6 +110,7 @@ export const useAcceptInvite = () => {
     },
     onSuccess: (response) => {
       toastForSuccessHook({ response });
+      navigate('/');
     },
     onError: (error) => {
       toastForErrorHook({ error });

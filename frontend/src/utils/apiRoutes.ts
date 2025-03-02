@@ -12,7 +12,7 @@ const API = {
     changeForgottenPassword: '/users/change_forgotten_password',
     forgotPassword: '/users/forgot_password',
     invite: '/users/invite',
-    acceptInvite: '/user/accept_invite',
+    acceptInvite: '/users/accept_invite',
   },
   companies: {
     all: '/companies',

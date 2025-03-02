@@ -1,5 +1,6 @@
 import { Button, Card, IconButton, Input } from '@chakra-ui/react';
-import { FC, useState } from 'react';
+
+import { FC, useContext, useEffect, useState } from 'react';
 import {
   DialogRoot,
   DialogTrigger,
@@ -13,23 +14,32 @@ import {
 import { MdClose, MdAddCircleOutline } from 'react-icons/md';
 import { Field } from '../ui/field';
 import { useRegisterUser } from '../../hooks/users/useUsers';
+import { roles } from '../../utils/roles';
+import { AuthContext } from '../../contexts/AuthContext';
+import { useCompanies } from '../../hooks/companies/useCompanies';
 
 type RegisterUserFormProps = {};
 
 export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
+  const { user } = useContext(AuthContext);
+
   const [open, setOpen] = useState(false);
   const [newUser, setNewUser] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    roleId: 2,
+    roleId: roles[0]?.roleId || 5,
+    companyId: user?.companyId || null,
   });
+  const setRole = roles;
 
   const handleOpenChange = (e: { open: boolean }) => {
     setOpen(e.open);
   };
 
   const { mutate: registerUser } = useRegisterUser();
+  const { data } = useCompanies();
+  const companies = data?.data || [];
 
   const handleInputChange =
     (field: keyof typeof newUser) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +50,7 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
     };
 
   const handleSave = async () => {
-    const { firstName, lastName, email } = newUser;
+    const { firstName, lastName, email, roleId, companyId } = newUser;
 
     if (!firstName || !lastName || !email) {
       console.error('Please fill in all fields');
@@ -48,13 +58,28 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
     }
 
     try {
-      await registerUser({ newUser });
-      setNewUser({ firstName: '', lastName: '', email: '', roleId: 2 });
+      if (companyId) {
+        await registerUser({ newUser: { firstName, lastName, email, roleId, companyId } });
+      } else {
+        await registerUser({ newUser: { firstName, lastName, email, roleId } });
+      }
       setOpen(false);
     } catch (error) {
       console.error('Error creating user:', error);
     }
   };
+
+  useEffect(() => {
+    if (!open) {
+      setNewUser({
+        firstName: '',
+        lastName: '',
+        email: '',
+        roleId: roles[0]?.roleId || 5,
+        companyId: null,
+      });
+    }
+  }, [open]);
 
   return (
     <DialogRoot lazyMount open={open} onOpenChange={handleOpenChange}>
@@ -87,7 +112,17 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
                   placeholder="Enter last name"
                 />
               </Field>
-
+              <Field label="Role" required py="2">
+                <select
+                  onChange={(e) => setNewUser({ ...newUser, roleId: parseInt(e.target.value) })}
+                >
+                  {setRole.map((role) => (
+                    <option key={role.roleId} value={role.roleId}>
+                      {role.roleName}
+                    </option>
+                  ))}
+                </select>
+              </Field>
               <Field label="Email" required>
                 <Input
                   value={newUser.email}
@@ -95,6 +130,28 @@ export const RegisterUserForm: FC<RegisterUserFormProps> = () => {
                   placeholder="Enter email"
                 />
               </Field>
+              {user?.profile?.roleId == 1 && (
+                <Field label="Company" required py="2">
+                  <select
+                    onChange={(e) =>
+                      setNewUser({
+                        ...newUser,
+                        companyId: e.target.value ? parseInt(e.target.value) : null,
+                      })
+                    }
+                    value={newUser.companyId || ''}
+                  >
+                    <option value="" disabled>
+                      Select a company
+                    </option>
+                    {companies.map((company) => (
+                      <option key={company.id} value={company.id}>
+                        {company.name}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+              )}
             </Card.Body>
           </Card.Root>
         </DialogBody>
