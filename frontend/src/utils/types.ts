@@ -90,6 +90,10 @@ export type BaseResponse = {
   message: string;
 };
 
+// Company Responses
+
+export type CompaniesResponse = BaseResponse & { data: Company[] };
+
 // Event Responses
 
 export type EventsResponse = BaseResponse & { events: Event[] };
@@ -150,6 +154,7 @@ export type RegisterUserPayload = {
   lastName: string;
   email: string;
   roleId: number;
+  companyId?: number | null;
 };
 
 // Auth Responses
