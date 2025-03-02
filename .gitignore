@@ -4,3 +4,4 @@ venv
 .idea
 .DS_Store
 node_modules
+/api/src/uploads/*

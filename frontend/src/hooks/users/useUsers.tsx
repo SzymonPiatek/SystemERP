@@ -9,6 +9,7 @@ import {
   User,
   UserResponse,
   AcceptInvitePayload,
+  changePasswordPayload,
 } from '../../utils/types';
 import {
   getUsers,
@@ -16,9 +17,12 @@ import {
   changeUserActivity,
   registerUser,
   acceptInvite,
+  changePassword,
+  changePicture,
 } from '../../actions/usersActions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toastForErrorHook, toastForSuccessHook } from '../../utils/hooks';
+import { forgotPassword, ResetPassword } from '../../actions/authActions';
 import { useNavigate } from 'react-router-dom';
 
 export const useUsers = (params: QueryParamsProps) => {
@@ -102,6 +106,75 @@ export const useAcceptInvite = () => {
   return useMutation<UserResponse, ToastForErrorHookErrorType, { accept: AcceptInvitePayload }>({
     mutationFn: async ({ accept }) => {
       const response = acceptInvite(accept);
+      return response;
+    },
+    onSuccess: (response) => {
+      toastForSuccessHook({ response });
+      navigate('/');
+    },
+    onError: (error) => {
+      toastForErrorHook({ error });
+    },
+  });
+};
+
+export const useChangePassword = () => {
+  return useMutation<
+    UserResponse,
+    ToastForErrorHookErrorType,
+    { updatedUser: changePasswordPayload; id: number }
+  >({
+    mutationFn: async ({ updatedUser, id }) => {
+      const response = changePassword(updatedUser, id);
+      return response;
+    },
+    onSuccess: (response) => {
+      toastForSuccessHook({ response });
+    },
+    onError: (error) => {
+      toastForErrorHook({ error });
+    },
+  });
+};
+
+export const useChangePic = () => {
+  return useMutation<UserResponse, ToastForErrorHookErrorType, { updatedUser: File; id: number }>({
+    mutationFn: async ({ updatedUser, id }) => {
+      const response = await changePicture(updatedUser, id);
+      return response;
+    },
+    onSuccess: (response) => {
+      toastForSuccessHook({ response });
+    },
+    onError: (error) => {
+      toastForErrorHook({ error });
+    },
+  });
+};
+
+export const useForgotPassword = () => {
+  return useMutation<UserResponse, ToastForErrorHookErrorType, { email: string }>({
+    mutationFn: async ({ email }) => {
+      const response = await forgotPassword({ email });
+      return response;
+    },
+    onSuccess: (response) => {
+      toastForSuccessHook({ response });
+    },
+    onError: (error) => {
+      toastForErrorHook({ error });
+    },
+  });
+};
+export const useResetPassword = () => {
+  const navigate = useNavigate();
+  return useMutation<
+    UserResponse,
+    ToastForErrorHookErrorType,
+    { newPassword: string; token: string }
+  >({
+    mutationFn: async ({ newPassword, token }) => {
+      const response = await ResetPassword({ newPassword, token });
       return response;
     },
     onSuccess: (response) => {

@@ -149,6 +149,11 @@ export type AcceptInvitePayload = {
   password: string;
 };
 
+export type changePasswordPayload = {
+  oldPassword: string;
+  newPassword: string;
+};
+
 export type RegisterUserPayload = {
   firstName: string;
   lastName: string;

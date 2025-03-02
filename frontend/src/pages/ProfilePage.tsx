@@ -1,5 +1,5 @@
-import { Card, Grid, GridItem, Text, Box } from '@chakra-ui/react';
-import { FC, useContext } from 'react';
+import { Card, Grid, GridItem, Text, Box, Button } from '@chakra-ui/react';
+import { FC, useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext.tsx';
 import { Avatar } from '../components/ui/avatar.tsx';
 import {
@@ -8,9 +8,34 @@ import {
   FileUploadTrigger,
 } from '../components/ui/file-upload.tsx';
 import { MdCameraAlt } from 'react-icons/md';
+import { ChangePassword } from '../components/profile/ChangePassword.tsx';
+import { useChangePic } from '../hooks/users/useUsers.tsx';
+import { toaster } from '../components/ui/toaster.tsx';
 
 export const ProfilePage: FC<{}> = () => {
   const { user } = useContext(AuthContext);
+  const { mutate } = useChangePic();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!user) {
+      toaster.create({ description: 'No authenticated user', type: 'error' });
+      return;
+    }
+
+    setSelectedFile(file);
+  };
+
+  const handleSave = () => {
+    if (selectedFile && user) {
+      mutate({ updatedUser: selectedFile, id: user.id });
+      setSelectedFile(null);
+    }
+  };
+  console.log(user?.profile);
   return (
     <Card.Root>
       <Card.Body p="12">
@@ -23,7 +48,7 @@ export const ProfilePage: FC<{}> = () => {
           alignItems="center"
         >
           <GridItem colSpan={1} display="flex">
-            <FileUploadRoot justifyContent="center" alignItems="center">
+            <FileUploadRoot justifyContent="center" alignItems="center" onChange={handleFileChange}>
               <FileUploadTrigger>
                 <Box
                   position="relative"
@@ -33,12 +58,8 @@ export const ProfilePage: FC<{}> = () => {
                   justifyContent="center"
                   alignItems="center"
                   _hover={{
-                    '& .avatar': {
-                      opacity: 0.3,
-                    },
-                    '& .icon': {
-                      opacity: 1,
-                    },
+                    '& .avatar': { opacity: 0.3 },
+                    '& .icon': { opacity: 1 },
                     cursor: 'pointer',
                   }}
                 >
@@ -71,6 +92,16 @@ export const ProfilePage: FC<{}> = () => {
             <Text>Email: {user?.email}</Text>
           </GridItem>
         </Grid>
+
+        {selectedFile && (
+          <Box mt="4">
+            <Button onClick={handleSave} variant="outline">
+              Save
+            </Button>
+          </Box>
+        )}
+
+        <ChangePassword />
       </Card.Body>
     </Card.Root>
   );
